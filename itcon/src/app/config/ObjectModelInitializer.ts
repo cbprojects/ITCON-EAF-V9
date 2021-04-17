@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
-export var HOST = 'http://localhost:9002';
+//export var HOST = 'http://localhost:9002';
 //export var HOST = 'http://10.176.56.211:9002';
-//export var HOST = 'http://192.168.1.15:9002';
+export var HOST = 'https://cbaeneprojects.com:8443/CentralUsuarios';
 
 export var SYSTEM = 'http://localhost:4200';
 //export var SYSTEM = 'http://10.176.56.211:7001';
-//export var SYSTEM = 'http://192.168.1.15:4200';
+//export var SYSTEM = 'https://www.contact-manager.cbaeneprojects.com';
 
 @Injectable()
 export class ObjectModelInitializer {
@@ -47,7 +47,16 @@ export class ObjectModelInitializer {
       urlRestService: `${HOST}/`,
       urlRestOauth: `${HOST}/oauth/token`,
       urlVCode: `${SYSTEM}/vCode/`,
-      urlConsultarToques: `${HOST}/eutanasia/paratodos/consultarToques`,
+      // Roles
+      urlContarRoles: `${HOST}/central/rol/contarRoles`,
+      urlConsultarRolesPorFiltros: `${HOST}/central/rol/consultarRolFiltros`,
+      urlCrearRol: `${HOST}/central/rol/crearRol`,
+      urlModificarRol: `${HOST}/central/rol/modificarRol`,
+      // Perfiles
+      urlContarPerfiles: `${HOST}/central/perfil/contarPerfiles`,
+      urlConsultarPerfilesPorFiltros: `${HOST}/central/perfil/consultarPerfilFiltros`,
+      urlCrearPerfil: `${HOST}/central/perfil/crearPerfil`,
+      urlModificarPerfil: `${HOST}/central/perfil/modificarPerfil`,
       tokenUsernameAUTH: 'BaeneApp',
       tokenPasswordAUTH: 'Baene2021codex',
       tokenNameAUTH: 'access_token',

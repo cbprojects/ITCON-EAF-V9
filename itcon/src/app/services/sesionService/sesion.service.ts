@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
-import { ContactoModel } from 'src/app/model/contacto-model';
+import { Perfil } from 'src/app/model/perfilModel';
+import { Rol } from 'src/app/model/RolModel';
 
 declare var $: any;
 
@@ -10,7 +11,8 @@ declare var $: any;
 export class SesionService {
   // Fases
   objServiceSesion: any;
-  objContactoCargado: ContactoModel;
+  objRolCargado: Rol;
+  objPerfilCargado: Perfil;
 
   constructor(public objectModelInitializer: ObjectModelInitializer) {
     this.inicializar();
@@ -20,8 +22,6 @@ export class SesionService {
   }
 
   inicializar() {
-    this.objContactoCargado = null;
-
     this.objServiceSesion = this.objectModelInitializer.getDataServiceSesion();
     this.objServiceSesion.phase = undefined;
     this.objServiceSesion.usuarioSesion = undefined;

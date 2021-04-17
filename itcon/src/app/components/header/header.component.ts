@@ -25,10 +25,6 @@ export class HeaderComponent implements OnInit {
 
   // Objetos de Animaciones
   fadeIn: any;
-  displayModalLogin: boolean = false;
-  usuario: any;
-  clave: any;
-  esLogueado: boolean = false;
 
   // Utilidades
   msg: any;
@@ -40,21 +36,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-  }
-
-  showDialogLogin() {
-    this.toggleDropdown('dropdownProfile');
-    this.displayModalLogin = true;
-  }
-
-  aplicarMDBLogin() {
-    setTimeout(() => {
-      $('#login').bootstrapMaterialDesign();
-    }, 10);
-  }
-
-  redirigirBlogs() {
-    this.router.navigate(['blogs']);
+    $('#pagesMenu').click();
   }
 
   obtenerBreadcrumb(url: string) {
@@ -74,24 +56,6 @@ export class HeaderComponent implements OnInit {
     }
 
     return ruta;
-  }
-
-  toggleDropdown(id) {
-    $('#' + id).toggleClass('show');
-  }
-
-  login() {
-    this.messageService.add({ severity: 'success', summary: 'Service Message', detail: 'Via MessageService' });
-    this.esLogueado = true;
-    this.cerrarModalLogin();
-  }
-
-  cerrarModalLogin() {
-    this.displayModalLogin = false;
-  }
-
-  cerrarSesion() {
-    this.esLogueado = false;
   }
 
 }

@@ -1,0 +1,33 @@
+.text-center {
+    text-align: center;
+}
+
+.sinResultados {
+    font-size: 18px;
+    color: #7c7c7c;
+    font-weight: bold;
+    padding: 10px;
+    margin: 5px 0;
+    text-align: center;
+    border: 1px solid #eeeeee;
+    border-radius: 5px;
+    background: #00bcd40f;
+}
+
+.p-toast .p-toast-message .p-toast-icon-close {
+    width: 2.5rem !important;
+}
+
+.p-toast {
+    width: calc(100% - 40px) !important;
+}
+
+.table > tbody > tr:hover {
+    background: whitesmoke;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+*:focus {
+    outline: none;
+}

@@ -461,4 +461,60 @@ export class Util {
   copiarElemento(source, target) {
     return Object.assign(target, source);
   }
+
+  cargarColorBadge(i) {
+    let color = "dark";
+    switch (i) {
+      case 1:
+        color = "secondary";
+        break;
+      case 2:
+        color = "primary";
+        break;
+      case 3:
+        color = "success";
+        break;
+      case 4:
+        color = "danger";
+        break;
+      case 5:
+        color = "warning";
+        break;
+      case 6:
+        color = "info";
+        break;
+    }
+    return color;
+  }
+
+  construirMensajeExcepcion(error, summary) {
+    let listaMensajes = [];
+
+    if (error !== undefined && error !== null && error.mensaje !== undefined && error.mensaje !== null) {
+      // Extraemos por el split de mensajes |
+      let listaErrores = error.mensaje.split('|');
+      listaErrores.forEach(errorMSG => {
+        let mensaje = { severity: '', summary: '', detail: '', sticky: true };
+        Object.assign(this.mensaje, mensaje);
+        mensaje.severity = this.const.severity[3];
+        mensaje.summary = summary;
+        mensaje.detail = errorMSG;
+        if (errorMSG.length > 0) {
+          listaMensajes.push(mensaje);
+        }
+      });
+    } else {
+      let mensaje = { severity: '', summary: '', detail: '', sticky: true };
+      mensaje.severity = this.const.severity[3];
+      mensaje.summary = summary;
+      mensaje.detail = this.msg.lbl_mensaje_sin_detalles_error;
+      listaMensajes.push(mensaje);
+    }
+    return listaMensajes;
+  }
+
+  soloNumeros(e) {
+    let key = window.Event ? e.which : e.keyCode;
+    return (key >= 37 && key <= 40) || (key >= 48 && key <= 57) || (key === 46) || (key === 8) || (e.shiftKey === 1);
+  }
 }
