@@ -165,4 +165,60 @@ export class ObjectModelInitializer {
     }
   };
 
+  getDataRol() {
+    return {
+      id: 0,
+      codigo: '',
+      descripcion: '',
+      estado: 0,
+      fechaCreacion: '',
+      usuarioCreacion: '',
+      fechaActualizacion: '',
+      usuarioActualizacion: ''
+    }
+  };
+
+  getDataPerfil() {
+    return {
+      id: 0,
+      codigo: '',
+      descripcion: '',
+      estado: 0,
+      fechaCreacion: '',
+      usuarioCreacion: '',
+      fechaActualizacion: '',
+      usuarioActualizacion: ''
+    }
+  };
+
+  getDataRequestConsultarPerfil() {
+    return {
+      perfil: {},
+      registroInicial: '',
+      cantidadRegistro: ''
+    }
+  };
+
+  getDataRequestConsultarRol() {
+    return {
+      rol: {},
+      registroInicial: '',
+      cantidadRegistro: ''
+    }
+  };
+
+  getDataResponseConsultarRol() {
+    return {
+      resultado: [],
+      registrosTotales: 0,
+    }
+  };
+
+  getDataResponseConsultarPerfil() {
+    return {
+      resultado: [],
+      registrosTotales: 0,
+    }
+  };
+
 }
