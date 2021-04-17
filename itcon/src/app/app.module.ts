@@ -35,6 +35,10 @@ import { NgxUiLoaderConfig, NgxUiLoaderHttpModule, NgxUiLoaderModule, NgxUiLoade
 import { AppComponent } from './app.component';
 import { Guardian } from './config/Guardian';
 import { HomeComponent } from './components/home/home.component';
+import { QRolesComponent } from './components/query/rol/q-roles.component';
+import { MRolesComponent } from './components/management/rol/m-roles.component';
+import { QPerfilesComponent } from './components/query/perfil/q-perfiles.component';
+import { MPerfilesComponent } from './components/management/perfil/m-perfiles.component';
 
 // Imports Componentes Internos
 import { HeaderComponent } from './components/header/header.component';
@@ -44,6 +48,7 @@ import { ObjectModelInitializer } from './config/ObjectModelInitializer';
 import { MessageService } from 'primeng/api';
 import { SesionService } from './services/sesionService/sesion.service';
 import { NgCircleProgressModule } from 'ng-circle-progress';
+
 
 // Constantes
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
@@ -79,7 +84,11 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    HomeComponent
+    HomeComponent,
+    QRolesComponent,
+    MRolesComponent,
+    QPerfilesComponent,
+    MPerfilesComponent
   ],
   imports: [
     AppRoutingModule,

@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit {
     chartBgUsers3();
     chartBgUsers4();
     $('.datatable').DataTable();
-    this.sesionService.objContactoCargado = null;
+    this.sesionService.objRolCargado = null;
   }
 
   ngAfterViewChecked(): void {
