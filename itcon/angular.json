@@ -42,6 +42,8 @@
             "scripts": [
               "./node_modules/jquery/dist/jquery.js",
               "./src/assets/js/dashboard.js",
+              "./src/assets/js/jquery.magnific-popup.js",
+              "./src/assets/js/popper.min.js",
               "./src/assets/js/vendors/circle-progress.min.js",
               "./src/assets/js/vendors/jquery.sparkline.min.js",
               "./src/assets/js/vendors/jquery.tablesorter.min.js",
@@ -134,6 +136,8 @@
             "scripts": [
               "./node_modules/jquery/dist/jquery.js",
               "./src/assets/js/dashboard.js",
+              "./src/assets/js/jquery.magnific-popup.js",
+              "./src/assets/js/popper.min.js",
               "./src/assets/js/vendors/circle-progress.min.js",
               "./src/assets/js/vendors/jquery.sparkline.min.js",
               "./src/assets/js/vendors/jquery.tablesorter.min.js",
