@@ -45,9 +45,6 @@ export class QRolesComponent implements OnInit {
   ngOnDestroy() {
   }
 
-  ngAfterViewChecked(): void {
-  }
-
   inicializar() {
     this.sesionService.objRolCargado = null;
     this.consultarRoles();
@@ -74,9 +71,7 @@ export class QRolesComponent implements OnInit {
           let temp: ResponseConsultaRol = JSON.parse(JSON.stringify(resp));
           if (temp !== undefined && temp.resultado.length > 0) {
             temp.resultado.forEach(rol => {
-              if (rol.estado === 1) {
-                this.listaRoles.push(rol);
-              }
+              this.listaRoles.push(rol);
             });
           }
         },
@@ -112,9 +107,7 @@ export class QRolesComponent implements OnInit {
           let temp: ResponseConsultaRol = JSON.parse(JSON.stringify(resp));
           if (temp !== undefined && temp.resultado.length > 0) {
             temp.resultado.forEach(rol => {
-              if (rol.estado === 1) {
-                this.listaRoles.push(rol);
-              }
+              this.listaRoles.push(rol);
             });
           }
         },

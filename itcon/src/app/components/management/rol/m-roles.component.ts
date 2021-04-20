@@ -28,11 +28,14 @@ export class MRolesComponent implements OnInit {
   // Utilidades
   msg: any;
   const: any;
+  enumEstado: any;
+  enums: any;
 
   constructor(private router: Router, private route: ActivatedRoute, public restService: RestService, public textProperties: TextProperties, public util: Util, public objectModelInitializer: ObjectModelInitializer, public enumerados: Enumerados, public sesionService: SesionService, private messageService: MessageService) {
     this.sesion = this.objectModelInitializer.getDataServiceSesion();
     this.msg = this.textProperties.getProperties(this.sesionService.objServiceSesion.idioma);
     this.const = this.objectModelInitializer.getConst();
+    this.enums = this.enumerados.getEnumerados();
   }
 
   ngOnInit() {
@@ -43,25 +46,20 @@ export class MRolesComponent implements OnInit {
   }
 
   inicializar() {
+    this.enumEstado = this.enums.estado.valores;
     this.rol = this.objectModelInitializer.getDataRol();
     this.esNuevoRol = true;
+    this.rol.estado = this.util.getValorEnumerado(this.enumEstado, 1);
     if (this.sesionService.objRolCargado !== undefined && this.sesionService.objRolCargado !== null && this.sesionService.objRolCargado.id > 0) {
       this.rol = this.sesionService.objRolCargado;
+      this.rol.estado = this.util.getValorEnumerado(this.enumEstado, this.rol.estado);
       this.esNuevoRol = false;
-    }
-  }
-
-  ngAfterViewChecked(): void {
-    //$('ng-select').niceSelect();
-    //$($('select#selectProceso').siblings()[1]).children()[0].innerHTML = this.contacto.procesoContacto.label;
-    if (this.esNuevoRol) {
-      //$('.card').bootstrapMaterialDesign();
     }
   }
 
   crearRol() {
     try {
-      this.rol.estado = 1;
+      this.rol.estado = this.rol.estado.value;
       this.restService.postREST(this.const.urlCrearRol, this.rol)
         .subscribe(resp => {
           let respuesta: Rol = JSON.parse(JSON.stringify(resp));
@@ -70,8 +68,7 @@ export class MRolesComponent implements OnInit {
             this.messageService.clear();
             this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo, sticky: true });
 
-            this.ngOnInit();
-            //$('.card').bootstrapMaterialDesign();
+            this.volverConsulta();
           }
         },
           error => {
@@ -85,6 +82,7 @@ export class MRolesComponent implements OnInit {
               mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
             });
             this.messageService.add(mensajeFinal);
+            this.rol.estado = this.util.getValorEnumerado(this.enumEstado, this.rol.estado);
 
             console.log(error, "error");
           })
@@ -95,6 +93,7 @@ export class MRolesComponent implements OnInit {
 
   modificarRol() {
     try {
+      this.rol.estado = this.rol.estado.value;
       this.restService.putREST(this.const.urlModificarRol, this.rol)
         .subscribe(resp => {
           let respuesta: Rol = JSON.parse(JSON.stringify(resp));
@@ -117,6 +116,7 @@ export class MRolesComponent implements OnInit {
               mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
             });
             this.messageService.add(mensajeFinal);
+            this.rol.estado = this.util.getValorEnumerado(this.enumEstado, this.rol.estado);
             if (this.rol.estado === 0) {
               this.rol.estado = 1;
             }

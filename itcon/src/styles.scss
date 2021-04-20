@@ -28,6 +28,14 @@
     font-weight: bold;
 }
 
-*:focus {
-    outline: none;
+.ng-select .ng-select-container .ng-value-container {
+    padding: 0 !important;
+}
+
+.ng-select.ng-select-single .ng-select-container .ng-clear-wrapper {
+    display: none;
+}
+
+.ng-select .ng-select-container {
+    min-height: 37px !important;
 }

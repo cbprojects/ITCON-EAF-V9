@@ -93,25 +93,6 @@ export class Util {
     return true;
   }
 
-  getEnum(enumerado) {
-    if (enumerado === this.enums.sino.cod) {
-      return this.enums.sino.valores;
-    } else if (enumerado === this.enums.sexo.cod) {
-      return this.enums.sexo.valores;
-    } else if (enumerado === this.enums.tipoUsuario.cod) {
-      return this.enums.tipoUsuario.valores;
-    } else if (enumerado === this.enums.tipoDocumento.cod) {
-      return this.enums.tipoDocumento.valores;
-    } else if (enumerado === this.enums.tipoUbicacion.cod) {
-      return this.enums.tipoUbicacion.valores;
-    }
-
-    else if (enumerado === null) {
-      return false;
-    }
-    return false;
-  }
-
   getEnumValString(array) {
     let lis = [];
     for (let ind in array) {

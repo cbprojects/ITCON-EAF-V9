@@ -29,7 +29,7 @@
                                 </div>
                                 <div class="row justify-content-center">
                                     <div class="form-group col-sm-12 col-lg-12 text-center">
-                                        <button type="submit" (click)="consultarPerfilesPorFiltros()"
+                                        <button type="submit" (click)="consultarPerfiles(0)"
                                             class="btn btn-primary ml-auto">Consultar</button>
                                     </div>
                                 </div>
@@ -37,39 +37,58 @@
                                 <!-- Consulta -->
                                 <hr />
                                 <div class="form-label">Resultados</div>
-                                <div class="table-responsive">
-                                    <table *ngIf="listaPerfiles.length > 0; else sinResultados" class="table mb-0">
-                                        <thead>
+                                <div *ngIf="listaPerfiles.length > 0; else sinResultados" class="table-responsive">
+                                    <p-table [lazy]="true" (onLazyLoad)="cargarTabla($event)" [paginator]="true"
+                                        [totalRecords]="totalRecords" [loading]="loading" styleClass="table mb-0"
+                                        [responsive]="true" [value]="listaPerfiles">
+
+                                        <ng-template pTemplate="caption" class="row">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <i class="fe fe-list"></i>
+                                                    <ng-select class="floatLeft w60px"
+                                                        notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                                        [(ngModel)]="rows" [items]="enumRows">
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+
+                                        <ng-template pTemplate="header">
                                             <tr>
                                                 <th class="pl-0 text-center">ID</th>
                                                 <th class="text-center">Código</th>
-                                                <th class="pr-0 text-center">Descripción</th>
+                                                <th class="text-center">Descripción</th>
+                                                <th class="pr-0 text-center">Estado</th>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr (click)="cargarPerfil(perfil)"
-                                                *ngFor="let perfil of listaPerfiles; index as i;">
+                                        </ng-template>
+
+                                        <ng-template pTemplate="body" let-perfil>
+                                            <tr (click)="cargarPerfil(perfil)">
                                                 <td class="pl-0 text-center">
                                                     {{perfil.id}}
                                                 </td>
                                                 <td>
                                                     {{perfil.codigo}}
                                                 </td>
-                                                <td class="pr-0">
+                                                <td>
                                                     {{perfil.descripcion}}
                                                 </td>
+                                                <td class="pr-0">
+                                                    {{perfil.estado === 1 ? 'Activo' : 'Inactivo'}}
+                                                </td>
                                             </tr>
-                                        </tbody>
-                                    </table>
-                                    <ng-template #sinResultados>
-                                        <div class="service-grids">
-                                            <div class="col-md-12 ser-grid">
-                                                <p class="sinResultados">
-                                                    {{msg.lbl_info_sin_resultados}}</p>
-                                            </div>
-                                        </div>
-                                    </ng-template>
+                                        </ng-template>
+                                    </p-table>
                                 </div>
+                                <ng-template #sinResultados>
+                                    <div class="service-grids">
+                                        <div class="col-md-12 ser-grid">
+                                            <p class="sinResultados">
+                                                {{msg.lbl_info_sin_resultados}}</p>
+                                        </div>
+                                    </div>
+                                </ng-template>
                             </div>
                             <div class="card-footer text-right">
                                 <div class="d-flex">

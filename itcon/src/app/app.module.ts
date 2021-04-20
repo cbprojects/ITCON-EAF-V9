@@ -1,21 +1,15 @@
 // Imports PrimeNG
-import { DialogModule } from 'primeng/dialog';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { ToastModule } from 'primeng/toast';
-import { GMapModule } from 'primeng/gmap';
-import { GalleriaModule } from 'primeng/galleria';
 import { ButtonModule } from 'primeng/button';
-import { SliderModule } from 'primeng/slider';
-import { FieldsetModule } from 'primeng/fieldset';
+import { TableModule } from 'primeng/table';
 
 // Imports Utilidades
 import { TextProperties } from './config/TextProperties';
 import { Functions } from './config/Functions';
 import { Util } from './config/Util';
-import { GoogleMapsModule } from '@angular/google-maps'
-import { CarouselModule } from 'ngx-owl-carousel-o';
 
 // Imports Esenciales
 import { AppRoutingModule } from './config/Routing';
@@ -25,7 +19,6 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { NiceSelectModule } from "ng-nice-select";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
@@ -43,6 +36,7 @@ import { MPerfilesComponent } from './components/management/perfil/m-perfiles.co
 // Imports Componentes Internos
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { ConsultaLazyComponent } from './components/consultaLazy/consultaLazy.component';
 import { Enumerados } from './config/Enumerados';
 import { ObjectModelInitializer } from './config/ObjectModelInitializer';
 import { MessageService } from 'primeng/api';
@@ -85,6 +79,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     HeaderComponent,
     FooterComponent,
     HomeComponent,
+    ConsultaLazyComponent,
     QRolesComponent,
     MRolesComponent,
     QPerfilesComponent,
@@ -104,28 +99,21 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     }),
     BrowserAnimationsModule,
     FormsModule,
-    GoogleMapsModule,
     HttpModule,
     HttpClientModule,
     NgSelectModule,
-    NiceSelectModule,
     RouterModule,
 
-    CarouselModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     NgxUiLoaderRouterModule,
     NgxUiLoaderHttpModule.forRoot({ showForeground: true }),
     MessagesModule,
     MessageModule,
     ToastModule,
-    GMapModule,
     ScrollPanelModule,
-    GalleriaModule,
     ButtonModule,
-    SliderModule,
-    FieldsetModule,
-    DialogModule,
     ReactiveFormsModule,
+    TableModule
   ],
   providers: [TextProperties, Enumerados, ObjectModelInitializer, Guardian, Util, Functions, MessageService, SesionService, { provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]
