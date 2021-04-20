@@ -43,7 +43,8 @@
                                             <tr>
                                                 <th class="pl-0 text-center">ID</th>
                                                 <th class="text-center">Código</th>
-                                                <th class="pr-0 text-center">Descripción</th>
+                                                <th class="text-center">Descripción</th>
+                                                <th class="pr-0 text-center">Estado</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -54,8 +55,11 @@
                                                 <td>
                                                     {{rol.codigo}}
                                                 </td>
-                                                <td class="pr-0">
+                                                <td>
                                                     {{rol.descripcion}}
+                                                </td>
+                                                <td class="pr-0 text-center">
+                                                    {{rol.estado === 1 ? 'Activo' : 'Inactivo'}}
                                                 </td>
                                             </tr>
                                         </tbody>

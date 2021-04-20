@@ -60,7 +60,4 @@ export class HomeComponent implements OnInit {
     $('.datatable').DataTable();
     this.sesionService.objRolCargado = null;
   }
-
-  ngAfterViewChecked(): void {
-  }
 }

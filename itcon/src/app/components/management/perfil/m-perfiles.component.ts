@@ -28,11 +28,14 @@ export class MPerfilesComponent implements OnInit {
   // Utilidades
   msg: any;
   const: any;
+  enumEstado: any;
+  enums: any;
 
   constructor(private router: Router, private route: ActivatedRoute, public restService: RestService, public textProperties: TextProperties, public util: Util, public objectModelInitializer: ObjectModelInitializer, public enumerados: Enumerados, public sesionService: SesionService, private messageService: MessageService) {
     this.sesion = this.objectModelInitializer.getDataServiceSesion();
     this.msg = this.textProperties.getProperties(this.sesionService.objServiceSesion.idioma);
     this.const = this.objectModelInitializer.getConst();
+    this.enums = this.enumerados.getEnumerados();
   }
 
   ngOnInit() {
@@ -43,25 +46,20 @@ export class MPerfilesComponent implements OnInit {
   }
 
   inicializar() {
-    this.perfil = this.objectModelInitializer.getDataRol();
+    this.enumEstado = this.enums.estado.valores;
+    this.perfil = this.objectModelInitializer.getDataPerfil();
+    this.perfil.estado = this.util.getValorEnumerado(this.enumEstado, 1);
     this.esNuevoPerfil = true;
     if (this.sesionService.objPerfilCargado !== undefined && this.sesionService.objPerfilCargado !== null && this.sesionService.objPerfilCargado.id > 0) {
       this.perfil = this.sesionService.objPerfilCargado;
+      this.perfil.estado = this.util.getValorEnumerado(this.enumEstado, this.perfil.estado);
       this.esNuevoPerfil = false;
-    }
-  }
-
-  ngAfterViewChecked(): void {
-    //$('ng-select').niceSelect();
-    //$($('select#selectProceso').siblings()[1]).children()[0].innerHTML = this.contacto.procesoContacto.label;
-    if (this.esNuevoPerfil) {
-      //$('.card').bootstrapMaterialDesign();
     }
   }
 
   crearPerfil() {
     try {
-      this.perfil.estado = 1;
+      this.perfil.estado = this.perfil.estado.value;
       this.restService.postREST(this.const.urlCrearPerfil, this.perfil)
         .subscribe(resp => {
           let respuesta: Perfil = JSON.parse(JSON.stringify(resp));
@@ -70,8 +68,7 @@ export class MPerfilesComponent implements OnInit {
             this.messageService.clear();
             this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo, sticky: true });
 
-            this.ngOnInit();
-            //$('.card').bootstrapMaterialDesign();
+            this.volverConsulta();
           }
         },
           error => {
@@ -85,6 +82,7 @@ export class MPerfilesComponent implements OnInit {
               mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
             });
             this.messageService.add(mensajeFinal);
+            this.perfil.estado = this.util.getValorEnumerado(this.enumEstado, this.perfil.estado);
 
             console.log(error, "error");
           })
@@ -95,6 +93,7 @@ export class MPerfilesComponent implements OnInit {
 
   modificarPerfil() {
     try {
+      this.perfil.estado = this.perfil.estado.value;
       this.restService.putREST(this.const.urlModificarPerfil, this.perfil)
         .subscribe(resp => {
           let respuesta: Perfil = JSON.parse(JSON.stringify(resp));
@@ -117,6 +116,7 @@ export class MPerfilesComponent implements OnInit {
               mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
             });
             this.messageService.add(mensajeFinal);
+            this.perfil.estado = this.util.getValorEnumerado(this.enumEstado, this.perfil.estado);
             if (this.perfil.estado === 0) {
               this.perfil.estado = 1;
             }

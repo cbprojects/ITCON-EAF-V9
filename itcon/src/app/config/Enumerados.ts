@@ -50,15 +50,10 @@ export class Enumerados {
           { value: 2, label: properties.lbl_enum_tipo_ubicacion_valor_ciudad }
         ]
       },
-      procesoContacto: {
+      estado: {
         cod: 6, valores: [
-          { value: 0, label: properties.lbl_enum_proceso_contacto_valor_seleccione },
-          { value: 1, label: properties.lbl_enum_proceso_contacto_valor_prospecto },
-          { value: 2, label: properties.lbl_enum_proceso_contacto_valor_contacto },
-          { value: 3, label: properties.lbl_enum_proceso_contacto_valor_cliente },
-          { value: 4, label: properties.lbl_enum_proceso_contacto_valor_cliente_perdido },
-          { value: 5, label: properties.lbl_enum_proceso_contacto_valor_potencial_perdida },
-          { value: 6, label: properties.lbl_enum_proceso_contacto_valor_cambio_info }
+          { value: 0, label: properties.lbl_enum_inactivo },
+          { value: 1, label: properties.lbl_enum_activo }
         ]
       },
       //valorIva: {cod: 25},

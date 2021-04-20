@@ -36,7 +36,6 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    $('#pagesMenu').click();
   }
 
   obtenerBreadcrumb(url: string) {
