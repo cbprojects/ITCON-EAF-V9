@@ -57,6 +57,8 @@ export class ObjectModelInitializer {
       urlConsultarPerfilesPorFiltros: `${HOST}/central/perfil/consultarPerfilFiltros`,
       urlCrearPerfil: `${HOST}/central/perfil/crearPerfil`,
       urlModificarPerfil: `${HOST}/central/perfil/modificarPerfil`,
+      //Usuarios
+      urlConsultarUsuariosPorFiltros: `${HOST}/central/usuario/consultarUsuarioFiltros`,
       tokenUsernameAUTH: 'BaeneApp',
       tokenPasswordAUTH: 'Baene2021codex',
       tokenNameAUTH: 'access_token',
@@ -200,6 +202,26 @@ export class ObjectModelInitializer {
     }
   };
 
+  getDataUsuario() {
+    return {
+      id: 0,
+      perfil: this.getDataPerfil(),
+      contrasena: '',
+      tipoDocumento: '',
+      documento: '',
+      nombre: '',
+      celular: '',
+      direccion: '',
+      email: '',
+      fechaCreacion: '',
+      usuarioCreacion: '',
+      fechaActualizacion: '',
+      usuarioActualizacion: '',
+      estado: ''
+
+    }
+  };
+
   getDataRequestConsultarPerfil() {
     return {
       perfil: {},
@@ -224,6 +246,21 @@ export class ObjectModelInitializer {
   };
 
   getDataResponseConsultarPerfil() {
+    return {
+      resultado: [],
+      registrosTotales: 0,
+    }
+  };
+
+  getDataRequestConsultarUsuario() {
+    return {
+      usuario: this.getDataUsuario(),
+      registroInicial: '',
+      cantidadRegistro: ''
+    }
+  };
+
+  getDataResponseConsultarUsuario() {
     return {
       resultado: [],
       registrosTotales: 0,

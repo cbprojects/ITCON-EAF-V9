@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { Perfil } from 'src/app/model/perfilModel';
 import { Rol } from 'src/app/model/RolModel';
+import { Usuario } from 'src/app/model/UsuariolModel';
 
 declare var $: any;
 
@@ -13,6 +14,7 @@ export class SesionService {
   objServiceSesion: any;
   objRolCargado: Rol;
   objPerfilCargado: Perfil;
+  objUsuarioCargado: Usuario;
 
   constructor(public objectModelInitializer: ObjectModelInitializer) {
     this.inicializar();

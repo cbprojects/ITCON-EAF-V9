@@ -32,6 +32,7 @@ import { QRolesComponent } from './components/query/rol/q-roles.component';
 import { MRolesComponent } from './components/management/rol/m-roles.component';
 import { QPerfilesComponent } from './components/query/perfil/q-perfiles.component';
 import { MPerfilesComponent } from './components/management/perfil/m-perfiles.component';
+import { QUsuarioComponent } from './components/query/usuario/q-usuario.component';
 
 // Imports Componentes Internos
 import { HeaderComponent } from './components/header/header.component';
@@ -83,7 +84,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     QRolesComponent,
     MRolesComponent,
     QPerfilesComponent,
-    MPerfilesComponent
+    MPerfilesComponent,
+    QUsuarioComponent
   ],
   imports: [
     AppRoutingModule,
