@@ -55,12 +55,17 @@ export class ObjectModelInitializer {
       // Perfiles
       urlContarPerfiles: `${HOST}/central/perfil/contarPerfiles`,
       urlConsultarPerfilesPorFiltros: `${HOST}/central/perfil/consultarPerfilFiltros`,
+      urlConsultarPerfilesPorFiltrosActivos: `${HOST}/central/perfil/consultarPerfilFiltrosActivos`,
       urlCrearPerfil: `${HOST}/central/perfil/crearPerfil`,
       urlModificarPerfil: `${HOST}/central/perfil/modificarPerfil`,
       tokenUsernameAUTH: 'BaeneApp',
       tokenPasswordAUTH: 'Baene2021codex',
       tokenNameAUTH: 'access_token',
       codigoADMIN: 'RMRADM',
+
+      // Rol-Perfiles
+      urlConsultarRolPerfil: `${HOST}/central/rolPerfil/consultarRolPerfilFiltros`,
+      urlCrearRolPerfil: `${HOST}/central/rolPerfil/crearRolPerfil`,
 
       // Model rango de fechas para NGBDatePicker
       minDate: { year: 1000, month: 1, day: 1 },
@@ -223,6 +228,26 @@ export class ObjectModelInitializer {
     }
   };
 
+  getDataResponseConsultarRolPerfil() {
+    return {
+      rolesAsociados: [],
+      rolesNoAsociados: [],
+    }
+  };
+
+  getDataRequestCrearRolPerfil() {
+    return {
+      perfil: {},
+      lstRoles: [],
+    }
+  };
+
+  getDataResponseCrearRolPerfil() {
+    return {
+      codigo: '',
+      mensaje: ''
+    }
+  };
   getDataResponseConsultarPerfil() {
     return {
       resultado: [],

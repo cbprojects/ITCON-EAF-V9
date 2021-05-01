@@ -5,6 +5,7 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
+import { PickListModule } from 'primeng/picklist';
 
 // Imports Utilidades
 import { TextProperties } from './config/TextProperties';
@@ -42,6 +43,7 @@ import { ObjectModelInitializer } from './config/ObjectModelInitializer';
 import { MessageService } from 'primeng/api';
 import { SesionService } from './services/sesionService/sesion.service';
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { RolPerfilComponent } from './components/management/rol-perfil/rol-perfil.component';
 
 
 // Constantes
@@ -83,10 +85,12 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     QRolesComponent,
     MRolesComponent,
     QPerfilesComponent,
-    MPerfilesComponent
+    MPerfilesComponent,
+    RolPerfilComponent
   ],
   imports: [
     AppRoutingModule,
+    PickListModule,
     BrowserModule,
     NgCircleProgressModule.forRoot({
       // set defaults here

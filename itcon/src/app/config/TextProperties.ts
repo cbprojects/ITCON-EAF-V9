@@ -309,6 +309,15 @@ export class TextProperties {
       lbl_mtto_telefono_contacto: idioma === constant.idiomaEs ? 'Teléfono Contacto' : 'Contact Telephone',
       lbl_mtto_proceso: idioma === constant.idiomaEs ? 'Proceso' : 'Process',
 
+      lbl_perfil_codigo: idioma === constant.idiomaEs ? 'Código' : 'Code',
+      lbl_rol_perfil_consulta: idioma === constant.idiomaEs ? 'Consulta de Rol-Perfil' : 'Search by Role-Profile ',
+      lbl_perfil_descripcion: idioma === constant.idiomaEs ? 'Descripción' : 'Description',
+      lbl_perfil_id: idioma === constant.idiomaEs ? 'ID' : 'ID',
+      lbl_perfil_estado: idioma === constant.idiomaEs ? 'Estado' : 'Status',
+      lbl_resultado: idioma === constant.idiomaEs ? 'Resultados' : 'Results',
+      lbl_rol_perfil_disponible: idioma === constant.idiomaEs ? 'Disponible' : 'Available',
+      lbl_rol_perfil_seleccionado: idioma === constant.idiomaEs ? 'Seleccionado' : 'Select',
+      lbl_rol_perfil_busqueda: idioma === constant.idiomaEs ? 'Busqueda por código' : 'Search by code',
     }
   };
 }
