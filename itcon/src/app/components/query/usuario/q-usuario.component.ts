@@ -5,6 +5,7 @@ import { Enumerados } from 'src/app/config/Enumerados';
 import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
+import { Perfil } from 'src/app/model/perfilModel';
 import { RequestConsultaUsuario } from 'src/app/model/requestConsultaUsuarioModel';
 import { ResponseConsultaUsuario } from 'src/app/model/responseConsultaUsuarioModel';
 import { Usuario } from 'src/app/model/UsuariolModel';
@@ -24,6 +25,7 @@ export class QUsuarioComponent implements OnInit {
   //Obj de datos
   usuarioFiltro: Usuario;
   listaUsuarios: Usuario[] = [];
+  listaPerfiles: Perfil[] =[];
 
   // Utilidades
   msg: any;
@@ -48,7 +50,37 @@ export class QUsuarioComponent implements OnInit {
   inicializar() {
     this.usuarioFiltro = this.objectModelInitializer.getDataUsuario();
     this.sesionService.objUsuarioCargado = null;
+    this.listarUsuariosActivos();
     this.consultarUsuarios(0);
+  }
+
+  listarUsuariosActivos(){
+    this.listaPerfiles=[];
+    try {
+      this.restService.getREST(this.const.urlConsultarPerfilesActivos)
+        .subscribe(resp => {
+          this.listaPerfiles = JSON.parse(JSON.stringify(resp));
+          this.listaPerfiles.unshift(this.objectModelInitializer.getDataPerfil());
+       
+        },
+          error => {
+            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+            let titleError = listaMensajes[0];
+            listaMensajes.splice(0, 1);
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+            this.messageService.clear();
+
+            listaMensajes.forEach(mensaje => {
+              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+            });
+            this.messageService.add(mensajeFinal);
+
+            console.log(error, "error");
+          })
+    } catch (e) {
+      console.log(e);
+    }
+
   }
 
   consultarUsuarios(primerItem) {
@@ -68,7 +100,6 @@ export class QUsuarioComponent implements OnInit {
             this.listaUsuarios = temp.resultado;
             this.totalRecords = temp.registrosTotales;
             this.posicionarAbajo();
-            this.loading = false;
           }
         },
           error => {
@@ -88,6 +119,7 @@ export class QUsuarioComponent implements OnInit {
     } catch (e) {
       console.log(e);
     }
+    this.loading = false;
   }
 
   cargarUsuario(usuario: Usuario) {
@@ -99,7 +131,7 @@ export class QUsuarioComponent implements OnInit {
   cargarTabla(event: LazyLoadEvent) {
     setTimeout(() => {
       this.consultarUsuarios(event.first);
-    }, 100);
+    }, 1000);
   }
 
   posicionarAbajo() {

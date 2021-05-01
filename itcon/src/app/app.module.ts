@@ -5,6 +5,7 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
+import {DropdownModule} from 'primeng/dropdown';
 
 // Imports Utilidades
 import { TextProperties } from './config/TextProperties';
@@ -43,6 +44,7 @@ import { ObjectModelInitializer } from './config/ObjectModelInitializer';
 import { MessageService } from 'primeng/api';
 import { SesionService } from './services/sesionService/sesion.service';
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { MUsuarioComponent } from './components/management/usuario/m-usuario.component';
 
 
 // Constantes
@@ -85,7 +87,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MRolesComponent,
     QPerfilesComponent,
     MPerfilesComponent,
-    QUsuarioComponent
+    QUsuarioComponent,
+    MUsuarioComponent
   ],
   imports: [
     AppRoutingModule,
@@ -115,7 +118,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ScrollPanelModule,
     ButtonModule,
     ReactiveFormsModule,
-    TableModule
+    TableModule,
+    DropdownModule
   ],
   providers: [TextProperties, Enumerados, ObjectModelInitializer, Guardian, Util, Functions, MessageService, SesionService, { provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]

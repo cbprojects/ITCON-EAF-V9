@@ -37,10 +37,10 @@
                                 <!-- Consulta -->
                                 <hr />
                                 <div class="form-label">Resultados</div>
-                                <div *ngIf="listaPerfiles.length > 0; else sinResultados" class="table-responsive">
+                                <div  class="table-responsive">
                                     <p-table [lazy]="true" (onLazyLoad)="cargarTabla($event)" [paginator]="true"
                                         [totalRecords]="totalRecords" [loading]="loading" styleClass="table mb-0"
-                                        [responsive]="true" [value]="listaPerfiles">
+                                        [responsive]="true" [value]="listaPerfiles" [rows]="rows">
 
                                         <ng-template pTemplate="caption" class="row">
                                             <div class="row">

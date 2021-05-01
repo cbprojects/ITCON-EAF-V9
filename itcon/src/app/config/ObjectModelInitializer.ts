@@ -57,6 +57,7 @@ export class ObjectModelInitializer {
       urlConsultarPerfilesPorFiltros: `${HOST}/central/perfil/consultarPerfilFiltros`,
       urlCrearPerfil: `${HOST}/central/perfil/crearPerfil`,
       urlModificarPerfil: `${HOST}/central/perfil/modificarPerfil`,
+      urlConsultarPerfilesActivos: `${HOST}/central/perfil/consultarPerfilesActivos`,
       //Usuarios
       urlConsultarUsuariosPorFiltros: `${HOST}/central/usuario/consultarUsuarioFiltros`,
       tokenUsernameAUTH: 'BaeneApp',

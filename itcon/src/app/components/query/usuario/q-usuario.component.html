@@ -32,7 +32,7 @@
                                     </div>
                                     <div class="form-group col-sm-12 col-lg-6">
                                         <label class="form-label">Perfil</label>
-                                        <input type="text" [(ngModel)]="usuarioFiltro.perfil" class="form-control">
+                                        <p-dropdown [options]="listaPerfiles" [(ngModel)]="usuarioFiltro.perfil" optionLabel="descripcion"></p-dropdown>
                                     </div>
                                 </div>
                                 <div class="row justify-content-center">
@@ -45,10 +45,10 @@
                                 <!-- Consulta -->
                                 <hr />
                                 <div class="form-label">Resultados</div>
-                                <div *ngIf="listaUsuarios.length > 0; else sinResultados" class="table-responsive">
+                                <div class="table-responsive">
                                     <p-table [lazy]="true" (onLazyLoad)="cargarTabla($event)" [paginator]="true"
                                         [totalRecords]="totalRecords" [loading]="loading" styleClass="table mb-0"
-                                        [responsive]="true" [value]="listaUsuarios">
+                                        [responsive]="true" [value]="listaUsuarios" [rows]="rows">
 
                                         <ng-template pTemplate="caption" class="row">
                                             <div class="row">
@@ -86,6 +86,9 @@
                                                 </td>
                                                 <td>
                                                     {{usuario.nombre}}
+                                                </td>
+                                                <td>
+                                                    {{usuario.perfil.descripcion}}
                                                 </td>
                                                 <td class="pr-0">
                                                     {{usuario.estado === 1 ? 'Activo' : 'Inactivo'}}
