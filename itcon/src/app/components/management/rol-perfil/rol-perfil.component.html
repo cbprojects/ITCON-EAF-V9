@@ -1,0 +1,124 @@
+<p-toast></p-toast>
+
+<div class="page ">
+    <div class="flex-fill">
+        <!-- HEADER -->
+        <app-header></app-header>
+        <!-- HEADER -->
+
+        <!-- CONTENT -->
+        <div class="my-3 my-md-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">{{msg.lbl_rol_perfil_consulta}}</h3>
+                            </div>
+                            <div class="card-body">
+                                <!-- Filtros -->
+                                <div class="row justify-content-center">
+                                    <div class="form-group col-sm-12 col-lg-4">
+                                        <label class="form-label">{{msg.lbl_perfil_codigo}}</label>
+                                        <input type="text" [(ngModel)]="codigoFiltro" class="form-control">
+                                    </div>
+                                    <div class="form-group col-sm-12 col-lg-4">
+                                        <label class="form-label">{{msg.lbl_perfil_descripcion}}</label>
+                                        <input type="text" [(ngModel)]="descripcionFiltro" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="form-group col-sm-12 col-lg-12 text-center">
+                                        <button type="submit" (click)="consultarPerfilesPorFiltros()"
+                                            class="btn btn-primary ml-auto">{{msg.lbl_btn_consultar}}</button>
+                                    </div>
+                                </div>
+
+                                <!-- Consulta -->
+                                <hr />
+                                <div class="form-label">{{msg.lbl_resultado}}</div>
+                                <div class="table-responsive">
+                                    <table *ngIf="listaPerfiles.length > 0; else sinResultados" class="table mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="pl-0 text-center">{{msg.lbl_perfil_id}}</th>
+                                                <th class="text-center">{{msg.lbl_perfil_codigo}}</th>
+                                                <th class="text-center">{{msg.lbl_perfil_descripcion}}</th>
+                                                <th class="pr-0 text-center">{{msg.lbl_perfil_estado}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr (click)="cargarPerfil(perfil)"
+                                                *ngFor="let perfil of listaPerfiles; index as i;">
+                                                <td class="pl-0 text-center">
+                                                    {{perfil.id}}
+                                                </td>
+                                                <td>
+                                                    {{perfil.codigo}}
+                                                </td>
+                                                <td>
+                                                    {{perfil.descripcion}}
+                                                </td>
+                                                <td class="pr-0 text-center">
+                                                    {{perfil.estado === 1 ? msg.lbl_enum_activo : msg.lbl_enum_inactivo}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <ng-template #sinResultados>
+                                        <div class="service-grids">
+                                            <div class="col-md-12 ser-grid">
+                                                <p class="sinResultados">
+                                                    {{msg.lbl_info_sin_resultados}}</p>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </div>
+                            </div>
+                            <div class="card-footer" *ngIf="objPerfilCargado !=null ">
+                                <p-pickList id="asoRolPerfil" [source]="sourceProducts" [target]="targetProducts" sourceHeader="{{msg.lbl_rol_perfil_disponible}}"
+                                    targetHeader="{{msg.lbl_rol_perfil_seleccionado}}" [dragdrop]="true" [responsive]="true"
+                                    [sourceStyle]="{'height':'30rem'}" [targetStyle]="{'height':'30rem'}"
+                                    filterBy="codigo" sourceFilterPlaceholder="{{msg.lbl_rol_perfil_busqueda}}"
+                                    targetFilterPlaceholder="{{msg.lbl_rol_perfil_busqueda}}">
+                                    <ng-template let-rol pTemplate="item">
+                                        <div class="product-item">
+                                            <div class="image-container">
+                                                <img src="assets/images/rol.png"
+                                                    style="display:inline-block;margin:2px 0 2px 2px" width="48">
+                                            </div>
+                                            <div class="product-list-detail" style="margin-left: 2rem;">
+                                                <h5 class="p-mb-2">{{rol.codigo}}</h5>
+                                                <i class="pi pi-tag product-category-icon"></i>
+                                                <span class="product-category">{{rol.descripcion}}</span>
+                                            </div>
+
+                                        </div>
+                                    </ng-template>
+                                </p-pickList>
+                                <div class="row justify-content-center" >
+                                    <div class="form-group col-sm-12 col-lg-12 text-center">
+                                        <button style="margin-top: 10px;" type="submit" (click)="GuardarRolesPerfiles()"
+                                            class="btn btn-primary ml-auto">{{msg.lbl_btn_guardar}}</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="card-footer text-right">
+                                <div class="d-flex">
+                                    <a class="btn btn-link" routerLink="/home">Home</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- CONTENT -->
+    </div>
+</div>
+
+<!-- FOOTER -->
+<app-footer></app-footer>
+<!-- FOOTER -->

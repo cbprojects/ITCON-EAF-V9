@@ -13,7 +13,7 @@
   "dependencies": {
     "@agm/core": "^1.1.0",
     "@angular/animations": "~9.1.4",
-    "@angular/cdk": "^11.2.9",
+    "@angular/cdk": "^11.2.11",
     "@angular/common": "~9.1.4",
     "@angular/compiler": "~9.1.4",
     "@angular/core": "^9.1.11",
@@ -41,8 +41,8 @@
     "ngx-pagination": "^5.0.0",
     "ngx-ui-loader": "^9.1.1",
     "primeflex": "^2.0.0",
-    "primeng": "^11.0.0",
     "primeicons": "^4.1.0",
+    "primeng": "^11.0.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "web-animations-js": "^2.3.2",
