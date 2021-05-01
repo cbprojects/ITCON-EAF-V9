@@ -13,23 +13,31 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Consulta de Perfiles</h3>
+                                <h3 class="card-title">Consulta de Usuarios</h3>
                             </div>
                             <div class="card-body">
                                 <!-- Filtros -->
                                 <div class="row justify-content-center">
-                                    <div class="form-group col-sm-12 col-lg-4">
-                                        <label class="form-label">Código</label>
-                                        <input type="text" [(ngModel)]="codigoFiltro" class="form-control">
+                                    <div class="form-group col-sm-12 col-lg-6">
+                                        <label class="form-label">Email</label>
+                                        <input type="text" [(ngModel)]="usuarioFiltro.email" class="form-control">
                                     </div>
-                                    <div class="form-group col-sm-12 col-lg-4">
-                                        <label class="form-label">Descripción</label>
-                                        <input type="text" [(ngModel)]="descripcionFiltro" class="form-control">
+                                    <div class="form-group col-sm-12 col-lg-6">
+                                        <label class="form-label">Documento</label>
+                                        <input type="text" [(ngModel)]="usuarioFiltro.documento" class="form-control">
+                                    </div>
+                                    <div class="form-group col-sm-12 col-lg-6">
+                                        <label class="form-label">Nombre</label>
+                                        <input type="text" [(ngModel)]="usuarioFiltro.nombre" class="form-control">
+                                    </div>
+                                    <div class="form-group col-sm-12 col-lg-6">
+                                        <label class="form-label">Perfil</label>
+                                        <p-dropdown [options]="listaPerfiles" [(ngModel)]="usuarioFiltro.perfil" optionLabel="descripcion"></p-dropdown>
                                     </div>
                                 </div>
                                 <div class="row justify-content-center">
                                     <div class="form-group col-sm-12 col-lg-12 text-center">
-                                        <button type="submit" (click)="consultarPerfiles(0)"
+                                        <button type="submit" (click)="consultarUsuarios(0)"
                                             class="btn btn-primary ml-auto">Consultar</button>
                                     </div>
                                 </div>
@@ -37,10 +45,10 @@
                                 <!-- Consulta -->
                                 <hr />
                                 <div class="form-label">Resultados</div>
-                                <div  class="table-responsive">
+                                <div class="table-responsive">
                                     <p-table [lazy]="true" (onLazyLoad)="cargarTabla($event)" [paginator]="true"
                                         [totalRecords]="totalRecords" [loading]="loading" styleClass="table mb-0"
-                                        [responsive]="true" [value]="listaPerfiles" [rows]="rows">
+                                        [responsive]="true" [value]="listaUsuarios" [rows]="rows">
 
                                         <ng-template pTemplate="caption" class="row">
                                             <div class="row">
@@ -57,25 +65,33 @@
                                         <ng-template pTemplate="header">
                                             <tr>
                                                 <th class="pl-0 text-center">ID</th>
-                                                <th class="text-center">Código</th>
-                                                <th class="text-center">Descripción</th>
+                                                <th class="text-center">Tipo Documento</th>
+                                                <th class="text-center">Documento</th>
+                                                <th class="text-center">Nombre</th>
+                                                <th class="text-center">Perfil</th>
                                                 <th class="pr-0 text-center">Estado</th>
                                             </tr>
                                         </ng-template>
 
-                                        <ng-template pTemplate="body" let-perfil>
-                                            <tr (click)="cargarPerfil(perfil)">
+                                        <ng-template pTemplate="body" let-usuario>
+                                            <tr (click)="cargarUsuario(usuario)">
                                                 <td class="pl-0 text-center">
-                                                    {{perfil.id}}
+                                                    {{usuario.id}}
                                                 </td>
                                                 <td>
-                                                    {{perfil.codigo}}
+                                                    {{usuario.tipoDocumento}}
                                                 </td>
                                                 <td>
-                                                    {{perfil.descripcion}}
+                                                    {{usuario.documento}}
+                                                </td>
+                                                <td>
+                                                    {{usuario.nombre}}
+                                                </td>
+                                                <td>
+                                                    {{usuario.perfil.descripcion}}
                                                 </td>
                                                 <td class="pr-0">
-                                                    {{perfil.estado === 1 ? 'Activo' : 'Inactivo'}}
+                                                    {{usuario.estado === 1 ? 'Activo' : 'Inactivo'}}
                                                 </td>
                                             </tr>
                                         </ng-template>
