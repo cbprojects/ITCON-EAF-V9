@@ -9,6 +9,7 @@ import { MRolesComponent } from '../components/management/rol/m-roles.component'
 import { QPerfilesComponent } from '../components/query/perfil/q-perfiles.component';
 import { MPerfilesComponent } from '../components/management/perfil/m-perfiles.component';
 import { QUsuarioComponent } from '../components/query/usuario/q-usuario.component';
+import { RolPerfilComponent } from '../components/management/rol-perfil/rol-perfil.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [Guardian] },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'q-perfil', component: QPerfilesComponent, canActivate: [Guardian] },
   { path: 'm-perfil', component: MPerfilesComponent, canActivate: [Guardian] },
   { path: 'q-usuario', component: QUsuarioComponent, canActivate: [Guardian] },
+  { path: 'm-rolPerfil', component: RolPerfilComponent, canActivate: [Guardian] },
 
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home' },
