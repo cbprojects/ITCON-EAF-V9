@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
-//export var HOST = 'http://localhost:9002';
+export var HOST = 'http://localhost:9002';
 //export var HOST = 'http://10.176.56.211:9002';
-export var HOST = 'https://cbaeneprojects.com:8443/CentralUsuarios';
+//export var HOST = 'https://cbaeneprojects.com:8443/CentralUsuarios';
 
 //export var SYSTEM = 'http://localhost:4200';
 //export var SYSTEM = 'http://10.176.56.211:7001';
@@ -47,6 +47,9 @@ export class ObjectModelInitializer {
       urlRestService: `${HOST}/`,
       urlRestOauth: `${HOST}/oauth/token`,
       urlVCode: `${SYSTEM}/vCode/`,
+      // Login
+      urlLogin: `${HOST}/central/usuario/login`,
+      urlRestaurarClave: `${HOST}/central/usuario/restaurarClave`,
       // Roles
       urlContarRoles: `${HOST}/central/rol/contarRoles`,
       urlConsultarRolesPorFiltros: `${HOST}/central/rol/consultarRolFiltros`,
@@ -61,10 +64,13 @@ export class ObjectModelInitializer {
       urlConsultarPerfilesActivos: `${HOST}/central/perfil/consultarPerfilesActivos`,
       //Usuarios
       urlConsultarUsuariosPorFiltros: `${HOST}/central/usuario/consultarUsuarioFiltros`,
+      urlModificarUsuario: `${HOST}/central/usuario/modificarUsuario`,
+
       tokenUsernameAUTH: 'BaeneApp',
       tokenPasswordAUTH: 'Baene2021codex',
       tokenNameAUTH: 'access_token',
       codigoADMIN: 'RMRADM',
+      tokenRecordarClave: 'ItCoN2021',
 
       // Rol-Perfiles
       urlConsultarRolPerfil: `${HOST}/central/rolPerfil/consultarRolPerfilFiltros`,
@@ -108,8 +114,8 @@ export class ObjectModelInitializer {
     return {
       // data
       phase: '',
-      usuarioSesion: '',
-      usuarioRegister: '',
+      usuarioSesion: this.getDataDTOUsuario(),
+      usuarioRegister: this.getDataDTOUsuario(),
       tokenSesion: '',
       decodedToken: '',
       expirationDate: '',
@@ -228,6 +234,14 @@ export class ObjectModelInitializer {
     }
   };
 
+  getDataDTOUsuario() {
+    return {
+      usuarioTB: this.getDataUsuario(),
+      listaRolesTB: [],
+      esAdmin: false
+    }
+  };
+
   getDataRequestConsultarPerfil() {
     return {
       perfil: {},
@@ -297,6 +311,13 @@ export class ObjectModelInitializer {
     return {
       label: '',
       value: ''
+    }
+  };
+
+  getDataPorcentajeURIWeb(code: String, symbol: String) {
+    return {
+      codigo: code,
+      simbolo: symbol
     }
   };
 }

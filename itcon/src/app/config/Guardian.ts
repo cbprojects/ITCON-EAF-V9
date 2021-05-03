@@ -22,6 +22,13 @@ export class Guardian implements CanActivate {
     let URLactual = window.location.href;
     let sesionOK = true;
 
+    let userSession = localStorage.getItem('usuarioSesion');
+    if (userSession !== undefined && userSession !== null) {
+      this.sesionService.objServiceSesion.usuarioSesion = JSON.parse(userSession);
+    } else {
+      this.router.navigate(['/login']);
+    }
+
     return true;
   }
 }

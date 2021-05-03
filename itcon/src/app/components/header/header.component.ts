@@ -57,4 +57,11 @@ export class HeaderComponent implements OnInit {
     return ruta;
   }
 
+  cerrarSesion() {
+    this.sesionService.objServiceSesion.usuarioSesion = undefined;
+    localStorage.clear();
+    sessionStorage.clear();
+    this.router.navigate(['/login']);
+  }
+
 }

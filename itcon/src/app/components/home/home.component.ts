@@ -41,8 +41,6 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    localStorage.clear();
-    sessionStorage.clear();
     this.inicializar();
   }
 

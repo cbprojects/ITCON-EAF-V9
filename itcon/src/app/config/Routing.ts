@@ -10,8 +10,12 @@ import { QPerfilesComponent } from '../components/query/perfil/q-perfiles.compon
 import { MPerfilesComponent } from '../components/management/perfil/m-perfiles.component';
 import { QUsuarioComponent } from '../components/query/usuario/q-usuario.component';
 import { RolPerfilComponent } from '../components/management/rol-perfil/rol-perfil.component';
+import { LoginComponent } from '../components/login/login.component';
+import { RestaurarClaveComponent } from '../components/restaurar-clave/restaurar-clave.component';
 
 const routes: Routes = [
+  { path: 'login', component: LoginComponent },
+  { path: 'restaurar-clave', component: RestaurarClaveComponent },
   { path: 'home', component: HomeComponent, canActivate: [Guardian] },
   { path: 'q-rol', component: QRolesComponent, canActivate: [Guardian] },
   { path: 'm-rol', component: MRolesComponent, canActivate: [Guardian] },
@@ -20,8 +24,8 @@ const routes: Routes = [
   { path: 'q-usuario', component: QUsuarioComponent, canActivate: [Guardian] },
   { path: 'm-rolPerfil', component: RolPerfilComponent, canActivate: [Guardian] },
 
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: '**', redirectTo: '/home' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '**', redirectTo: '/login' },
 ];
 
 @NgModule({
