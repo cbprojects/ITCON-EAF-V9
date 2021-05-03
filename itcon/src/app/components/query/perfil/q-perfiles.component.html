@@ -37,23 +37,10 @@
                                 <!-- Consulta -->
                                 <hr />
                                 <div class="form-label">Resultados</div>
-                                <div  class="table-responsive">
+                                <div class="table-responsive {{listaPerfiles.length > 0 ? '' : 'displayNone'}}">
                                     <p-table [lazy]="true" (onLazyLoad)="cargarTabla($event)" [paginator]="true"
                                         [totalRecords]="totalRecords" [loading]="loading" styleClass="table mb-0"
                                         [responsive]="true" [value]="listaPerfiles" [rows]="rows">
-
-                                        <ng-template pTemplate="caption" class="row">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <i class="fe fe-list"></i>
-                                                    <ng-select class="floatLeft w60px"
-                                                        notFoundText="{{msg.lbl_info_sin_resultados}}"
-                                                        [(ngModel)]="rows" [items]="enumRows">
-                                                    </ng-select>
-                                                </div>
-                                            </div>
-                                        </ng-template>
-
                                         <ng-template pTemplate="header">
                                             <tr>
                                                 <th class="pl-0 text-center">ID</th>
@@ -81,14 +68,12 @@
                                         </ng-template>
                                     </p-table>
                                 </div>
-                                <ng-template #sinResultados>
-                                    <div class="service-grids">
-                                        <div class="col-md-12 ser-grid">
-                                            <p class="sinResultados">
-                                                {{msg.lbl_info_sin_resultados}}</p>
-                                        </div>
+                                <div *ngIf="listaPerfiles.length <= 0" class="service-grids">
+                                    <div class="col-md-12 ser-grid">
+                                        <p class="sinResultados">
+                                            {{msg.lbl_info_sin_resultados}}</p>
                                     </div>
-                                </ng-template>
+                                </div>
                             </div>
                             <div class="card-footer text-right">
                                 <div class="d-flex">

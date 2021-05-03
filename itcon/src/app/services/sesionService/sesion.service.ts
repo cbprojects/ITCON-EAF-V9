@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
+import { ServiceSessionDTO } from 'src/app/model/dto/service-session-dto';
 import { Perfil } from 'src/app/model/perfilModel';
 import { Rol } from 'src/app/model/RolModel';
-import { Usuario } from 'src/app/model/UsuariolModel';
+import { Usuario } from 'src/app/model/usuariolModel';
 
 declare var $: any;
 
@@ -11,7 +12,7 @@ declare var $: any;
 })
 export class SesionService {
   // Fases
-  objServiceSesion: any;
+  objServiceSesion: ServiceSessionDTO;
   objRolCargado: Rol;
   objPerfilCargado: Perfil;
   objUsuarioCargado: Usuario;
@@ -40,7 +41,7 @@ export class SesionService {
 
   getUsuarioSesionActual() {
     let result = null;
-    if (typeof this.objServiceSesion.usuarioSesion !== 'undefined' && this.objServiceSesion.usuarioSesion !== null && this.objServiceSesion.usuarioSesion !== 'null') {
+    if (typeof this.objServiceSesion.usuarioSesion !== 'undefined' && this.objServiceSesion.usuarioSesion !== null) {
       result = this.objServiceSesion.usuarioSesion;
     }
     return result;
@@ -52,15 +53,13 @@ export class SesionService {
 
   tienePermisos(URLactual: String) {
     let resultTienePermisos = false;
-    if (this.objServiceSesion.usuarioSesion.usuarioTb !== undefined && this.objServiceSesion.usuarioSesion.usuarioTb !== null && this.objServiceSesion.usuarioSesion.usuarioTb.listaRoles !== undefined && this.objServiceSesion.usuarioSesion.usuarioTb.listaRoles !== null) {
-      for (let i in this.objServiceSesion.usuarioSesion.usuarioTb.listaRoles) {
-        let rolUsuario = this.objServiceSesion.usuarioSesion.usuarioTb.listaRoles[i];
+    if (this.objServiceSesion.usuarioSesion.usuarioTB !== undefined && this.objServiceSesion.usuarioSesion.usuarioTB !== null && this.objServiceSesion.usuarioSesion.listaRolesTB !== undefined && this.objServiceSesion.usuarioSesion.listaRolesTB !== null) {
+      for (let i in this.objServiceSesion.usuarioSesion.listaRolesTB) {
+        let rolUsuario = this.objServiceSesion.usuarioSesion.listaRolesTB[i];
 
         if (!URLactual.includes("dashboard")) {
-          if (URLactual.includes(rolUsuario.path) || rolUsuario.codigo === this.objectModelInitializer.getConst().codigoADMIN) {
-            resultTienePermisos = true;
-            break;
-          }
+          resultTienePermisos = true;
+          break;
         }
         else {
           resultTienePermisos = true;

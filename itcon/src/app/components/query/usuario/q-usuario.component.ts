@@ -8,7 +8,7 @@ import { Util } from 'src/app/config/Util';
 import { Perfil } from 'src/app/model/perfilModel';
 import { RequestConsultaUsuario } from 'src/app/model/requestConsultaUsuarioModel';
 import { ResponseConsultaUsuario } from 'src/app/model/responseConsultaUsuarioModel';
-import { Usuario } from 'src/app/model/UsuariolModel';
+import { Usuario } from 'src/app/model/usuariolModel';
 import { RestService } from 'src/app/services/rest.service';
 import { SesionService } from 'src/app/services/sesionService/sesion.service';
 import * as CryptoJS from 'crypto-js';
@@ -101,7 +101,7 @@ export class QUsuarioComponent implements OnInit {
           if (temp !== undefined && temp.resultado.length > 0) {
             this.listaUsuarios = temp.resultado;
             this.totalRecords = temp.registrosTotales;
-            this.posicionarAbajo();
+            this.loading = false;
           }
         },
           error => {
@@ -121,7 +121,6 @@ export class QUsuarioComponent implements OnInit {
     } catch (e) {
       console.log(e);
     }
-    this.loading = false;
   }
 
   cargarUsuario(usuario: Usuario) {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { LazyLoadEvent, MessageService } from 'primeng/api';
 import { Enumerados } from 'src/app/config/Enumerados';
 import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
@@ -26,16 +26,22 @@ export class QRolesComponent implements OnInit {
   // Objetos de datos
   codigoFiltro: any = "";
   descripcionFiltro: any = "";
-  listaRoles: Rol[] = [];
+  listaRoles: Rol[];
 
   // Utilidades
   msg: any;
   const: any;
+  rows: any;
+  enumRows: any;
+  totalRecords: number;
+  loading: boolean;
 
   constructor(private router: Router, private route: ActivatedRoute, public restService: RestService, public textProperties: TextProperties, public util: Util, public objectModelInitializer: ObjectModelInitializer, public enumerados: Enumerados, public sesionService: SesionService, private messageService: MessageService) {
     this.sesion = this.objectModelInitializer.getDataServiceSesion();
     this.msg = this.textProperties.getProperties(this.sesionService.objServiceSesion.idioma);
     this.const = this.objectModelInitializer.getConst();
+    this.enumRows = [5, 10, 15, 20, 50, 100];
+    this.rows = this.enumRows[1];
   }
 
   ngOnInit() {
@@ -47,7 +53,7 @@ export class QRolesComponent implements OnInit {
 
   inicializar() {
     this.sesionService.objRolCargado = null;
-    this.consultarRoles();
+    this.consultarRoles(0);
   }
 
   cargarRol(rol: Rol) {
@@ -56,23 +62,24 @@ export class QRolesComponent implements OnInit {
     this.router.navigate(['/m-rol']);
   }
 
-  consultarRolesPorFiltros() {
+  consultarRoles(primerItem) {
     this.listaRoles = [];
     try {
       let requestRolFiltro: RequestConsultaRol = this.objectModelInitializer.getDataRequestConsultarRol();
       let rolFiltro = this.objectModelInitializer.getDataRol();
       rolFiltro.codigo = this.codigoFiltro;
       rolFiltro.descripcion = this.descripcionFiltro;
+      requestRolFiltro.rol = this.objectModelInitializer.getDataRol();
       requestRolFiltro.rol = rolFiltro;
-      requestRolFiltro.registroInicial = "0";
-      requestRolFiltro.cantidadRegistro = "5";
+      requestRolFiltro.registroInicial = primerItem;
+      requestRolFiltro.cantidadRegistro = this.rows;
       this.restService.postREST(this.const.urlConsultarRolesPorFiltros, requestRolFiltro)
         .subscribe(resp => {
           let temp: ResponseConsultaRol = JSON.parse(JSON.stringify(resp));
           if (temp !== undefined && temp.resultado.length > 0) {
-            temp.resultado.forEach(rol => {
-              this.listaRoles.push(rol);
-            });
+            this.listaRoles = temp.resultado;
+            this.totalRecords = temp.registrosTotales;
+            this.loading = false;
           }
         },
           error => {
@@ -94,39 +101,9 @@ export class QRolesComponent implements OnInit {
     }
   }
 
-  consultarRoles() {
-    this.listaRoles = [];
-    try {
-      let requestRolFiltro: RequestConsultaRol = this.objectModelInitializer.getDataRequestConsultarRol();
-      requestRolFiltro.rol = this.objectModelInitializer.getDataRol();
-      requestRolFiltro.rol.estado = 1;
-      requestRolFiltro.registroInicial = "0";
-      requestRolFiltro.cantidadRegistro = "5";
-      this.restService.postREST(this.const.urlConsultarRolesPorFiltros, requestRolFiltro)
-        .subscribe(resp => {
-          let temp: ResponseConsultaRol = JSON.parse(JSON.stringify(resp));
-          if (temp !== undefined && temp.resultado.length > 0) {
-            temp.resultado.forEach(rol => {
-              this.listaRoles.push(rol);
-            });
-          }
-        },
-          error => {
-            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
-            let titleError = listaMensajes[0];
-            listaMensajes.splice(0, 1);
-            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
-            this.messageService.clear();
-
-            listaMensajes.forEach(mensaje => {
-              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
-            });
-            this.messageService.add(mensajeFinal);
-
-            console.log(error, "error");
-          })
-    } catch (e) {
-      console.log(e);
-    }
+  cargarTabla(event: LazyLoadEvent) {
+    setTimeout(() => {
+      this.consultarRoles(event.first);
+    }, 100);
   }
 }

@@ -29,7 +29,7 @@ export class QPerfilesComponent implements OnInit {
   // Objetos de datos
   codigoFiltro: any = "";
   descripcionFiltro: any = "";
-  listaPerfiles: Perfil[] = [];
+  listaPerfiles: Perfil[];
   listaCabeceras = [
     { 'campoLista': 'id', 'nombreCabecera': 'ID' },
     { 'campoLista': 'codigo', 'nombreCabecera': 'Código' },
@@ -50,7 +50,7 @@ export class QPerfilesComponent implements OnInit {
     this.msg = this.textProperties.getProperties(this.sesionService.objServiceSesion.idioma);
     this.const = this.objectModelInitializer.getConst();
     this.enumRows = [5, 10, 15, 20, 50, 100];
-    this.rows = this.enumRows[0];
+    this.rows = this.enumRows[1];
   }
 
   ngOnInit() {
@@ -89,7 +89,6 @@ export class QPerfilesComponent implements OnInit {
           if (temp !== undefined && temp.resultado.length > 0) {
             this.listaPerfiles = temp.resultado;
             this.totalRecords = temp.registrosTotales;
-            this.posicionarAbajo();
             this.loading = false;
           }
         },
@@ -116,12 +115,5 @@ export class QPerfilesComponent implements OnInit {
     setTimeout(() => {
       this.consultarPerfiles(event.first);
     }, 100);
-  }
-
-  posicionarAbajo() {
-    let sc = this.sc;
-    setTimeout(function () {
-      sc.scrollTop(sc.containerViewChild.nativeElement.offsetHeight);
-    }, 200);
   }
 }
