@@ -5,14 +5,14 @@ import { Enumerados } from 'src/app/config/Enumerados';
 import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
-import { Usuario } from 'src/app/model/UsuariolModel';
+import { Usuario } from 'src/app/model/usuariolModel';
 import { RestService } from 'src/app/services/rest.service';
 import { SesionService } from 'src/app/services/sesionService/sesion.service';
 
 @Component({
   selector: 'app-m-usuario.component',
-  templateUrl: './m-usuario.component.component.html',
-  styleUrls: ['./m-usuario.component.component.scss']
+  templateUrl: './m-usuario.component.html',
+  styleUrls: ['./m-usuario.component.scss']
 })
 export class MUsuarioComponent implements OnInit {
 
@@ -22,6 +22,7 @@ export class MUsuarioComponent implements OnInit {
   // Objetos de datos
   usuario: Usuario;
   esNuevoUsuario: boolean;
+  confirmarContrasena: any;
 
   // Utilidades
   msg: any;
@@ -45,6 +46,14 @@ export class MUsuarioComponent implements OnInit {
       this.usuario.estado = this.util.getValorEnumerado(this.enumEstado, this.usuario.estado);
       this.esNuevoUsuario = false;
     }
+  }
+
+  modificarUsuario() {
+    
+  }
+
+  crearUsuario() {
+    
   }
 
 }

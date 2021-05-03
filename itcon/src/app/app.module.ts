@@ -5,7 +5,7 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
-import {DropdownModule} from 'primeng/dropdown';
+import { DropdownModule } from 'primeng/dropdown';
 import { PickListModule } from 'primeng/picklist';
 
 // Imports Utilidades
@@ -39,7 +39,6 @@ import { QUsuarioComponent } from './components/query/usuario/q-usuario.componen
 // Imports Componentes Internos
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { ConsultaLazyComponent } from './components/consultaLazy/consultaLazy.component';
 import { Enumerados } from './config/Enumerados';
 import { ObjectModelInitializer } from './config/ObjectModelInitializer';
 import { MessageService } from 'primeng/api';
@@ -47,6 +46,8 @@ import { SesionService } from './services/sesionService/sesion.service';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { MUsuarioComponent } from './components/management/usuario/m-usuario.component';
 import { RolPerfilComponent } from './components/management/rol-perfil/rol-perfil.component';
+import { LoginComponent } from './components/login/login.component';
+import { RestaurarClaveComponent } from './components/restaurar-clave/restaurar-clave.component';
 
 
 // Constantes
@@ -84,14 +85,15 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    ConsultaLazyComponent,
     QRolesComponent,
     MRolesComponent,
     QPerfilesComponent,
     MPerfilesComponent,
     QUsuarioComponent,
     MUsuarioComponent,
-    RolPerfilComponent
+    RolPerfilComponent,
+    LoginComponent,
+    RestaurarClaveComponent
   ],
   imports: [
     AppRoutingModule,

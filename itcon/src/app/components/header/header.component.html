@@ -5,11 +5,6 @@
                 <img src="./assets/images/brand/tabler.svg" class="header-brand-img" alt="tabler logo">
             </a>
             <div class="d-flex order-lg-2 ml-auto">
-                <div class="nav-item d-none d-md-flex">
-                    <a href="https://github.com/tabler/tabler" class="btn btn-sm btn-outline-primary"
-                        target="_blank">Source
-                        code</a>
-                </div>
                 <div class="dropdown d-none d-md-flex">
                     <a class="nav-link icon" data-toggle="dropdown">
                         <i class="fe fe-bell"></i>
@@ -48,8 +43,10 @@
                     <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
                         <span class="avatar" style="background-image: url(./assets/images/faces/female/25.jpg)"></span>
                         <span class="ml-2 d-none d-lg-block">
-                            <span class="text-default">Jane Pearson</span>
-                            <small class="text-muted d-block mt-1">Administrator</small>
+                            <span
+                                class="text-default">{{sesionService.objServiceSesion.usuarioSesion.usuarioTB.nombre}}</span>
+                            <small
+                                class="text-muted d-block mt-1">{{sesionService.objServiceSesion.usuarioSesion.usuarioTB.perfil.descripcion}}</small>
                         </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
@@ -70,7 +67,7 @@
                         <a class="dropdown-item" href="#">
                             <i class="dropdown-icon fe fe-help-circle"></i> Need help?
                         </a>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="#" (click)="cerrarSesion()">
                             <i class="dropdown-icon fe fe-log-out"></i> Sign out
                         </a>
                     </div>
