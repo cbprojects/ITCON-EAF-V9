@@ -299,6 +299,18 @@ export class TextProperties {
       lbl_rol_perfil_seleccionado: idioma === constant.idiomaEs ? 'Seleccionado' : 'Select',
       lbl_rol_perfil_busqueda: idioma === constant.idiomaEs ? 'Busqueda por código' : 'Search by code',
 
+      //Usuario
+      lbl_validar_contrasena: idioma === constant.idiomaEs ? 'Contraseña incorrecta' : 'Password incorrect',
+      lbl_validar_tipoDoc: idioma === constant.idiomaEs ? 'Tipo documento vacío' : 'empty type document',
+      lbl_validar_documento: idioma === constant.idiomaEs ? 'Documento vacío' : 'empty document',
+      lbl_validar_nombre: idioma === constant.idiomaEs ? 'Nombre vacío' : 'empty name',
+      lbl_validar_celular: idioma === constant.idiomaEs ? 'Celular vacío' : 'empty cellphone',
+      lbl_validar_direccion: idioma === constant.idiomaEs ? 'Dirección vacío' : 'empty address',
+      lbl_validar_email: idioma === constant.idiomaEs ? 'Email vacío' : 'empty email',
+      lbl_validar_contrasenaVacia: idioma === constant.idiomaEs ? 'Contraseña vacía' : 'empty password',
+      lbl_validar_confirContrasena: idioma === constant.idiomaEs ? 'Confirmar contraseña vacía' : 'empty confirm password',
+      lbl_validar_perfil: idioma === constant.idiomaEs ? 'Perfil vacío' : 'Profile email',
+      lbl_validar_estado: idioma === constant.idiomaEs ? 'Estado vacío' : 'State email',
       // Login
       lbl_login_welcome: idioma === constant.idiomaEs ? 'Ingresa a tu cuenta' : 'Login to your account',
     }

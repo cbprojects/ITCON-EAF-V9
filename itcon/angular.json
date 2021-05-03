@@ -60,7 +60,8 @@
               "./src/assets/js/vendors/selectize.min.js",
               "./src/assets/plugins/input-mask/js/jquery.mask.min.js",
               "./src/assets/plugins/datatables/datatables.min.js",
-              "./src/assets/js/main.js"
+              "./src/assets/js/main.js",
+              "./node_modules/crypto-js/crypto-js.js"
             ]
           },
           "configurations": {
@@ -155,7 +156,8 @@
               "./src/assets/js/vendors/selectize.min.js",
               "./src/assets/plugins/input-mask/js/jquery.mask.min.js",
               "./src/assets/plugins/datatables/datatables.min.js",
-              "./src/assets/js/main.js"
+              "./src/assets/js/main.js",
+              "./node_modules/crypto-js/crypto-js.js"
             ]
           }
         },
