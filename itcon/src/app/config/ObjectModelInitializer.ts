@@ -61,6 +61,9 @@ export class ObjectModelInitializer {
       urlConsultarPerfilesActivos: `${HOST}/central/perfil/consultarPerfilesActivos`,
       //Usuarios
       urlConsultarUsuariosPorFiltros: `${HOST}/central/usuario/consultarUsuarioFiltros`,
+      urlCrearUsuario: `${HOST}/central/usuario/crearUsuario`,
+      urlModificarUsuario: `${HOST}/central/usuario/modificarUsuario`,
+
       tokenUsernameAUTH: 'BaeneApp',
       tokenPasswordAUTH: 'Baene2021codex',
       tokenNameAUTH: 'access_token',
@@ -100,7 +103,8 @@ export class ObjectModelInitializer {
       menuAgenda: "G",
       menuMovimientos: "M",
       estadoActivoNumString: 1,
-      estadoInactivoNumString: 0
+      estadoInactivoNumString: 0,
+      passwordAES:'B13EC3B0742D2308'
     }
   };
 

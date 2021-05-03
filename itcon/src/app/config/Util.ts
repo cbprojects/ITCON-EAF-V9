@@ -5,6 +5,7 @@ import { ObjectModelInitializer } from './ObjectModelInitializer';
 import { Enumerados } from './Enumerados';
 import { SesionService } from '../services/sesionService/sesion.service';
 import { MessageService } from 'primeng/api';
+import * as CryptoJS from 'crypto-js';
 
 declare var $: any;
 
@@ -497,5 +498,36 @@ export class Util {
   soloNumeros(e) {
     let key = window.Event ? e.which : e.keyCode;
     return (key >= 37 && key <= 40) || (key >= 48 && key <= 57) || (key === 46) || (key === 8) || (e.shiftKey === 1);
+  }
+
+  isBlank(texto) {
+    if (texto == undefined || texto == null || texto == '') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+   //desencriptado AES
+   encriptarAES(texto, llave) {
+    const iv = CryptoJS.enc.Hex.parse(llave);
+    const key = CryptoJS.enc.Utf8.parse(llave);
+    var textoEncriptado = CryptoJS.AES.encrypt(texto, key, { iv, mode: CryptoJS.mode.ECB });
+    //console.log("encriptado: " + textoEncriptado.toString());
+    return textoEncriptado.toString();
+  }
+
+  //desencriptado AES
+  desencriptarAES(textoEncriptado, llave) {
+    const iv = CryptoJS.enc.Hex.parse(llave);
+    const key = CryptoJS.enc.Utf8.parse(llave);
+    const textoDesencriptado = CryptoJS.AES.decrypt(textoEncriptado, key,
+      {
+        iv,
+        mode: CryptoJS.mode.ECB,
+      }
+    )
+    //console.log('Desencriptado: ' + textoDesencriptado.toString(CryptoJS.enc.Utf8));
+    return textoDesencriptado.toString(CryptoJS.enc.Utf8);
   }
 }

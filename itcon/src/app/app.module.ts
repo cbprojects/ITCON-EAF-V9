@@ -8,6 +8,7 @@ import { TableModule } from 'primeng/table';
 import {DropdownModule} from 'primeng/dropdown';
 import { PickListModule } from 'primeng/picklist';
 
+
 // Imports Utilidades
 import { TextProperties } from './config/TextProperties';
 import { Functions } from './config/Functions';
@@ -123,7 +124,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ButtonModule,
     ReactiveFormsModule,
     TableModule,
-    DropdownModule
+    DropdownModule,
   ],
   providers: [TextProperties, Enumerados, ObjectModelInitializer, Guardian, Util, Functions, MessageService, SesionService, { provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]

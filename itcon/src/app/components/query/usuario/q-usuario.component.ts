@@ -11,6 +11,8 @@ import { ResponseConsultaUsuario } from 'src/app/model/responseConsultaUsuarioMo
 import { Usuario } from 'src/app/model/UsuariolModel';
 import { RestService } from 'src/app/services/rest.service';
 import { SesionService } from 'src/app/services/sesionService/sesion.service';
+import * as CryptoJS from 'crypto-js';
+
 
 @Component({
   selector: 'app-usuario',
@@ -25,7 +27,7 @@ export class QUsuarioComponent implements OnInit {
   //Obj de datos
   usuarioFiltro: Usuario;
   listaUsuarios: Usuario[] = [];
-  listaPerfiles: Perfil[] =[];
+  listaPerfiles: Perfil[] = [];
 
   // Utilidades
   msg: any;
@@ -50,18 +52,18 @@ export class QUsuarioComponent implements OnInit {
   inicializar() {
     this.usuarioFiltro = this.objectModelInitializer.getDataUsuario();
     this.sesionService.objUsuarioCargado = null;
-    this.listarUsuariosActivos();
+    this.listarPerfilesActivos();
     this.consultarUsuarios(0);
   }
 
-  listarUsuariosActivos(){
-    this.listaPerfiles=[];
+  listarPerfilesActivos() {
+    this.listaPerfiles = [];
     try {
       this.restService.getREST(this.const.urlConsultarPerfilesActivos)
         .subscribe(resp => {
           this.listaPerfiles = JSON.parse(JSON.stringify(resp));
           this.listaPerfiles.unshift(this.objectModelInitializer.getDataPerfil());
-       
+
         },
           error => {
             let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
@@ -125,6 +127,11 @@ export class QUsuarioComponent implements OnInit {
   cargarUsuario(usuario: Usuario) {
     this.sesionService.objUsuarioCargado = this.objectModelInitializer.getDataUsuario();
     this.sesionService.objUsuarioCargado = usuario;
+    this.sesionService.objUsuarioCargado.celular=this.util.desencriptarAES(this.sesionService.objUsuarioCargado.celular.trim(), this.const.passwordAES); 
+    this.sesionService.objUsuarioCargado.direccion=this.util.desencriptarAES(this.sesionService.objUsuarioCargado.direccion.trim(), this.const.passwordAES); 
+    this.sesionService.objUsuarioCargado.contrasena=this.util.desencriptarAES(this.sesionService.objUsuarioCargado.contrasena.trim(), this.const.passwordAES); 
+    this.sesionService.objUsuarioCargado.email=this.util.desencriptarAES(this.sesionService.objUsuarioCargado.email.trim(), this.const.passwordAES); 
+
     this.router.navigate(['/m-usuario']);
   }
 
