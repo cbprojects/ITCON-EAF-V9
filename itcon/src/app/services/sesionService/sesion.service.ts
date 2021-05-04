@@ -53,9 +53,9 @@ export class SesionService {
 
   tienePermisos(URLactual: String) {
     let resultTienePermisos = false;
-    if (this.objServiceSesion.usuarioSesion.usuarioTB !== undefined && this.objServiceSesion.usuarioSesion.usuarioTB !== null && this.objServiceSesion.usuarioSesion.listaRolesTB !== undefined && this.objServiceSesion.usuarioSesion.listaRolesTB !== null) {
-      for (let i in this.objServiceSesion.usuarioSesion.listaRolesTB) {
-        let rolUsuario = this.objServiceSesion.usuarioSesion.listaRolesTB[i];
+    if (this.objServiceSesion.usuarioSesion.usuario !== undefined && this.objServiceSesion.usuarioSesion.usuario !== null && this.objServiceSesion.usuarioSesion.listaRoles !== undefined && this.objServiceSesion.usuarioSesion.listaRoles !== null) {
+      for (let i in this.objServiceSesion.usuarioSesion.listaRoles) {
+        let rolUsuario = this.objServiceSesion.usuarioSesion.listaRoles[i];
 
         if (!URLactual.includes("dashboard")) {
           resultTienePermisos = true;

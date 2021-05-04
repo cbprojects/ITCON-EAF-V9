@@ -8,6 +8,7 @@ import { SesionService } from 'src/app/services/sesionService/sesion.service';
 import { trigger, transition, useAnimation } from '@angular/animations';
 import { tada, fadeIn } from 'ng-animate';
 import { MessageService } from 'primeng/api';
+import { ServiceSessionDTO } from 'src/app/model/dto/service-session-dto';
 
 declare var $: any;
 
@@ -22,7 +23,7 @@ declare var $: any;
 })
 export class HeaderComponent implements OnInit {
   // Objetos de datos
-
+  objServiceSesion: ServiceSessionDTO;
   // Objetos de Animaciones
   fadeIn: any;
 
@@ -33,6 +34,7 @@ export class HeaderComponent implements OnInit {
   constructor(public router: Router, private route: ActivatedRoute, public restService: RestService, public messageService: MessageService, public textProperties: TextProperties, public objectModelInitializer: ObjectModelInitializer, public sesionService: SesionService, public util: Util) {
     this.msg = this.textProperties.getProperties(this.sesionService.objServiceSesion.idioma);
     this.const = this.objectModelInitializer.getConst();
+    
   }
 
   ngOnInit() {
@@ -62,6 +64,18 @@ export class HeaderComponent implements OnInit {
     localStorage.clear();
     sessionStorage.clear();
     this.router.navigate(['/login']);
+  }
+
+  validarRol(rol: string){
+    let validar=false;
+    this.sesionService.objServiceSesion.usuarioSesion.listaRoles.forEach(roles => {
+      if(!validar){
+        if(roles.codigo==rol){
+          validar= true;
+        }
+    }
+    });
+    return validar;
   }
 
 }

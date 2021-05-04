@@ -66,6 +66,7 @@ export class ObjectModelInitializer {
       urlConsultarUsuariosPorFiltros: `${HOST}/central/usuario/consultarUsuarioFiltros`,
       urlCrearUsuario: `${HOST}/central/usuario/crearUsuario`,
       urlModificarUsuario: `${HOST}/central/usuario/modificarUsuario`,
+      urlLoginUsuario:`${HOST}/central/usuario/loginUsuario`,
 
       tokenUsernameAUTH: 'BaeneApp',
       tokenPasswordAUTH: 'Baene2021codex',
@@ -238,8 +239,8 @@ export class ObjectModelInitializer {
 
   getDataDTOUsuario() {
     return {
-      usuarioTB: this.getDataUsuario(),
-      listaRolesTB: [],
+      usuario: this.getDataUsuario(),
+      listaRoles: [],
       esAdmin: false
     }
   };
