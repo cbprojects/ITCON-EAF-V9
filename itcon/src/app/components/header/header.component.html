@@ -44,9 +44,9 @@
                         <span class="avatar" style="background-image: url(./assets/images/faces/female/25.jpg)"></span>
                         <span class="ml-2 d-none d-lg-block">
                             <span
-                                class="text-default">{{sesionService.objServiceSesion.usuarioSesion.usuarioTB.nombre}}</span>
+                                class="text-default">{{sesionService.objServiceSesion.usuarioSesion.usuario.nombre}}</span>
                             <small
-                                class="text-muted d-block mt-1">{{sesionService.objServiceSesion.usuarioSesion.usuarioTB.perfil.descripcion}}</small>
+                                class="text-muted d-block mt-1">{{sesionService.objServiceSesion.usuarioSesion.usuario.perfil.descripcion}}</small>
                         </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
@@ -121,10 +121,11 @@
                                 class="fe fe-file"></i>
                             Pages</a>
                         <div class="dropdown-menu dropdown-menu-arrow">
-                            <a routerLink="/q-perfil" class="dropdown-item ">Perfil</a>
-                            <a routerLink="/q-rol" class="dropdown-item ">Rol</a>
-                            <a routerLink="/q-usuario" class="dropdown-item ">Usuario</a>
-                            <a routerLink="/m-rolPerfil" class="dropdown-item ">Rol-Perfil</a>
+                            <a routerLink="/q-perfil" class="dropdown-item " *ngIf="validarRol('ITCPER')">Perfil</a>
+                            <a routerLink="/q-rol" class="dropdown-item " *ngIf="validarRol('ITCROL')">Rol</a>
+                            <a routerLink="/q-usuario" class="dropdown-item " *ngIf="validarRol('ITCUSU')">Usuario</a>
+                            <a routerLink="/m-rolPerfil" class="dropdown-item "
+                                *ngIf="validarRol('ITCRYP')">Rol-Perfil</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
