@@ -313,6 +313,13 @@ export class TextProperties {
       lbl_validar_estado: idioma === constant.idiomaEs ? 'Estado vacío' : 'State email',
       // Login
       lbl_login_welcome: idioma === constant.idiomaEs ? 'Ingresa a tu cuenta' : 'Login to your account',
+
+      // Recuperar contraseña
+      lbl_sugerencia: idioma === constant.idiomaEs ? 'Sugerencias' : 'Suggestions',
+      lbl_unaMinus: idioma === constant.idiomaEs ? 'Al menos una minúscula' : 'At least one lowercase',
+      lbl_unaMayus: idioma === constant.idiomaEs ? 'Al menos una mayúscula' : 'At least one uppercase',
+      lbl_unNume: idioma === constant.idiomaEs ? 'Al menos un número' : 'At least one numeric',
+      lbl_ochoCaract: idioma === constant.idiomaEs ? 'Mínimo 8 caracteres' : 'Minimum 8 characters',
     }
   };
 }

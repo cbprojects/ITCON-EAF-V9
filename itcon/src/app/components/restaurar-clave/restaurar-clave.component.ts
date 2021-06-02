@@ -14,7 +14,8 @@ import { SesionService } from 'src/app/services/sesionService/sesion.service';
 @Component({
   selector: 'app-restaurar-clave',
   templateUrl: './restaurar-clave.component.html',
-  styleUrls: ['./restaurar-clave.component.scss']
+  styleUrls: ['./restaurar-clave.component.scss'],
+  styles: [':host ::ng-deep .p-password input {width: 15rem}']
 })
 export class RestaurarClaveComponent implements OnInit {
   // Objetos de Sesion
@@ -102,44 +103,107 @@ export class RestaurarClaveComponent implements OnInit {
     }
   }
 
-  reestablecerClave() {
+  tiene_minusculas(texto) {
+    for (var index = 0; index < texto.length; index++) {
+      var letraActual = texto.charAt(index);
+      //validar que no sea un número
+      if (isNaN(letraActual)) {
+        if (letraActual === letraActual.toLowerCase()) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  tiene_mayusculas(texto) {
+    for (var index = 0; index < texto.length; index++) {
+      var letraActual = texto.charAt(index);
+      //validar que no sea un número
+      if (isNaN(letraActual)) {
+        if (letraActual === letraActual.toUpperCase()) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  tiene_numero(texto) {
+    const regex = /^[0-9]*$/;
+    return regex.test(texto);
+  }
+
+  validarContrasena() {
+    let bret = true;
+    this.messageService.clear();
     if (this.clave !== undefined && this.clave !== null && this.confirmaClave !== undefined && this.confirmaClave !== null) {
       if (this.clave === this.confirmaClave) {
-        try {
-          this.usuarioReset.contrasena = this.clave;
-          this.restService.postREST(this.const.urlModificarUsuario, this.usuarioReset)
-            .subscribe(resp => {
-              let respuesta: Usuario = JSON.parse(JSON.stringify(resp));
-              if (respuesta !== null) {
-                // Mostrar mensaje exitoso y consultar comentarios de nuevo
-                this.messageService.clear();
-                this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo, sticky: true });
-              }
-            },
-              error => {
-                let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
-                let titleError = listaMensajes[0];
-                listaMensajes.splice(0, 1);
-                let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
-                this.messageService.clear();
-
-                listaMensajes.forEach(mensaje => {
-                  mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
-                });
-                this.messageService.add(mensajeFinal);
-
-                console.log(error, "error");
-              })
-        } catch (e) {
-          console.log(e);
+        if (this.clave.length < 8) {
+          bret = false;
+          this.messageService.add({ severity: this.const.severity[2], summary: this.msg.lbl_summary_warning, detail: this.msg.lbl_ochoCaract, sticky: true });
         }
+        if (!this.tiene_minusculas(this.clave)) {
+          bret = false;
+          this.messageService.add({ severity: this.const.severity[2], summary: this.msg.lbl_summary_warning, detail: this.msg.lbl_unaMinus, sticky: true });
+        }
+
+        if (!this.tiene_mayusculas(this.clave)) {
+          bret = false;
+          this.messageService.add({ severity: this.const.severity[2], summary: this.msg.lbl_summary_warning, detail: this.msg.lbl_unaMinus, sticky: true });
+        }
+
+        if (!this.tiene_numero(this.clave)) {
+          bret = false;
+          this.messageService.add({ severity: this.const.severity[2], summary: this.msg.lbl_summary_warning, detail: this.msg.lbl_unNume, sticky: true });
+        }
+
+        if (this.clave.length < 8) {
+          bret = false;
+          this.messageService.add({ severity: this.const.severity[2], summary: this.msg.lbl_summary_warning, detail: this.msg.lbl_ochoCaract, sticky: true });
+        }
+
       } else {
-        this.messageService.clear();
+        bret = false;
         this.messageService.add({ severity: this.const.severity[2], summary: this.msg.lbl_summary_warning, detail: this.msg.lbl_msg_claves_no_coinciden, sticky: true });
       }
     } else {
-      this.messageService.clear();
+      bret = false;
       this.messageService.add({ severity: this.const.severity[2], summary: this.msg.lbl_summary_warning, detail: this.msg.lbl_llenar_datos, sticky: true });
+    }
+    return bret;
+  }
+
+  reestablecerClave() {
+    try {
+      if (this.validarContrasena()) {
+        this.usuarioReset.contrasena = this.clave;
+        this.restService.postREST(this.const.urlModificarUsuario, this.usuarioReset)
+          .subscribe(resp => {
+            let respuesta: Usuario = JSON.parse(JSON.stringify(resp));
+            if (respuesta !== null) {
+              // Mostrar mensaje exitoso y consultar comentarios de nuevo
+              this.messageService.clear();
+              this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo, sticky: true });
+            }
+          },
+            error => {
+              let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+              let titleError = listaMensajes[0];
+              listaMensajes.splice(0, 1);
+              let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+              this.messageService.clear();
+
+              listaMensajes.forEach(mensaje => {
+                mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+              });
+              this.messageService.add(mensajeFinal);
+
+              console.log(error, "error");
+            })
+      }
+    } catch (e) {
+      console.log(e);
     }
   }
 

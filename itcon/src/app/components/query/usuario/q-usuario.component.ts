@@ -126,10 +126,10 @@ export class QUsuarioComponent implements OnInit {
   cargarUsuario(usuario: Usuario) {
     this.sesionService.objUsuarioCargado = this.objectModelInitializer.getDataUsuario();
     this.sesionService.objUsuarioCargado = usuario;
-    this.sesionService.objUsuarioCargado.celular=this.util.desencriptarAES(this.sesionService.objUsuarioCargado.celular.trim(), this.const.passwordAES); 
-    this.sesionService.objUsuarioCargado.direccion=this.util.desencriptarAES(this.sesionService.objUsuarioCargado.direccion.trim(), this.const.passwordAES); 
-    this.sesionService.objUsuarioCargado.contrasena=this.util.desencriptarAES(this.sesionService.objUsuarioCargado.contrasena.trim(), this.const.passwordAES); 
-    this.sesionService.objUsuarioCargado.email=this.util.desencriptarAES(this.sesionService.objUsuarioCargado.email.trim(), this.const.passwordAES); 
+    this.sesionService.objUsuarioCargado.celular = this.util.isBlank(this.sesionService.objUsuarioCargado.celular) ? '' : this.util.desencriptarAES(this.sesionService.objUsuarioCargado.celular.trim(), this.const.passwordAES);
+    this.sesionService.objUsuarioCargado.direccion = this.util.isBlank(this.sesionService.objUsuarioCargado.celular) ? '' : this.util.desencriptarAES(this.sesionService.objUsuarioCargado.direccion.trim(), this.const.passwordAES);
+    //this.sesionService.objUsuarioCargado.contrasena = this.util.desencriptarAES(this.sesionService.objUsuarioCargado.contrasena.trim(), this.const.passwordAES);
+    this.sesionService.objUsuarioCargado.email = this.sesionService.objUsuarioCargado.email.trim();
 
     this.router.navigate(['/m-usuario']);
   }

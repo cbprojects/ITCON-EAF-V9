@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { LazyLoadEvent, MessageService } from 'primeng/api';
 import { Enumerados } from 'src/app/config/Enumerados';
 import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
@@ -39,11 +39,16 @@ export class RolPerfilComponent implements OnInit {
   // Utilidades
   msg: any;
   const: any;
+  rows: any;
+  enumRows: any;
+  totalRecords: number;
 
   constructor(private router: Router, private route: ActivatedRoute, public restService: RestService, public textProperties: TextProperties, public util: Util, public objectModelInitializer: ObjectModelInitializer, public enumerados: Enumerados, public sesionService: SesionService, private messageService: MessageService) {
     this.sesion = this.objectModelInitializer.getDataServiceSesion();
     this.msg = this.textProperties.getProperties(this.sesionService.objServiceSesion.idioma);
     this.const = this.objectModelInitializer.getConst();
+    this.enumRows = [5, 10, 15, 20, 50, 100];
+    this.rows = this.enumRows[1];
   }
 
   ngOnInit() {
@@ -55,7 +60,7 @@ export class RolPerfilComponent implements OnInit {
 
   inicializar() {
     this.objPerfilCargado = null;
-    this.consultarPerfiles();
+    this.consultarPerfiles(0);
   }
 
   cargarPerfil(perfil: Perfil) {
@@ -102,9 +107,9 @@ export class RolPerfilComponent implements OnInit {
   }
   GuardarRolesPerfiles() {
     try {
-      let requestCrearRolPerfil : RequestCrearRolPerfil = this.objectModelInitializer.getDataRequestCrearRolPerfil();
-      requestCrearRolPerfil.perfil=this.objPerfilCargado;
-      requestCrearRolPerfil.lstRoles=this.targetProducts;
+      let requestCrearRolPerfil: RequestCrearRolPerfil = this.objectModelInitializer.getDataRequestCrearRolPerfil();
+      requestCrearRolPerfil.perfil = this.objPerfilCargado;
+      requestCrearRolPerfil.lstRoles = this.targetProducts;
       this.restService.postREST(this.const.urlCrearRolPerfil, requestCrearRolPerfil)
         .subscribe(resp => {
           let respuesta: ResponseCrearRolPerfil = JSON.parse(JSON.stringify(resp));
@@ -127,7 +132,7 @@ export class RolPerfilComponent implements OnInit {
               mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
             });
             this.messageService.add(mensajeFinal);
-            
+
             console.log(error, "error");
           })
     } catch (e) {
@@ -173,7 +178,7 @@ export class RolPerfilComponent implements OnInit {
     }
   }
 
-  consultarPerfiles() {
+  consultarPerfiles(primerItem) {
     this.listaPerfiles = [];
     try {
       let requestPerfilFiltro: RequestConsultaPerfil = this.objectModelInitializer.getDataRequestConsultarPerfil();
@@ -181,8 +186,8 @@ export class RolPerfilComponent implements OnInit {
       perfilFiltro.codigo = this.codigoFiltro;
       perfilFiltro.descripcion = this.descripcionFiltro;
       requestPerfilFiltro.perfil = perfilFiltro;
-      requestPerfilFiltro.registroInicial = "0";
-      requestPerfilFiltro.cantidadRegistro = "5";
+      requestPerfilFiltro.registroInicial = primerItem;
+      requestPerfilFiltro.cantidadRegistro = this.rows;
       this.restService.postREST(this.const.urlConsultarPerfilesPorFiltrosActivos, requestPerfilFiltro)
         .subscribe(resp => {
           let temp: ResponseConsultaRol = JSON.parse(JSON.stringify(resp));
@@ -209,6 +214,12 @@ export class RolPerfilComponent implements OnInit {
     } catch (e) {
       console.log(e);
     }
+  }
+
+  cargarTabla(event: LazyLoadEvent) {
+    setTimeout(() => {
+      this.consultarPerfiles(event.first);
+    }, 100);
   }
 
 }
