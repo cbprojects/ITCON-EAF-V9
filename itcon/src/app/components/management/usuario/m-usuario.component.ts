@@ -102,7 +102,7 @@ export class MUsuarioComponent implements OnInit {
     try {
       this.usuario.tipoDocumento = this.usuario.tipoDocumento.value;
       this.usuario.estado = this.usuario.estado.value;
-      if (this.validaciones) {
+      if (this.validaciones()) {
         this.restService.putREST(this.const.urlModificarUsuario, this.usuario)
           .subscribe(resp => {
             let respuesta: Usuario = JSON.parse(JSON.stringify(resp));
@@ -174,7 +174,7 @@ export class MUsuarioComponent implements OnInit {
   validaciones() {
     let bret = true;
     this.messageService.clear();
-    bret = this.confirmarContrasenia();
+    //bret = this.confirmarContrasenia();
     if (this.util.isBlank(this.usuario.tipoDocumento)) {
 
       this.messageService.add({ severity: this.const.severity[3], summary: this.msg.lbl_summary_danger, detail: this.msg.lbl_validar_tipoDoc, sticky: true });
@@ -188,24 +188,8 @@ export class MUsuarioComponent implements OnInit {
       this.messageService.add({ severity: this.const.severity[3], summary: this.msg.lbl_summary_danger, detail: this.msg.lbl_validar_nombre, sticky: true });
       bret = false;
     }
-    if (this.util.isBlank(this.usuario.celular)) {
-      this.messageService.add({ severity: this.const.severity[3], summary: this.msg.lbl_summary_danger, detail: this.msg.lbl_validar_celular, sticky: true });
-      bret = false;
-    }
-    if (this.util.isBlank(this.usuario.direccion)) {
-      this.messageService.add({ severity: this.const.severity[3], summary: this.msg.lbl_summary_danger, detail: this.msg.lbl_validar_direccion, sticky: true });
-      bret = false;
-    }
     if (this.util.isBlank(this.usuario.email)) {
       this.messageService.add({ severity: this.const.severity[3], summary: this.msg.lbl_summary_danger, detail: this.msg.lbl_validar_email, sticky: true });
-      bret = false;
-    }
-    if (this.util.isBlank(this.usuario.contrasena)) {
-      this.messageService.add({ severity: this.const.severity[3], summary: this.msg.lbl_summary_danger, detail: this.msg.lbl_validar_contrasenaVacia, sticky: true });
-      bret = false;
-    }
-    if (this.util.isBlank(this.confirmarContrasena)) {
-      this.messageService.add({ severity: this.const.severity[3], summary: this.msg.lbl_summary_danger, detail: this.msg.lbl_validar_confirContrasena, sticky: true });
       bret = false;
     }
     if (this.util.isBlank(this.usuario.perfil.codigo)) {

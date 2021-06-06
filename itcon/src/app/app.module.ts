@@ -7,6 +7,8 @@ import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { PickListModule } from 'primeng/picklist';
+import { PasswordModule } from "primeng/password";
+import { DividerModule } from "primeng/divider"
 
 
 // Imports Utilidades
@@ -127,6 +129,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ReactiveFormsModule,
     TableModule,
     DropdownModule,
+    PasswordModule,
+    DividerModule
   ],
   providers: [TextProperties, Enumerados, ObjectModelInitializer, Guardian, Util, Functions, MessageService, SesionService, { provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]

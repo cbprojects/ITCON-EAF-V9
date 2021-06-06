@@ -15,13 +15,39 @@
                             <div class="card-title">{{msg.lbl_btn_reset_password}}</div>
                             <div class="form-group">
                                 <label class="form-label">{{msg.lbl_header_password}}</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1"
-                                    placeholder="{{msg.lbl_header_password}}" [(ngModel)]="clave">
+                                <p-password id="exampleInputPassword1" [(ngModel)]="clave" [toggleMask]="true">
+                                    <ng-template pTemplate="header">
+                                        <h6>{{msg.lbl_header_password}}</h6>
+                                    </ng-template>
+                                    <ng-template pTemplate="footer">
+                                        <p-divider></p-divider>
+                                        <p class="p-mt-2">{{msg.lbl_sugerencia}}</p>
+                                        <ul class="p-pl-2 p-ml-2 p-mt-0" style="line-height: 1.5">
+                                            <li>{{msg.lbl_unaMinus}}</li>
+                                            <li>{{msg.lbl_unaMayus}}</li>
+                                            <li>{{msg.lbl_unNume}}</li>
+                                            <li>{{msg.lbl_ochoCaract}}</li>
+                                        </ul>
+                                    </ng-template>
+                                </p-password>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">{{msg.lbl_header_confirmar_password}}</label>
-                                <input type="password" class="form-control" id="exampleInputPassword2"
-                                    placeholder="{{msg.lbl_header_confirmar_password}}" [(ngModel)]="confirmaClave">
+                                <p-password id="exampleInputPassword2" [(ngModel)]="confirmaClave" [toggleMask]="true">
+                                    <ng-template pTemplate="header">
+                                        <h6>{{msg.lbl_header_confirmar_password}}</h6>
+                                    </ng-template>
+                                    <ng-template pTemplate="footer">
+                                        <p-divider></p-divider>
+                                        <p class="p-mt-2">{{msg.lbl_sugerencia}}</p>
+                                        <ul class="p-pl-2 p-ml-2 p-mt-0" style="line-height: 1.5">
+                                            <li>{{msg.lbl_unaMinus}}</li>
+                                            <li>{{msg.lbl_unaMayus}}</li>
+                                            <li>{{msg.lbl_unNume}}</li>
+                                            <li>{{msg.lbl_ochoCaract}}</li>
+                                        </ul>
+                                    </ng-template>
+                                </p-password>
                             </div>
                             <div class="form-footer">
                                 <button type="submit" (click)="reestablecerClave()"
