@@ -42,6 +42,7 @@ export class RolPerfilComponent implements OnInit {
   rows: any;
   enumRows: any;
   totalRecords: number;
+  loading: boolean;
 
   constructor(private router: Router, private route: ActivatedRoute, public restService: RestService, public textProperties: TextProperties, public util: Util, public objectModelInitializer: ObjectModelInitializer, public enumerados: Enumerados, public sesionService: SesionService, private messageService: MessageService) {
     this.sesion = this.objectModelInitializer.getDataServiceSesion();
@@ -180,6 +181,7 @@ export class RolPerfilComponent implements OnInit {
 
   consultarPerfiles(primerItem) {
     this.listaPerfiles = [];
+    this.loading = true;
     try {
       let requestPerfilFiltro: RequestConsultaPerfil = this.objectModelInitializer.getDataRequestConsultarPerfil();
       let perfilFiltro = this.objectModelInitializer.getDataPerfil();
@@ -192,9 +194,12 @@ export class RolPerfilComponent implements OnInit {
         .subscribe(resp => {
           let temp: ResponseConsultaRol = JSON.parse(JSON.stringify(resp));
           if (temp !== undefined && temp.resultado.length > 0) {
+            this.listaPerfiles = [];
             temp.resultado.forEach(perfil => {
               this.listaPerfiles.push(perfil);
             });
+            this.totalRecords = temp.registrosTotales;
+            this.loading = false;
           }
         },
           error => {

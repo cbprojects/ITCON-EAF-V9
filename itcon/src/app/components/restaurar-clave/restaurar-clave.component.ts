@@ -130,8 +130,13 @@ export class RestaurarClaveComponent implements OnInit {
   }
 
   tiene_numero(texto) {
-    const regex = /^[0-9]*$/;
-    return regex.test(texto);
+    var numeros = "0123456789";
+    for (var i = 0; i < texto.length; i++) {
+      if (numeros.indexOf(texto.charAt(i), 0) != -1) {
+        return true;
+      }
+    }
+    return false;
   }
 
   validarContrasena() {
@@ -150,17 +155,12 @@ export class RestaurarClaveComponent implements OnInit {
 
         if (!this.tiene_mayusculas(this.clave)) {
           bret = false;
-          this.messageService.add({ severity: this.const.severity[2], summary: this.msg.lbl_summary_warning, detail: this.msg.lbl_unaMinus, sticky: true });
+          this.messageService.add({ severity: this.const.severity[2], summary: this.msg.lbl_summary_warning, detail: this.msg.lbl_unaMayus, sticky: true });
         }
 
         if (!this.tiene_numero(this.clave)) {
           bret = false;
           this.messageService.add({ severity: this.const.severity[2], summary: this.msg.lbl_summary_warning, detail: this.msg.lbl_unNume, sticky: true });
-        }
-
-        if (this.clave.length < 8) {
-          bret = false;
-          this.messageService.add({ severity: this.const.severity[2], summary: this.msg.lbl_summary_warning, detail: this.msg.lbl_ochoCaract, sticky: true });
         }
 
       } else {
@@ -185,6 +185,7 @@ export class RestaurarClaveComponent implements OnInit {
               // Mostrar mensaje exitoso y consultar comentarios de nuevo
               this.messageService.clear();
               this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo, sticky: true });
+              //this.router.navigate(['/login']);
             }
           },
             error => {
