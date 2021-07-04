@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
+import { Caja } from 'src/app/model/cajaModel';
 import { ServiceSessionDTO } from 'src/app/model/dto/service-session-dto';
 import { Perfil } from 'src/app/model/perfilModel';
 import { Rol } from 'src/app/model/RolModel';
@@ -16,6 +17,7 @@ export class SesionService {
   objRolCargado: Rol;
   objPerfilCargado: Perfil;
   objUsuarioCargado: Usuario;
+  objCajaCargado: Caja;
 
   constructor(public objectModelInitializer: ObjectModelInitializer) {
     this.inicializar();

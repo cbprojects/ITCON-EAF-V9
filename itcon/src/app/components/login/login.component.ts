@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
   const: any;
   enumEstado: any;
   enums: any;
+  value2: any;
 
   constructor(private router: Router, private route: ActivatedRoute, public restService: RestService, public textProperties: TextProperties, public util: Util, public objectModelInitializer: ObjectModelInitializer, public enumerados: Enumerados, public sesionService: SesionService, private messageService: MessageService) {
     this.sesion = this.objectModelInitializer.getDataServiceSesion();

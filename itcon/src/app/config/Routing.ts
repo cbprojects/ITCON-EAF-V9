@@ -13,6 +13,8 @@ import { MUsuarioComponent } from '../components/management/usuario/m-usuario.co
 import { RolPerfilComponent } from '../components/management/rol-perfil/rol-perfil.component';
 import { LoginComponent } from '../components/login/login.component';
 import { RestaurarClaveComponent } from '../components/restaurar-clave/restaurar-clave.component';
+import { MCajaComponent } from '../components/management/caja/m-cajas.component';
+import { QCajaComponent } from '../components/query/caja/q-cajas.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -25,6 +27,8 @@ const routes: Routes = [
   { path: 'q-usuario', component: QUsuarioComponent, canActivate: [Guardian] },
   { path: 'm-usuario', component: MUsuarioComponent, canActivate: [Guardian] },
   { path: 'm-rolPerfil', component: RolPerfilComponent, canActivate: [Guardian] },
+  { path: 'q-caja', component: QCajaComponent, canActivate: [Guardian] },
+  { path: 'm-caja', component: MCajaComponent, canActivate: [Guardian] },
 
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/login' },
