@@ -12,7 +12,9 @@
     "importHelpers": true,
     "target": "es2015",
     "types": [
-      "node"
+      "node",
+      "jest",
+      "mocha"
     ],
     "lib": [
       "es2018",

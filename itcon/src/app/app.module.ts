@@ -10,11 +10,11 @@ import { PickListModule } from 'primeng/picklist';
 import { PasswordModule } from "primeng/password";
 import { DividerModule } from "primeng/divider"
 
-
 // Imports Utilidades
 import { TextProperties } from './config/TextProperties';
 import { Functions } from './config/Functions';
 import { Util } from './config/Util';
+import { NgxJsonViewerModule } from 'ngx-json-viewer';
 
 // Imports Esenciales
 import { AppRoutingModule } from './config/Routing';
@@ -38,6 +38,8 @@ import { MRolesComponent } from './components/management/rol/m-roles.component';
 import { QPerfilesComponent } from './components/query/perfil/q-perfiles.component';
 import { MPerfilesComponent } from './components/management/perfil/m-perfiles.component';
 import { QUsuarioComponent } from './components/query/usuario/q-usuario.component';
+import { QCajaComponent } from './components/query/caja/q-cajas.component';
+import { MCajaComponent } from './components/management/caja/m-cajas.component';
 
 // Imports Componentes Internos
 import { HeaderComponent } from './components/header/header.component';
@@ -96,12 +98,15 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MUsuarioComponent,
     RolPerfilComponent,
     LoginComponent,
-    RestaurarClaveComponent
+    RestaurarClaveComponent,
+    QCajaComponent,
+    MCajaComponent
   ],
   imports: [
     AppRoutingModule,
     PickListModule,
     BrowserModule,
+    NgxJsonViewerModule,
     NgCircleProgressModule.forRoot({
       // set defaults here
       radius: 100,

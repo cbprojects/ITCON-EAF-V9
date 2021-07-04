@@ -66,7 +66,19 @@ export class ObjectModelInitializer {
       urlConsultarUsuariosPorFiltros: `${HOST}/central/usuario/consultarUsuarioFiltros`,
       urlCrearUsuario: `${HOST}/central/usuario/crearUsuario`,
       urlModificarUsuario: `${HOST}/central/usuario/modificarUsuario`,
-      urlLoginUsuario:`${HOST}/central/usuario/loginUsuario`,
+      urlLoginUsuario: `${HOST}/central/usuario/loginUsuario`,
+      urlBuscarSedesActivasPorUsuario: `${HOST}/central/UsuarioSede/buscarSedesActivasPorUsuario`,
+      // Cajas
+      urlContarCajas: `${HOST}/central/caja/contarCajas`,
+      urlConsultarCajasPorFiltros: `${HOST}/central/caja/consultarCajaFiltros`,
+      urlCrearCaja: `${HOST}/central/caja/crearCaja`,
+      urlModificarCaja: `${HOST}/central/caja/modificarCaja`,
+      urlConsultarSociedadActiva: `${HOST}/central/sociedad/consultarSociedadActiva`,
+      urlBuscarEntrepanosActivosPorEstante: `${HOST}/central/Entrepano/buscarEntrepanosActivosPorEstante`,
+      urlBuscarEstantesActivosPorCuerpo: `${HOST}/central/Estante/buscarEstantesActivosPorCuerpo`,
+      urlBuscarCuerposActivosPorBloque: `${HOST}/central/Cuerpo/buscarCuerposActivosPorBloque`,
+      urlBuscarBloquesActivosPorBodega: `${HOST}/central/Bloque/buscarBloquesActivosPorBodega`,
+      urlBuscarBodegasActivasPorSede: `${HOST}/central/Bodega/buscarBodegasActivasPorSede`,
 
       tokenUsernameAUTH: 'BaeneApp',
       tokenPasswordAUTH: 'Baene2021codex',
@@ -109,7 +121,7 @@ export class ObjectModelInitializer {
       menuMovimientos: "M",
       estadoActivoNumString: 1,
       estadoInactivoNumString: 0,
-      passwordAES:'B13EC3B0742D2308'
+      passwordAES: 'B13EC3B0742D2308'
     }
   };
 
@@ -237,6 +249,134 @@ export class ObjectModelInitializer {
     }
   };
 
+  getDataCaja() {
+    return {
+      id: '',
+      descripcion: '',
+      codigoAlterno: '',
+      codigoBarras: '',
+      qr: '',
+      entrepano: this.getDataEntrepano(),
+      sociedad: this.getDataSociedad(),
+      fechaCreacion: '',
+      usuarioCreacion: '',
+      fechaActualizacion: '',
+      usuarioActualizacion: '',
+      estado: ''
+    }
+  };
+
+  getDataEntrepano() {
+    return {
+      id: 0,
+      codigo: '',
+      estante: this.getDataEstante(),
+      fechaCreacion: '',
+      usuarioCreacion: '',
+      fechaActualizacion: '',
+      usuarioActualizacion: '',
+      estado: ''
+    }
+  };
+
+  getDataEstante() {
+    return {
+      id: 0,
+      codigo: '',
+      cuerpo: this.getDataCuerpo(),
+      fechaCreacion: '',
+      usuarioCreacion: '',
+      fechaActualizacion: '',
+      usuarioActualizacion: '',
+      estado: ''
+    }
+  };
+
+  getDataCuerpo() {
+    return {
+      id: 0,
+      codigo: '',
+      bloque: this.getDataBloque(),
+      fechaCreacion: '',
+      usuarioCreacion: '',
+      fechaActualizacion: '',
+      usuarioActualizacion: '',
+      estado: ''
+    }
+  };
+
+  getDataBloque() {
+    return {
+      id: 0,
+      codigo: '',
+      bodega: this.getDataBodega(),
+      fechaCreacion: '',
+      usuarioCreacion: '',
+      fechaActualizacion: '',
+      usuarioActualizacion: '',
+      estado: ''
+    }
+  };
+
+  getDataBodega() {
+    return {
+      id: 0,
+      codigo: '',
+      nombre: '',
+      nombre10: '',
+      ownerName: '',
+      sede: this.getDataSede(),
+      fechaCreacion: '',
+      usuarioCreacion: '',
+      fechaActualizacion: '',
+      usuarioActualizacion: '',
+      estado: ''
+    }
+  };
+
+  getDataSede() {
+    return {
+      id: 0,
+      codigo: '',
+      nombre: '',
+      nombre10: '',
+      address: '',
+      fechaCreacion: '',
+      usuarioCreacion: '',
+      fechaActualizacion: '',
+      usuarioActualizacion: '',
+      estado: ''
+    }
+  };
+
+  getDataSociedad() {
+    return {
+      id: 0,
+      nombre: '',
+      nombre10: '',
+      tax: '',
+      cliente: this.getDataCliente(),
+      fechaCreacion: '',
+      usuarioCreacion: '',
+      fechaActualizacion: '',
+      usuarioActualizacion: '',
+      estado: ''
+    }
+  };
+
+  getDataCliente() {
+    return {
+      id: 0,
+      nombre: '',
+      tax: '',
+      fechaCreacion: '',
+      usuarioCreacion: '',
+      fechaActualizacion: '',
+      usuarioActualizacion: '',
+      estado: ''
+    }
+  };
+
   getDataDTOUsuario() {
     return {
       usuario: this.getDataUsuario(),
@@ -323,4 +463,60 @@ export class ObjectModelInitializer {
       simbolo: symbol
     }
   };
+
+  getDataRequestConsultarCaja() {
+    return {
+      caja: this.getDataCaja(),
+      idSede: '',
+      idBodega: '',
+      idBloque: '',
+      idCuerpo: '',
+      idEstante: '',
+      registroInicial: '',
+      cantidadRegistro: ''
+    }
+  };
+
+  getDataResponseConsultarCaja() {
+    return {
+      resultado: [],
+      registrosTotales: 0,
+    }
+  };
+
+  getDataRequestSedesXUsuario() {
+    return {
+      email: ''
+    }
+  }
+
+  getDataRequestBodegasXSedes() {
+    return {
+      idSede: ''
+    }
+  }
+
+  getDataRequestBloquesXBodega() {
+    return {
+      idBodega: ''
+    }
+  }
+
+  getDataRequestCuerposXBloque() {
+    return {
+      idBloque: ''
+    }
+  }
+
+  getDataRequestEstantesXCuerpo() {
+    return {
+      idCuerpo: ''
+    }
+  }
+
+  getDataRequestEntrepanosXEstante() {
+    return {
+      idEstante: ''
+    }
+  }
 }

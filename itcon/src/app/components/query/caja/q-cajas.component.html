@@ -1,0 +1,155 @@
+<p-toast></p-toast>
+
+<div class="page ">
+    <div class="flex-fill">
+        <!-- HEADER -->
+        <app-header></app-header>
+        <!-- HEADER -->
+
+        <!-- CONTENT -->
+        <div class="my-3 my-md-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Consulta de Cajas</h3>
+                            </div>
+                            <div class="card-body">
+                                <!-- Filtros -->
+                                <div class="row justify-content-center">
+                                    <div class="form-group col-sm-12 col-lg-4">
+                                        <label class="form-label">Sede</label>
+                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                            [(ngModel)]="sedeFiltro" [items]="listaSedes"
+                                            (ngModelChange)="cargarBodegasXSede($event)">
+                                        </ng-select>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-lg-4">
+                                        <label class="form-label">Bodega</label>
+                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                            [(ngModel)]="bodegaFiltro" [items]="listaBodegas"
+                                            (ngModelChange)="cargarBloquesXBodega($event)">
+                                        </ng-select>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-lg-4">
+                                        <label class="form-label">Bloque</label>
+                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                            [(ngModel)]="bloqueFiltro" [items]="listaBloques"
+                                            (ngModelChange)="cargarCuerposXBloque($event)">
+                                        </ng-select>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-lg-4">
+                                        <label class="form-label">Cuerpo</label>
+                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                            [(ngModel)]="cuerpoFiltro" [items]="listaCuerpos"
+                                            (ngModelChange)="cargarEstantesXCuerpo($event)">
+                                        </ng-select>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-lg-4">
+                                        <label class="form-label">Estante</label>
+                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                            [(ngModel)]="estanteFiltro" [items]="listaEstantes"
+                                            (ngModelChange)="cargarEntrepanosXEstante($event)">
+                                        </ng-select>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-lg-4">
+                                        <label class="form-label">Entrepaño</label>
+                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                            [(ngModel)]="entrepanoFiltro" [items]="listaEntrepanos">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-12 col-lg-4">
+                                        <label class="form-label">Sociedad</label>
+                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                            [(ngModel)]="sociedadFiltro" [items]="listaSociedades">
+                                        </ng-select>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-lg-4">
+                                        <div class="form-group">
+                                            <label class="form-label">Código Alterno</label>
+                                            <input type="text" [(ngModel)]="cajaFiltro.codigoAlterno"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-lg-4">
+                                        <div class="form-group">
+                                            <label class="form-label">Código Barras</label>
+                                            <input type="text" [(ngModel)]="cajaFiltro.codigoBarras"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="form-group col-sm-12 col-lg-12 text-center">
+                                        <button type="submit" (click)="consultarCajas(0)"
+                                            class="btn btn-primary ml-auto">Consultar</button>
+                                    </div>
+                                </div>
+
+                                <!-- Consulta -->
+                                <hr />
+                                <div class="form-label">Resultados</div>
+                                <div class="table-responsive {{listaCajas.length > 0 ? '' : 'displayNone'}}">
+                                    <p-table [lazy]="true" (onLazyLoad)="cargarTabla($event)" [paginator]="true"
+                                        [totalRecords]="totalRecords" [loading]="loading" styleClass="table mb-0"
+                                        [responsive]="true" [value]="listaCajas" [rows]="rows">
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th class="text-center">ID</th>
+                                                <th class="text-center">Código Alterno</th>
+                                                <th class="text-center">Código Barras</th>
+                                                <th class="text-center">Descripción</th>
+                                                <th class="pr-0 text-center">Estado</th>
+                                            </tr>
+                                        </ng-template>
+
+                                        <ng-template pTemplate="body" let-caja>
+                                            <tr (click)="cargarCaja(caja)">
+                                                <td>
+                                                    {{caja.id}}
+                                                </td>
+                                                <td>
+                                                    {{caja.codigoAlterno}}
+                                                </td>
+                                                <td>
+                                                    {{caja.codigoBarras}}
+                                                </td>
+                                                <td>
+                                                    {{caja.descripcion}}
+                                                </td>
+                                                <td class="pr-0">
+                                                    {{caja.estado === 1 ? 'Activo' : 'Inactivo'}}
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                                <div *ngIf="listaCajas.length <= 0" class="service-grids">
+                                    <div class="col-md-12 ser-grid">
+                                        <p class="sinResultados">
+                                            {{msg.lbl_info_sin_resultados}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-right">
+                                <div class="d-flex">
+                                    <a class="btn btn-link" routerLink="/home">Home</a>
+                                    <button type="submit" routerLink="/m-caja"
+                                        class="btn btn-primary ml-auto">Crear</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- CONTENT -->
+    </div>
+</div>
+
+<!-- FOOTER -->
+<app-footer></app-footer>
+<!-- FOOTER -->
