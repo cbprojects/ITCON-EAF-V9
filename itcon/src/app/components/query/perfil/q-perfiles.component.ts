@@ -30,12 +30,6 @@ export class QPerfilesComponent implements OnInit {
   codigoFiltro: any = "";
   descripcionFiltro: any = "";
   listaPerfiles: Perfil[];
-  listaCabeceras = [
-    { 'campoLista': 'id', 'nombreCabecera': 'ID' },
-    { 'campoLista': 'codigo', 'nombreCabecera': 'Código' },
-    { 'campoLista': 'descripcion', 'nombreCabecera': 'Descripción' },
-    { 'campoLista': 'estado', 'nombreCabecera': 'Estado' }
-  ];
 
   // Utilidades
   msg: any;

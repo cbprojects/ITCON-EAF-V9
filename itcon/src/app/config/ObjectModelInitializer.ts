@@ -69,7 +69,6 @@ export class ObjectModelInitializer {
       urlLoginUsuario: `${HOST}/central/usuario/loginUsuario`,
       urlBuscarSedesActivasPorUsuario: `${HOST}/central/UsuarioSede/buscarSedesActivasPorUsuario`,
       // Cajas
-      urlContarCajas: `${HOST}/central/caja/contarCajas`,
       urlConsultarCajasPorFiltros: `${HOST}/central/caja/consultarCajaFiltros`,
       urlCrearCaja: `${HOST}/central/caja/crearCaja`,
       urlModificarCaja: `${HOST}/central/caja/modificarCaja`,
@@ -79,6 +78,13 @@ export class ObjectModelInitializer {
       urlBuscarCuerposActivosPorBloque: `${HOST}/central/Cuerpo/buscarCuerposActivosPorBloque`,
       urlBuscarBloquesActivosPorBodega: `${HOST}/central/Bloque/buscarBloquesActivosPorBodega`,
       urlBuscarBodegasActivasPorSede: `${HOST}/central/Bodega/buscarBodegasActivasPorSede`,
+      // Unidad Documental
+      urlConsultarUDPorFiltros: `${HOST}/central/unidadDocumental/consultarUnidadDocumentalFiltros`,
+      urlCrearUD: `${HOST}/central/unidadDocumental/crearUnidadDocumental`,
+      urlModificarUD: `${HOST}/central/unidadDocumental/modificarUnidadDocumental`,
+      urlBuscarContenedoresActivos: `${HOST}/central/Contenedor/buscarContenedoresActivos`,
+      urlBuscarTipoUDActivos: `${HOST}/central/TipoUD/buscarTipoUDActivos`,
+      urlBuscarAreasActivasPorSociedad: `${HOST}/central/SociedadArea/buscarAreasActivasPorSociedad`,
 
       tokenUsernameAUTH: 'BaeneApp',
       tokenPasswordAUTH: 'Baene2021codex',
@@ -92,6 +98,7 @@ export class ObjectModelInitializer {
 
       // Model rango de fechas para NGBDatePicker
       minDate: { year: 1000, month: 1, day: 1 },
+      actualDate: new Date(),
       maxDate: new Date(),
       formatoFecha: 'dd/mm/yy',
       rangoYears: '1900:3000',
@@ -179,27 +186,6 @@ export class ObjectModelInitializer {
       thumbnailImageSrc: rutaImagen,
       alt: nombreImagen,
       title: nombreImagen
-    }
-  };
-
-  getDataContactoModel() {
-    return {
-      idContacto: 0,
-      nombreEmpresa: '',
-      telefonoEmpresa: '',
-      descripcionEmpresa: '',
-      nombreContacto: '',
-      correoContacto: '',
-      cargoContacto: '',
-      telefonoContacto: '',
-      procesoContacto: 0,
-
-      // Auditoria
-      estado: '',
-      fechaCreacion: '',
-      fechaActualizacion: '',
-      usuarioCreacion: '',
-      usuarioActualizacion: '',
     }
   };
 
@@ -377,6 +363,82 @@ export class ObjectModelInitializer {
     }
   };
 
+  getDataArea() {
+    return {
+      id: 0,
+      nombre: '',
+      nombre10: '',
+      estado: 1,
+      fechaCreacion: '',
+      usuarioCreacion: '',
+      fechaActualizacion: '',
+      usuarioActualizacion: ''
+    }
+  };
+
+  getDataSociedadArea() {
+    return {
+      id: 0,
+      sociedad: this.getDataSociedad(),
+      area: this.getDataArea(),
+      estado: 1,
+      fechaCreacion: '',
+      usuarioCreacion: '',
+      fechaActualizacion: '',
+      usuarioActualizacion: ''
+    }
+  };
+
+  getDataContenedor() {
+    return {
+      id: 0,
+      nombre: '',
+      estado: 1,
+      fechaCreacion: '',
+      usuarioCreacion: '',
+      fechaActualizacion: '',
+      usuarioActualizacion: ''
+    }
+  };
+
+  getDataTipoDocumental() {
+    return {
+      id: 0,
+      nombre: '',
+      estado: 1,
+      fechaCreacion: '',
+      usuarioCreacion: '',
+      fechaActualizacion: '',
+      usuarioActualizacion: ''
+    }
+  };
+
+  getDataUnidadDocumental() {
+    return {
+      id: 0,
+      codigo: '',
+      nombre: '',
+      sociedadArea: this.getDataSociedadArea(),
+      descripcion: '',
+      caja: this.getDataCaja(),
+      codigoBarra: '',
+      qr: '',
+      rutaArchivo: '',
+      tipoDocumental: this.getDataTipoDocumental(),
+      contenedor: this.getDataContenedor(),
+      consecutivoIni: 0,
+      consecutivoFin: 0,
+      fechaIni: '',
+      fechaFin: '',
+      fechaRecibe: '',
+      estado: 1,
+      fechaCreacion: '',
+      usuarioCreacion: '',
+      fechaActualizacion: '',
+      usuarioActualizacion: ''
+    }
+  };
+
   getDataDTOUsuario() {
     return {
       usuario: this.getDataUsuario(),
@@ -387,7 +449,7 @@ export class ObjectModelInitializer {
 
   getDataRequestConsultarPerfil() {
     return {
-      perfil: {},
+      perfil: this.getDataPerfil(),
       registroInicial: '',
       cantidadRegistro: ''
     }
@@ -395,7 +457,7 @@ export class ObjectModelInitializer {
 
   getDataRequestConsultarRol() {
     return {
-      rol: {},
+      rol: this.getDataRol(),
       registroInicial: '',
       cantidadRegistro: ''
     }
@@ -483,6 +545,20 @@ export class ObjectModelInitializer {
       registrosTotales: 0,
     }
   };
+
+  getDataRequestUnidadDocumental() {
+    return {
+      unidadDocumental: this.getDataUnidadDocumental(),
+      registroInicial: '',
+      cantidadRegistro: ''
+    }
+  };
+
+  getDataRequestAreasXSociedad() {
+    return {
+      id: ''
+    }
+  }
 
   getDataRequestSedesXUsuario() {
     return {

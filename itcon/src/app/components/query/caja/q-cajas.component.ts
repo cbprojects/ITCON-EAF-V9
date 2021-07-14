@@ -64,12 +64,6 @@ export class QCajaComponent implements OnInit {
   listaBodegas: any[];
   listaSedes: any[];
   listaSociedades: any[];
-  listaCabeceras = [
-    { 'campoLista': 'codigoAlterno', 'nombreCabecera': 'Código Alterno' },
-    { 'campoLista': 'codigoBarras', 'nombreCabecera': 'Código Barras' },
-    { 'campoLista': 'descripcion', 'nombreCabecera': 'Descripción' },
-    { 'campoLista': 'estado', 'nombreCabecera': 'Estado' }
-  ];
 
   // Utilidades
   msg: any;
@@ -106,6 +100,7 @@ export class QCajaComponent implements OnInit {
     this.sociedadFiltro = { value: this.objectModelInitializer.getDataSociedad(), label: this.msg.lbl_enum_generico_valor_vacio };
     this.consultarCajas(0);
     this.cargarSedesXUsuario();
+    this.consultarSociedades();
   }
 
   // Activar cambios vista listas desplegables
@@ -174,8 +169,7 @@ export class QCajaComponent implements OnInit {
   }
 
   // Carga ngselects
-
-
+  
   consultarSociedades() {
     try {
       this.listaSociedades = [];
@@ -442,11 +436,6 @@ export class QCajaComponent implements OnInit {
       let requestCajaFiltro: RequestConsultaCaja = this.objectModelInitializer.getDataRequestConsultarCaja();
       this.cajaFiltro.entrepano = this.entrepanoFiltro.value;
       this.cajaFiltro.sociedad = this.sociedadFiltro.value;
-      /*this.cajaFiltro.entrepano.estante = this.estanteFiltro.value;
-      this.cajaFiltro.entrepano.estante.cuerpo = this.cuerpoFiltro.value;
-      this.cajaFiltro.entrepano.estante.cuerpo.bloque = this.bloqueFiltro.value;
-      this.cajaFiltro.entrepano.estante.cuerpo.bloque.bodega = this.bodegaFiltro.value;
-      this.cajaFiltro.entrepano.estante.cuerpo.bloque.bodega.sede = this.sedeFiltro.value;*/
       requestCajaFiltro.caja = this.cajaFiltro;
       requestCajaFiltro.idSede = this.sedeFiltro.id;
       requestCajaFiltro.idBodega = this.bodegaFiltro.id;
@@ -455,7 +444,6 @@ export class QCajaComponent implements OnInit {
       requestCajaFiltro.idEstante = this.estanteFiltro.id;
       requestCajaFiltro.registroInicial = primerItem;
       requestCajaFiltro.cantidadRegistro = this.rows;
-      console.log(requestCajaFiltro);
       this.restService.postREST(this.const.urlConsultarCajasPorFiltros, requestCajaFiltro)
         .subscribe(resp => {
           let temp: ResponseConsultaCaja = JSON.parse(JSON.stringify(resp));

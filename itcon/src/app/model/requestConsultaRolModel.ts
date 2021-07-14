@@ -1,5 +1,7 @@
+import { Rol } from "./RolModel";
+
 export interface RequestConsultaRol {
-    rol;
+    rol: Rol;
     registroInicial;
     cantidadRegistro;
 }

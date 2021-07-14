@@ -1,0 +1,218 @@
+<p-toast></p-toast>
+
+<div class="page ">
+    <div class="flex-fill">
+        <!-- HEADER -->
+        <app-header></app-header>
+        <!-- HEADER -->
+
+        <!-- CONTENT -->
+        <div class="my-3 my-md-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Gestión de Unidades Documentales</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="row justify-content-center">
+                                    <div id="card-ud-1" class="card card-collapsed">
+                                        <div class="card-status card-status-left bg-blue"></div>
+                                        <div class="card-header">
+                                            <h4 class="card-title">Ubicación</h4>
+                                            <div class="card-options">
+                                                <a class="card-options-collapse"
+                                                    (click)="util.toggleCollapseByID('card-ud-1')"><i
+                                                        class="fe fe-chevron-up"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row justify-content-center">
+                                                <div class="form-group col-sm-12 col-lg-3">
+                                                    <label class="form-label">Sociedad<span
+                                                            class="form-required">*</span></label>
+                                                    <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                                        [(ngModel)]="sociedadFiltro" [items]="listaSociedades"
+                                                        (ngModelChange)="cargarAreasXSociedad($event)">
+                                                    </ng-select>
+                                                </div>
+                                                <div class="form-group col-sm-12 col-lg-3">
+                                                    <label class="form-label">Área<span
+                                                            class="form-required">*</span></label>
+                                                    <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                                        [(ngModel)]="areaFiltro" [items]="listaAreas">
+                                                    </ng-select>
+                                                </div>
+                                                <div class="form-group col-sm-12 col-lg-3">
+                                                    <label class="form-label">Contenedor<span
+                                                            class="form-required">*</span></label>
+                                                    <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                                        [(ngModel)]="contenedorFiltro" [items]="listaContenedores">
+                                                    </ng-select>
+                                                </div>
+                                                <div class="form-group col-sm-12 col-lg-3">
+                                                    <label class="form-label">Tipo Documental<span
+                                                            class="form-required">*</span></label>
+                                                    <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                                        [(ngModel)]="tipoDocumentalFiltro"
+                                                        [items]="listaTipoDocumental">
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row justify-content-center">
+                                    <div id="card-ud-2" class="card card-collapsed">
+                                        <div class="card-status card-status-left bg-blue"></div>
+                                        <div class="card-header">
+                                            <h4 class="card-title">Especificaciones</h4>
+                                            <div class="card-options">
+                                                <a class="card-options-collapse"
+                                                    (click)="util.toggleCollapseByID('card-ud-2')"><i
+                                                        class="fe fe-chevron-up"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row justify-content-center">
+                                                <div class="form-group col-sm-12 col-lg-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Código<span
+                                                                class="form-required">*</span></label>
+                                                        <input type="text" [(ngModel)]="unidadDocumental.codigo"
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-sm-12 col-lg-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Nombre<span
+                                                                class="form-required">*</span></label>
+                                                        <input type="text" [(ngModel)]="unidadDocumental.nombre"
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-sm-12 col-lg-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Código Barras<span
+                                                                class="form-required">*</span></label>
+                                                        <input type="text" [(ngModel)]="unidadDocumental.codigoBarra"
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-sm-12 col-lg-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Código QR</label>
+                                                        <input type="text" [(ngModel)]="unidadDocumental.qr"
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-sm-12 col-lg-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Ruta Archivo</label>
+                                                        <input type="text" [(ngModel)]="unidadDocumental.rutaArchivo"
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-sm-12 col-lg-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Descripción</label>
+                                                        <input type="text" [(ngModel)]="unidadDocumental.descripcion"
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-sm-12 col-lg-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Consecutivo Inicial</label>
+                                                        <input type="text" (keydown)="util.soloNumeros($event)"
+                                                            [(ngModel)]="unidadDocumental.consecutivoIni"
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-sm-12 col-lg-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Consecutivo Final</label>
+                                                        <input type="text" (keydown)="util.soloNumeros($event)"
+                                                            [(ngModel)]="unidadDocumental.consecutivoFin"
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row justify-content-center">
+                                    <div id="card-ud-3" class="card card-collapsed">
+                                        <div class="card-status card-status-left bg-blue"></div>
+                                        <div class="card-header">
+                                            <h4 class="card-title">Fechas y Estado</h4>
+                                            <div class="card-options">
+                                                <a class="card-options-collapse"
+                                                    (click)="util.toggleCollapseByID('card-ud-3')"><i
+                                                        class="fe fe-chevron-up"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row justify-content-center">
+                                                <div class="form-group col-sm-12 col-lg-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Fecha Recibe<span
+                                                                class="form-required">*</span></label>
+                                                        <p-calendar [(ngModel)]="unidadDocumental.fechaRecibe"
+                                                            [minDate]="const.actualDate" [readonlyInput]="true">
+                                                        </p-calendar>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-sm-12 col-lg-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Fecha Inicial</label>
+                                                        <p-calendar [(ngModel)]="unidadDocumental.fechaIni"
+                                                            [minDate]="const.actualDate" [readonlyInput]="true">
+                                                        </p-calendar>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-sm-12 col-lg-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Fecha Final</label>
+                                                        <p-calendar [(ngModel)]="unidadDocumental.fechaFin"
+                                                            [minDate]="const.actualDate" [readonlyInput]="true">
+                                                        </p-calendar>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-lg-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Estado<span
+                                                                class="form-required">*</span></label>
+                                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                                            [(ngModel)]="unidadDocumental.estado" [items]="enumEstado">
+                                                        </ng-select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-right">
+                                <div class="d-flex">
+                                    <a class="btn btn-link" routerLink="/q-unidad-documental">Atrás</a>
+                                    <button *ngIf="esNuevaUnidadDocumental" (click)="crearUD()" type="submit"
+                                        class="btn btn-primary ml-auto">Crear</button>
+                                    <button *ngIf="!esNuevaUnidadDocumental" (click)="modificarUD()" type="submit"
+                                        class="btn btn-primary ml-auto">Modificar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- CONTENT -->
+    </div>
+</div>
+
+<!-- FOOTER -->
+<app-footer></app-footer>
+<!-- FOOTER -->

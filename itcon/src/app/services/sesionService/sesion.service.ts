@@ -4,6 +4,7 @@ import { Caja } from 'src/app/model/cajaModel';
 import { ServiceSessionDTO } from 'src/app/model/dto/service-session-dto';
 import { Perfil } from 'src/app/model/perfilModel';
 import { Rol } from 'src/app/model/RolModel';
+import { UnidadDocumental } from 'src/app/model/unidadDocumentalModel';
 import { Usuario } from 'src/app/model/usuariolModel';
 
 declare var $: any;
@@ -18,6 +19,7 @@ export class SesionService {
   objPerfilCargado: Perfil;
   objUsuarioCargado: Usuario;
   objCajaCargado: Caja;
+  objUnidadDocumentalCargada: UnidadDocumental;
 
   constructor(public objectModelInitializer: ObjectModelInitializer) {
     this.inicializar();
