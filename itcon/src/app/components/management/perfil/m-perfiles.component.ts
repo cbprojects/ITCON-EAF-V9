@@ -64,7 +64,7 @@ export class MPerfilesComponent implements OnInit {
         .subscribe(resp => {
           let respuesta: Perfil = JSON.parse(JSON.stringify(resp));
           if (respuesta !== null) {
-            // Mostrar mensaje exitoso y consultar comentarios de nuevo
+            // Mostrar mensaje exitoso y consultar de nuevo
             this.messageService.clear();
             this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo, sticky: true });
 
@@ -98,7 +98,7 @@ export class MPerfilesComponent implements OnInit {
         .subscribe(resp => {
           let respuesta: Perfil = JSON.parse(JSON.stringify(resp));
           if (respuesta !== null) {
-            // Mostrar mensaje exitoso y consultar comentarios de nuevo
+            // Mostrar mensaje exitoso y consultar de nuevo
             this.messageService.clear();
             this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo, sticky: true });
 

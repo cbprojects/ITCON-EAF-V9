@@ -15,6 +15,8 @@ import { LoginComponent } from '../components/login/login.component';
 import { RestaurarClaveComponent } from '../components/restaurar-clave/restaurar-clave.component';
 import { MCajaComponent } from '../components/management/caja/m-cajas.component';
 import { QCajaComponent } from '../components/query/caja/q-cajas.component';
+import { MUnidadDocumentalComponent } from '../components/management/unidad-documental/m-unidad-documental.component';
+import { QUnidadDocumentalComponent } from '../components/query/unidad-documental/q-unidad-documental.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -29,6 +31,8 @@ const routes: Routes = [
   { path: 'm-rolPerfil', component: RolPerfilComponent, canActivate: [Guardian] },
   { path: 'q-caja', component: QCajaComponent, canActivate: [Guardian] },
   { path: 'm-caja', component: MCajaComponent, canActivate: [Guardian] },
+  { path: 'q-unidad-documental', component: QUnidadDocumentalComponent, canActivate: [Guardian] },
+  { path: 'm-unidad-documental', component: MUnidadDocumentalComponent, canActivate: [Guardian] },
 
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/login' },

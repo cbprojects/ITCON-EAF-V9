@@ -8,7 +8,8 @@ import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { PickListModule } from 'primeng/picklist';
 import { PasswordModule } from "primeng/password";
-import { DividerModule } from "primeng/divider"
+import { DividerModule } from "primeng/divider";
+import { CalendarModule } from 'primeng/calendar';
 
 // Imports Utilidades
 import { TextProperties } from './config/TextProperties';
@@ -53,6 +54,8 @@ import { MUsuarioComponent } from './components/management/usuario/m-usuario.com
 import { RolPerfilComponent } from './components/management/rol-perfil/rol-perfil.component';
 import { LoginComponent } from './components/login/login.component';
 import { RestaurarClaveComponent } from './components/restaurar-clave/restaurar-clave.component';
+import { QUnidadDocumentalComponent } from './components/query/unidad-documental/q-unidad-documental.component';
+import { MUnidadDocumentalComponent } from './components/management/unidad-documental/m-unidad-documental.component';
 
 
 // Constantes
@@ -100,7 +103,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     LoginComponent,
     RestaurarClaveComponent,
     QCajaComponent,
-    MCajaComponent
+    MCajaComponent,
+    QUnidadDocumentalComponent,
+    MUnidadDocumentalComponent
   ],
   imports: [
     AppRoutingModule,
@@ -135,7 +140,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     TableModule,
     DropdownModule,
     PasswordModule,
-    DividerModule
+    DividerModule,
+    CalendarModule
   ],
   providers: [TextProperties, Enumerados, ObjectModelInitializer, Guardian, Util, Functions, MessageService, SesionService, { provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]

@@ -17,89 +17,167 @@
                             </div>
                             <div class="card-body">
                                 <div class="row justify-content-center">
-                                    <div class="form-group col-sm-12 col-lg-4">
-                                        <label class="form-label">Sede<span class="form-required">*</span></label>
-                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
-                                            [(ngModel)]="sedeFiltro" [items]="listaSedes"
-                                            (ngModelChange)="cargarBodegasXSede($event)">
-                                        </ng-select>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-lg-4">
-                                        <label class="form-label">Bodega<span class="form-required">*</span></label>
-                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
-                                            [(ngModel)]="bodegaFiltro" [items]="listaBodegas"
-                                            (ngModelChange)="cargarBloquesXBodega($event)">
-                                        </ng-select>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-lg-4">
-                                        <label class="form-label">Bloque<span class="form-required">*</span></label>
-                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
-                                            [(ngModel)]="bloqueFiltro" [items]="listaBloques"
-                                            (ngModelChange)="cargarCuerposXBloque($event)">
-                                        </ng-select>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-lg-4">
-                                        <label class="form-label">Cuerpo<span class="form-required">*</span></label>
-                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
-                                            [(ngModel)]="cuerpoFiltro" [items]="listaCuerpos"
-                                            (ngModelChange)="cargarEstantesXCuerpo($event)">
-                                        </ng-select>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-lg-4">
-                                        <label class="form-label">Estante<span class="form-required">*</span></label>
-                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
-                                            [(ngModel)]="estanteFiltro" [items]="listaEstantes"
-                                            (ngModelChange)="cargarEntrepanosXEstante($event)">
-                                        </ng-select>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-lg-4">
-                                        <label class="form-label">Entrepaño<span class="form-required">*</span></label>
-                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
-                                            [(ngModel)]="entrepanoFiltro" [items]="listaEntrepanos">
-                                        </ng-select>
+                                    <div id="card-caja-1" class="card card-collapsed">
+                                        <div class="card-status card-status-left bg-blue"></div>
+                                        <div class="card-header">
+                                            <h4 class="card-title">Ubicación Sociedad</h4>
+                                            <div class="card-options">
+                                                <a class="card-options-collapse"
+                                                    (click)="util.toggleCollapseByID('card-caja-1')"><i
+                                                        class="fe fe-chevron-up"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="form-group col-sm-12 col-lg-4">
+                                                    <label class="form-label">Sociedad<span
+                                                            class="form-required">*</span></label>
+                                                    <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                                        [(ngModel)]="sociedadFiltro" [items]="listaSociedades">
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="form-group col-sm-12 col-lg-4">
-                                        <label class="form-label">Sociedad<span class="form-required">*</span></label>
-                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
-                                            [(ngModel)]="sociedadFiltro" [items]="listaSociedades">
-                                        </ng-select>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-lg-4">
-                                        <div class="form-group">
-                                            <label class="form-label">Código Alterno<span
-                                                    class="form-required">*</span></label>
-                                            <input type="text" [(ngModel)]="caja.codigoAlterno" class="form-control">
+
+                                <div class="row justify-content-center">
+                                    <div id="card-caja-2" class="card card-collapsed">
+                                        <div class="card-status card-status-left bg-blue"></div>
+                                        <div class="card-header">
+                                            <h4 class="card-title">Ubicación Bodega</h4>
+                                            <div class="card-options">
+                                                <a class="card-options-collapse"
+                                                    (click)="util.toggleCollapseByID('card-caja-2')"><i
+                                                        class="fe fe-chevron-up"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row justify-content-center">
+                                                <div class="form-group col-sm-12 col-lg-4">
+                                                    <label class="form-label">Sede<span
+                                                            class="form-required">*</span></label>
+                                                    <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                                        [(ngModel)]="sedeFiltro" [items]="listaSedes"
+                                                        (ngModelChange)="cargarBodegasXSede($event)">
+                                                    </ng-select>
+                                                </div>
+                                                <div class="form-group col-sm-12 col-lg-4">
+                                                    <label class="form-label">Bodega<span
+                                                            class="form-required">*</span></label>
+                                                    <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                                        [(ngModel)]="bodegaFiltro" [items]="listaBodegas"
+                                                        (ngModelChange)="cargarBloquesXBodega($event)">
+                                                    </ng-select>
+                                                </div>
+                                                <div class="form-group col-sm-12 col-lg-4">
+                                                    <label class="form-label">Bloque<span
+                                                            class="form-required">*</span></label>
+                                                    <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                                        [(ngModel)]="bloqueFiltro" [items]="listaBloques"
+                                                        (ngModelChange)="cargarCuerposXBloque($event)">
+                                                    </ng-select>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-sm-12 col-lg-4">
-                                        <div class="form-group">
-                                            <label class="form-label">Código Barras<span
-                                                    class="form-required">*</span></label>
-                                            <input type="text" [(ngModel)]="caja.codigoBarras" class="form-control">
+                                </div>
+
+                                <div class="row justify-content-center">
+                                    <div id="card-caja-3" class="card card-collapsed">
+                                        <div class="card-status card-status-left bg-blue"></div>
+                                        <div class="card-header">
+                                            <h4 class="card-title">Ubicación Entrepaño</h4>
+                                            <div class="card-options">
+                                                <a class="card-options-collapse"
+                                                    (click)="util.toggleCollapseByID('card-caja-3')"><i
+                                                        class="fe fe-chevron-up"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row justify-content-center">
+                                                <div class="form-group col-sm-12 col-lg-4">
+                                                    <label class="form-label">Cuerpo<span
+                                                            class="form-required">*</span></label>
+                                                    <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                                        [(ngModel)]="cuerpoFiltro" [items]="listaCuerpos"
+                                                        (ngModelChange)="cargarEstantesXCuerpo($event)">
+                                                    </ng-select>
+                                                </div>
+                                                <div class="form-group col-sm-12 col-lg-4">
+                                                    <label class="form-label">Estante<span
+                                                            class="form-required">*</span></label>
+                                                    <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                                        [(ngModel)]="estanteFiltro" [items]="listaEstantes"
+                                                        (ngModelChange)="cargarEntrepanosXEstante($event)">
+                                                    </ng-select>
+                                                </div>
+                                                <div class="form-group col-sm-12 col-lg-4">
+                                                    <label class="form-label">Entrepaño<span
+                                                            class="form-required">*</span></label>
+                                                    <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                                        [(ngModel)]="entrepanoFiltro" [items]="listaEntrepanos">
+                                                    </ng-select>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-sm-12 col-lg-4">
-                                        <div class="form-group">
-                                            <label class="form-label">Código QR<span
-                                                    class="form-required">*</span></label>
-                                            <input type="text" [(ngModel)]="caja.qr" class="form-control">
+                                </div>
+
+                                <div class="row justify-content-center">
+                                    <div id="card-caja-4" class="card card-collapsed">
+                                        <div class="card-status card-status-left bg-blue"></div>
+                                        <div class="card-header">
+                                            <h4 class="card-title">Especificaciones y Estado</h4>
+                                            <div class="card-options">
+                                                <a class="card-options-collapse"
+                                                    (click)="util.toggleCollapseByID('card-caja-4')"><i
+                                                        class="fe fe-chevron-up"></i></a>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group col-sm-12 col-lg-4">
-                                        <div class="form-group">
-                                            <label class="form-label">Descripción<span
-                                                    class="form-required">*</span></label>
-                                            <input type="text" [(ngModel)]="caja.descripcion" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-lg-3">
-                                        <div class="form-group">
-                                            <label class="form-label">Estado<span class="form-required">*</span></label>
-                                            <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
-                                                [(ngModel)]="caja.estado" [items]="enumEstado">
-                                            </ng-select>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="form-group col-sm-12 col-lg-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Código Alterno<span
+                                                                class="form-required">*</span></label>
+                                                        <input type="text" [(ngModel)]="caja.codigoAlterno"
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-sm-12 col-lg-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Código Barras<span
+                                                                class="form-required">*</span></label>
+                                                        <input type="text" [(ngModel)]="caja.codigoBarras"
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-sm-12 col-lg-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Código QR<span
+                                                                class="form-required">*</span></label>
+                                                        <input type="text" [(ngModel)]="caja.qr" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-sm-12 col-lg-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Descripción<span
+                                                                class="form-required">*</span></label>
+                                                        <input type="text" [(ngModel)]="caja.descripcion"
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-lg-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Estado<span
+                                                                class="form-required">*</span></label>
+                                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                                            [(ngModel)]="caja.estado" [items]="enumEstado">
+                                                        </ng-select>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

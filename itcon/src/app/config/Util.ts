@@ -603,8 +603,12 @@ export class Util {
   }
 
   soloNumeros(e) {
-    let key = window.Event ? e.which : e.keyCode;
-    return (key >= 37 && key <= 40) || (key >= 48 && key <= 57) || (key === 46) || (key === 8) || (e.shiftKey === 1);
+    if (!e.shiftKey && !e.ctrlKey && !e.altKey) {
+      let key = window.Event ? e.which : e.keyCode;
+      return (key >= 37 && key <= 40) || (key >= 48 && key <= 57) || (key === 46) || (key === 8) || (e.shiftKey === 1) || (key === 190);
+    } else {
+      return false;
+    }
   }
 
   isBlank(texto) {
@@ -615,8 +619,8 @@ export class Util {
     }
   }
 
-   //desencriptado AES
-   encriptarAES(texto, llave) {
+  //desencriptado AES
+  encriptarAES(texto, llave) {
     const iv = CryptoJS.enc.Hex.parse(llave);
     const key = CryptoJS.enc.Utf8.parse(llave);
     var textoEncriptado = CryptoJS.AES.encrypt(texto, key, { iv, mode: CryptoJS.mode.ECB });
@@ -636,5 +640,9 @@ export class Util {
     )
     //console.log('Desencriptado: ' + textoDesencriptado.toString(CryptoJS.enc.Utf8));
     return textoDesencriptado.toString(CryptoJS.enc.Utf8);
+  }
+
+  toggleCollapseByID(id) {
+    $('#' + id).toggleClass('card-collapsed');
   }
 }

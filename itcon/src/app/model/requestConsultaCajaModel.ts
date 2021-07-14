@@ -1,5 +1,7 @@
+import { Caja } from "./cajaModel";
+
 export interface RequestConsultaCaja {
-    caja;
+    caja: Caja;
     idSede;
     idBodega;
     idBloque;

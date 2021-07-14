@@ -1,5 +1,7 @@
+import { Perfil } from "./perfilModel";
+
 export interface RequestConsultaPerfil {
-    perfil;
+    perfil: Perfil;
     registroInicial;
     cantidadRegistro;
 }

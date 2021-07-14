@@ -114,6 +114,8 @@
                             Administración</a>
                         <div class="dropdown-menu dropdown-menu-arrow">
                             <a routerLink="/q-caja" class="dropdown-item " *ngIf="validarRol('ITCCAJ')">Caja</a>
+                            <a routerLink="/q-unidad-documental" class="dropdown-item "
+                                *ngIf="validarRol('ITCUDO')">Unidad Documental</a>
                         </div>
                     </li>
                 </ul>
