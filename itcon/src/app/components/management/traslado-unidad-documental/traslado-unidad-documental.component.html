@@ -21,7 +21,7 @@
                                         <label class="form-label">Sociedad<span class="form-required">*</span></label>
                                         <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
                                             [(ngModel)]="sociedadSelect" [items]="listaSociedades" bindLabel="nombre"
-                                            (change)="consultarCajasPorSociedad($event)">
+                                            (change)="consultarCajasPorSociedad()">
                                         </ng-select>
                                     </div>
                                 </div>
@@ -32,14 +32,14 @@
                                         <label class="form-label">Caja 1<span class="form-required">*</span></label>
                                         <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
                                             [(ngModel)]="caja1Select" [items]="listaCajas" bindLabel="codigoAlterno" 
-                                            (change)="limpiarUnidadDocumental($event)">
+                                            (change)="limpiarUnidadDocumental()">
                                         </ng-select>
                                     </div>
                                     <div class="form-group col-sm-6 col-lg-4">
                                         <label class="form-label">Caja 2<span class="form-required">*</span></label>
                                         <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
                                             [(ngModel)]="caja2Select" [items]="listaCajas" bindLabel="codigoAlterno"
-                                            (change)="limpiarUnidadDocumental($event)">
+                                            (change)="limpiarUnidadDocumental()">
                                         </ng-select>
                                     </div>
                                     <div class="form-group col-sm-6 col-lg-4 text-center">
