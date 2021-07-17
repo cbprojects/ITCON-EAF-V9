@@ -56,6 +56,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RestaurarClaveComponent } from './components/restaurar-clave/restaurar-clave.component';
 import { QUnidadDocumentalComponent } from './components/query/unidad-documental/q-unidad-documental.component';
 import { MUnidadDocumentalComponent } from './components/management/unidad-documental/m-unidad-documental.component';
+import { TrasladoUnidadDocumentalComponent } from './components/management/traslado-unidad-documental/traslado-unidad-documental.component';
 
 
 // Constantes
@@ -105,7 +106,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     QCajaComponent,
     MCajaComponent,
     QUnidadDocumentalComponent,
-    MUnidadDocumentalComponent
+    MUnidadDocumentalComponent,
+    TrasladoUnidadDocumentalComponent
   ],
   imports: [
     AppRoutingModule,
