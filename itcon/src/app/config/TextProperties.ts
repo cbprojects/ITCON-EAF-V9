@@ -299,6 +299,9 @@ export class TextProperties {
       lbl_rol_perfil_seleccionado: idioma === constant.idiomaEs ? 'Seleccionado' : 'Select',
       lbl_rol_perfil_busqueda: idioma === constant.idiomaEs ? 'Busqueda por código' : 'Search by code',
 
+      lbl_traslado_unidad_documental: idioma === constant.idiomaEs ? 'Traslado Unidad Documental' : 'Documentary Unit Transfer',
+      lbl_caja_repetida: idioma === constant.idiomaEs ? 'Por favor escoger dos cajas diferentes' : 'Please choose two different boxes',
+
       //Usuario
       lbl_validar_contrasena: idioma === constant.idiomaEs ? 'Contraseña incorrecta' : 'Password incorrect',
       lbl_validar_tipoDoc: idioma === constant.idiomaEs ? 'Tipo documento vacío' : 'empty type document',
