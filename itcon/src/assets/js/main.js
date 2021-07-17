@@ -5,18 +5,99 @@ function chartDevelopmentActivity() {
             data: {
                 columns: [
                     // each columns data
-                    ['data1', 0, 5, 1, 2, 7, 5, 6, 8, 24, 7, 12, 5, 6, 3, 2, 2, 6, 30, 10, 10, 15, 14, 47, 65, 55]
+                    ['data1', '0', '115', '1', '2', '7', '5', '6', '8', '24', '7', '12', '5', '6', '3', '2', '2', '6', '30', '10', '10', '15', '14', '47', '65', '5'],
+                    ['data2', 10, 15, 1, 2, 7, 5, 61, 81, 24, 7, 12, 5, 6, 3, 2, 2, 6, 30, 10, 10, 15, 14, 47, 65, 55],
+                    ['data3', 0, 5, 11, 21, 71, 51, 6, 8, 24, 7, 12, 5, 6, 3, 2, 2, 6, 30, 10, 10, 15, 14, 47, 65, 55],
                 ],
                 type: 'area', // default type of chart
                 groups: [
                     ['data1', 'data2', 'data3']
                 ],
                 colors: {
-                    'data1': tabler.colors["blue"]
+                    'data1': tabler.colors["blue"],
+                    'data2': tabler.colors["green"],
+                    'data3': tabler.colors["red"]
                 },
                 names: {
                     // name of each serie
-                    'data1': 'Purchases'
+                    'data1': 'Carlos',
+                    'data2': 'Felipe',
+                    'data3': 'Julio'
+                }
+            },
+            axis: {
+                y: {
+                    padding: {
+                        bottom: 0,
+                    },
+                    show: false,
+                    tick: {
+                        outer: false
+                    }
+                },
+                x: {
+                    padding: {
+                        left: 0,
+                        right: 0
+                    },
+                    show: false
+                }
+            },
+            legend: {
+                position: 'inset',
+                padding: 0,
+                inset: {
+                    anchor: 'top-left',
+                    x: 20,
+                    y: 8,
+                    step: 10
+                }
+            },
+            tooltip: {
+                format: {
+                    title: function (x) {
+                        return '';
+                    }
+                }
+            },
+            padding: {
+                bottom: 0,
+                left: -1,
+                right: -1
+            },
+            point: {
+                show: false
+            }
+        });
+    });
+}
+
+function chartTable1(charTable1) {
+    $(document).ready(function () {
+        // Extraer info del parámetro
+        var chart = c3.generate({
+            bindto: '#chart-development-activity', // id of chart wrapper
+            data: {
+                columns: [
+                    // each columns data
+                    ['data1', '0', '115', '1', '2', '7', '5', '6', '8', '24', '7', '12', '5', '6', '3', '2', '2', '6', '30', '10', '10', '15', '14', '47', '65', '5'],
+                    ['data2', 10, 15, 1, 2, 7, 5, 61, 81, 24, 7, 12, 5, 6, 3, 2, 2, 6, 30, 10, 10, 15, 14, 47, 65, 55],
+                    ['data3', 0, 5, 11, 21, 71, 51, 6, 8, 24, 7, 12, 5, 6, 3, 2, 2, 6, 30, 10, 10, 15, 14, 47, 65, 55],
+                ],
+                type: 'area', // default type of chart
+                groups: [
+                    ['data1', 'data2', 'data3']
+                ],
+                colors: {
+                    'data1': tabler.colors["blue"],
+                    'data2': tabler.colors["green"],
+                    'data3': tabler.colors["red"]
+                },
+                names: {
+                    // name of each serie
+                    'data1': 'Carlos',
+                    'data2': 'Felipe',
+                    'data3': 'Julio'
                 }
             },
             axis: {

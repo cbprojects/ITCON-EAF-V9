@@ -7,6 +7,7 @@ import { Util } from 'src/app/config/Util';
 import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { Enumerados } from 'src/app/config/Enumerados';
 import { SesionService } from 'src/app/services/sesionService/sesion.service';
+import { Dashboard } from 'src/app/model/dashboardModel';
 
 declare var $: any;
 declare var chartDevelopmentActivity: any;
@@ -27,6 +28,7 @@ declare var chartBgUsers4: any;
 export class HomeComponent implements OnInit {
   // Objetos de Sesion
   sesion: any;
+  dashboardModel: Dashboard;
 
   // Objetos de datos
 
@@ -57,5 +59,45 @@ export class HomeComponent implements OnInit {
     chartBgUsers4();
     $('.datatable').DataTable();
     this.sesionService.objRolCargado = null;
+    this.cargarDashboard();
+  }
+
+  cargarDashboard() {
+    try {
+      let request = { idUser: this.sesionService.objServiceSesion.usuarioSesion.usuario };
+      let box = this.objectModelInitializer.getDataBox();
+      console.log(box);
+      let chart = this.objectModelInitializer.getDataChart();
+      console.log(chart);
+      let persona = this.objectModelInitializer.getDataPersona();
+      console.log(persona);
+      let factura = this.objectModelInitializer.getDataFactura();
+      console.log(factura);
+      let ejemploResponse = this.objectModelInitializer.getDataDashboardModel();
+      console.log(ejemploResponse);
+      this.restService.postREST(this.const.urlCargarDashboard, request)
+        .subscribe(resp => {
+          let respuesta: Dashboard = JSON.parse(JSON.stringify(resp));
+          if (respuesta !== null) {
+            this.dashboardModel = respuesta;
+          }
+        },
+          error => {
+            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+            let titleError = listaMensajes[0];
+            listaMensajes.splice(0, 1);
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+            this.messageService.clear();
+
+            listaMensajes.forEach(mensaje => {
+              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+            });
+            this.messageService.add(mensajeFinal);
+
+            console.log(error, "error");
+          })
+    } catch (e) {
+      console.log(e);
+    }
   }
 }

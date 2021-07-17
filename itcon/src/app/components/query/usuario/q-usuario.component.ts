@@ -8,7 +8,7 @@ import { Util } from 'src/app/config/Util';
 import { Perfil } from 'src/app/model/perfilModel';
 import { RequestConsultaUsuario } from 'src/app/model/requestConsultaUsuarioModel';
 import { ResponseConsultaUsuario } from 'src/app/model/responseConsultaUsuarioModel';
-import { Usuario } from 'src/app/model/usuariolModel';
+import { Usuario } from 'src/app/model/usuarioModel';
 import { RestService } from 'src/app/services/rest.service';
 import { SesionService } from 'src/app/services/sesionService/sesion.service';
 import * as CryptoJS from 'crypto-js';

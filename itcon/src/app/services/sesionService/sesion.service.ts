@@ -5,7 +5,7 @@ import { ServiceSessionDTO } from 'src/app/model/dto/service-session-dto';
 import { Perfil } from 'src/app/model/perfilModel';
 import { Rol } from 'src/app/model/RolModel';
 import { UnidadDocumental } from 'src/app/model/unidadDocumentalModel';
-import { Usuario } from 'src/app/model/usuariolModel';
+import { Usuario } from 'src/app/model/usuarioModel';
 
 declare var $: any;
 

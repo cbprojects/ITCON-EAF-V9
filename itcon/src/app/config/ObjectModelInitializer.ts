@@ -47,6 +47,8 @@ export class ObjectModelInitializer {
       urlRestService: `${HOST}/`,
       urlRestOauth: `${HOST}/oauth/token`,
       urlVCode: `${SYSTEM}/vCode/`,
+      // Dashboard
+      urlCargarDashboard: `${HOST}/central/dashboard/cargarDashboard`,
       // Login
       urlLogin: `${HOST}/central/usuario/login`,
       urlRestaurarClave: `${HOST}/central/usuario/restaurarClave`,
@@ -593,6 +595,126 @@ export class ObjectModelInitializer {
   getDataRequestEntrepanosXEstante() {
     return {
       idEstante: ''
+    }
+  }
+
+  getDataBox() {
+    return {
+      principalLabel: '',
+      principalValue: '',
+      upperLabel: '',
+      upperValue: '',
+      subtitleLabel: '',
+      subtitleValue: '',
+      color: ''
+    }
+  }
+
+  getDataChart() {
+    return {
+      columns: [],
+      color: '',
+      label: '',
+      type: ''
+    }
+  }
+
+  getDataPersona() {
+    return {
+      usuario: '',
+      nombre: '',
+      fechaRegistro: '',
+      rutaImagen: '',
+      commit: '',
+      fechaCommit: '',
+      usage: '',
+      payment: '',
+      activity: '',
+      satisfaction: ''
+    }
+  }
+
+  getDataFactura() {
+    return {
+      numero: '',
+      empresa: '',
+      cliente: '',
+      vatNo: '',
+      fechaCreacion: '',
+      estado: '',
+      precio: ''
+    }
+  }
+
+  getDataDashboardModel() {
+    return {
+      boxes1: {
+        box1: this.getDataBox(),
+        box2: this.getDataBox(),
+        box3: this.getDataBox(),
+        box4: this.getDataBox(),
+        box5: this.getDataBox(),
+        box6: this.getDataBox()
+      },
+      chartTable1: {
+        data: [],
+        table: {
+          cabeceras: [],
+          values: []
+        }
+      },
+      chartPie1: {
+        data: [],
+      },
+      chartPie2: {
+        data: [],
+      },
+      boxes2: {
+        box1: this.getDataBox(),
+        box2: this.getDataBox()
+      },
+      boxes3: {
+        box1: this.getDataBox(),
+        box2: this.getDataBox(),
+        box3: this.getDataBox(),
+        box4: this.getDataBox()
+      },
+      table1: {
+        cabeceras: [],
+        values: []
+      },
+      table2: {
+        cabeceras: [],
+        values: []
+      },
+      table3: {
+        cabeceras: [],
+        values: []
+      },
+      table4: {
+        cabeceras: [],
+        values: []
+      },
+      chartBox1: {
+        data: [],
+        box: this.getDataBox()
+      },
+      chartBox2: {
+        data: [],
+        box: this.getDataBox()
+      },
+      chartBox3: {
+        data: [],
+        box: this.getDataBox()
+      },
+      chartBox4: {
+        data: [],
+        box: this.getDataBox()
+      },
+      table5: {
+        cabeceras: [],
+        values: []
+      }
     }
   }
 }
