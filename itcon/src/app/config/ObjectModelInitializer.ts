@@ -91,7 +91,7 @@ export class ObjectModelInitializer {
       //Sociedades
       urlConsultarSociedadesActivas: `${HOST}/central/sociedad/consultarSociedadActiva`,
 
-      
+
 
       tokenUsernameAUTH: 'BaeneApp',
       tokenPasswordAUTH: 'Baene2021codex',
@@ -545,7 +545,7 @@ export class ObjectModelInitializer {
       cantidadRegistro: ''
     }
   };
-  
+
   getDataResponseConsultarCaja() {
     return {
       resultado: [],
@@ -603,36 +603,41 @@ export class ObjectModelInitializer {
     }
   }
 
+  getDataRequestEntrepanosXEstante() {
+    return {
+      idEstante: ''
+    }
+  }
   getDataRequestConsultarUnidadDocumentalMasivo() {
     return {
-      idCajaUno:'',
-      idCajaDos:''
+      idCajaUno: '',
+      idCajaDos: ''
     }
 
   }
 
   getDataResponseConsultarUnidadDocumentalMasivo() {
     return {
-      lstUnidadDocumentalCajaUno:[],
-      lstUnidadDocumentalCajaDos:[]
+      lstUnidadDocumentalCajaUno: [],
+      lstUnidadDocumentalCajaDos: []
     }
   }
 
   getDataRequestCambiarUnidadDocumentalMasivo() {
     return {
-      idCajaUno:'',
-      idCajaDos:'',
-      lstUnidadDocumentalCajaUno:[],
-      lstUnidadDocumentalCajaDos:[]
+      idCajaUno: '',
+      idCajaDos: '',
+      lstUnidadDocumentalCajaUno: [],
+      lstUnidadDocumentalCajaDos: []
     }
 
   }
 
   getDataResponseCambiarUnidadDocumentalMasivo() {
     return {
-      codigo:'',
-      mensaje:''
+      codigo: '',
+      mensaje: ''
     }
 
-}
+  }
 }
