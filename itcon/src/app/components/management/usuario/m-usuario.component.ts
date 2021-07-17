@@ -6,7 +6,7 @@ import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
 import { Perfil } from 'src/app/model/perfilModel';
-import { Usuario } from 'src/app/model/UsuariolModel';
+import { Usuario } from 'src/app/model/usuarioModel';
 import { RestService } from 'src/app/services/rest.service';
 import { SesionService } from 'src/app/services/sesionService/sesion.service';
 

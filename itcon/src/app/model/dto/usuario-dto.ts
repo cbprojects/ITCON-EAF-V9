@@ -1,5 +1,5 @@
 import { Rol } from "../RolModel";
-import { Usuario } from "../usuariolModel";
+import { Usuario } from "../usuarioModel";
 
 export interface UsuarioDTO {
     usuario: Usuario;

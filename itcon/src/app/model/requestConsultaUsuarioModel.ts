@@ -1,4 +1,4 @@
-import { Usuario } from "./usuariolModel";
+import { Usuario } from "./usuarioModel";
 
 export interface RequestConsultaUsuario {
     usuario: Usuario;
