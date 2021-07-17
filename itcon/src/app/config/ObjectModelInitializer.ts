@@ -78,6 +78,7 @@ export class ObjectModelInitializer {
       urlBuscarCuerposActivosPorBloque: `${HOST}/central/Cuerpo/buscarCuerposActivosPorBloque`,
       urlBuscarBloquesActivosPorBodega: `${HOST}/central/Bloque/buscarBloquesActivosPorBodega`,
       urlBuscarBodegasActivasPorSede: `${HOST}/central/Bodega/buscarBodegasActivasPorSede`,
+      urlConsultarCajasPorSociedad: `${HOST}/central/caja/consultarCajasPorSociedad`,
       // Unidad Documental
       urlConsultarUDPorFiltros: `${HOST}/central/unidadDocumental/consultarUnidadDocumentalFiltros`,
       urlCrearUD: `${HOST}/central/unidadDocumental/crearUnidadDocumental`,
@@ -85,6 +86,12 @@ export class ObjectModelInitializer {
       urlBuscarContenedoresActivos: `${HOST}/central/Contenedor/buscarContenedoresActivos`,
       urlBuscarTipoUDActivos: `${HOST}/central/TipoUD/buscarTipoUDActivos`,
       urlBuscarAreasActivasPorSociedad: `${HOST}/central/SociedadArea/buscarAreasActivasPorSociedad`,
+      urlConsultarUnidadDocumentalPorCajaMasiva: `${HOST}/central/unidadDocumental/consultarUnidadDocumentalPorCajaMasiva`,
+      urlCambiarCajaUnidadDocumentalMasiva: `${HOST}/central/unidadDocumental/cambiarCajaUnidadDocumentalMasiva`,
+      //Sociedades
+      urlConsultarSociedadesActivas: `${HOST}/central/sociedad/consultarSociedadActiva`,
+
+
 
       tokenUsernameAUTH: 'BaeneApp',
       tokenPasswordAUTH: 'Baene2021codex',
@@ -546,6 +553,12 @@ export class ObjectModelInitializer {
     }
   };
 
+  getDataRequestConsultaCajasPorSociedad() {
+    return {
+      id: ''
+    }
+  };
+
   getDataRequestUnidadDocumental() {
     return {
       unidadDocumental: this.getDataUnidadDocumental(),
@@ -594,5 +607,37 @@ export class ObjectModelInitializer {
     return {
       idEstante: ''
     }
+  }
+  getDataRequestConsultarUnidadDocumentalMasivo() {
+    return {
+      idCajaUno: '',
+      idCajaDos: ''
+    }
+
+  }
+
+  getDataResponseConsultarUnidadDocumentalMasivo() {
+    return {
+      lstUnidadDocumentalCajaUno: [],
+      lstUnidadDocumentalCajaDos: []
+    }
+  }
+
+  getDataRequestCambiarUnidadDocumentalMasivo() {
+    return {
+      idCajaUno: '',
+      idCajaDos: '',
+      lstUnidadDocumentalCajaUno: [],
+      lstUnidadDocumentalCajaDos: []
+    }
+
+  }
+
+  getDataResponseCambiarUnidadDocumentalMasivo() {
+    return {
+      codigo: '',
+      mensaje: ''
+    }
+
   }
 }
