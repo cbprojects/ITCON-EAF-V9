@@ -52,9 +52,9 @@
                                 <div *ngIf="selectedFiles" class="row justify-content-center">
                                     <div class="col-md-12 ser-grid">
                                         <h5>Nodo Seleccionado: {{selectedFiles.label}}</h5>
-                                        <p-fileUpload #fileUpload mode="basic" name="demo[]"
-                                            (uploadHandler)="onBasicUpload($event, fileUpload)" accept="text/plain"
-                                            maxFileSize="1000000" customUpload="true" chooseLabel="Cargar Archivo">
+                                        <p-fileUpload #fileUpload name="demo[]" multiple="multiple"
+                                            (uploadHandler)="onBasicUpload($event, fileUpload)" maxFileSize="5000000"
+                                            customUpload="true" chooseLabel="Cargar Archivo">
                                         </p-fileUpload>
                                     </div>
                                 </div>

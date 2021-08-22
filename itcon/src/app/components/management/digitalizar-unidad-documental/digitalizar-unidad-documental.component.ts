@@ -317,9 +317,19 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
           if (temp !== undefined && temp !== null) {
             let listaArchivos: Archivo[] = JSON.parse(temp.replaceAll('\"', '"'));
             if (seDescarga) {
-              var binaryData = [];
-              binaryData.push(listaArchivos[0].archivo); //My blob
-              const url = URL.createObjectURL(new Blob(binaryData, { type: "application/text" }));
+              let vectorFile = listaArchivos[0].nombreArchivo.split('.');
+              let mimeType = this.util.devolverMimeType('.' + vectorFile[vectorFile.length - 1]);
+              let textbuffer = window.atob(listaArchivos[0].archivo);
+              let binaryLen = textbuffer.length;
+              let byte = new Uint8Array(binaryLen);
+              for (let i = 0; i < binaryLen; i++) {
+                let ascii = textbuffer.charCodeAt(i);
+                byte[i] = ascii;
+              }
+              let blob = new Blob([byte], { type: mimeType });
+
+              //My blob
+              const url = URL.createObjectURL(blob);
               //const url = window.URL.createObjectURL(listaArchivos[0].archivo);
               const a = document.createElement('a');
               a.setAttribute('style', 'display:none');
@@ -350,18 +360,8 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
     }
   }
 
-  cargarArchivo() {
+  cargarArchivo(requestCrearArchivos) {
     try {
-      let requestCrearArchivos: RequestArchivo = this.objectModelInitializer.getDataRequestArchivoFile();
-      requestCrearArchivos.idUnidadDocumental = this.selectedFiles.data;
-      this.uploadedFiles.forEach(file => {
-        let archivo: Archivo = this.objectModelInitializer.getDataArchivo();
-        archivo.nombreArchivo = file.name;
-        archivo.archivo = 'UmVxdWVzdCANCg0KPHNvYXBlbnY6RW52ZWxvcGUgeG1sbnM6c29hcGVudj0iaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvc29hcC9lbnZlbG9wZS8iIHhtbG5zOnNlcj0iaHR0cDovL3NlcnZpY2VzLmJlZXNpb24uY29tIj4NCiAgIDxzb2FwZW52OkhlYWRlci8+DQogICA8c29hcGVudjpCb2R5Pg0KICAgICAgPHNlcjpXc0dldFZpc3RhMzYwPg0KICAgICAgICAgPHNlcjpiaWxsaW5nQWNjb3VudENvZGU+NDM3NTU5ODk8L3NlcjpiaWxsaW5nQWNjb3VudENvZGU+DQogICAgICAgICA8IS0tT3B0aW9uYWw6LS0+DQogICAgICAgICA8c2VyOmJpbGxpbmdBY2NvdW50SWQ+PC9zZXI6YmlsbGluZ0FjY291bnRJZD4NCiAgICAgIDwvc2VyOldzR2V0VmlzdGEzNjA+DQogICA8L3NvYXBlbnY6Qm9keT4NCjwvc29hcGVudjpFbnZlbG9wZT4NCg0KUmVzcG9uc2UNCg0KPHM6RW52ZWxvcGUgeG1sbnM6cz0iaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvc29hcC9lbnZlbG9wZS8iPg0KICAgPHM6Qm9keT4NCiAgICAgIDxzOkZhdWx0Pg0KICAgICAgICAgPGZhdWx0Y29kZSB4bWxuczphPSJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDUvMDUvYWRkcmVzc2luZy9ub25lIj5hOkFjdGlvbk5vdFN1cHBvcnRlZDwvZmF1bHRjb2RlPg0KICAgICAgICAgPGZhdWx0c3RyaW5nIHhtbDpsYW5nPSJlbi1VUyI+VGhlIG1lc3NhZ2Ugd2l0aCBBY3Rpb24gJ2h0dHA6Ly9zZXJ2aWNlcy5iZWVzaW9uLmNvbS9Xc0Z1bGxTdGFjazIvV3NHZXRWaXN0YTM2MCcgY2Fubm90IGJlIHByb2Nlc3NlZCBhdCB0aGUgcmVjZWl2ZXIsIGR1ZSB0byBhIENvbnRyYWN0RmlsdGVyIG1pc21hdGNoIGF0IHRoZSBFbmRwb2ludERpc3BhdGNoZXIuIFRoaXMgbWF5IGJlIGJlY2F1c2Ugb2YgZWl0aGVyIGEgY29udHJhY3QgbWlzbWF0Y2ggKG1pc21hdGNoZWQgQWN0aW9ucyBiZXR3ZWVuIHNlbmRlciBhbmQgcmVjZWl2ZXIpIG9yIGEgYmluZGluZy9zZWN1cml0eSBtaXNtYXRjaCBiZXR3ZWVuIHRoZSBzZW5kZXIgYW5kIHRoZSByZWNlaXZlci4gIENoZWNrIHRoYXQgc2VuZGVyIGFuZCByZWNlaXZlciBoYXZlIHRoZSBzYW1lIGNvbnRyYWN0IGFuZCB0aGUgc2FtZSBiaW5kaW5nIChpbmNsdWRpbmcgc2VjdXJpdHkgcmVxdWlyZW1lbnRzLCBlLmcuIE1lc3NhZ2UsIFRyYW5zcG9ydCwgTm9uZSkuPC9mYXVsdHN0cmluZz4NCiAgICAgIDwvczpGYXVsdD4NCiAgIDwvczpCb2R5Pg0KPC9zOkVudmVsb3BlPg==';
-        requestCrearArchivos.listaArchivosPorSubir.push(archivo);
-      });
-
-
       this.restService.postREST(this.const.urlCrearArchivos, requestCrearArchivos)
         .subscribe(resp => {
           let temp = JSON.parse(JSON.stringify(resp));
@@ -398,9 +398,27 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
         this.uploadedFiles.push(file);
       }
 
-      this.cargarArchivo();
-      this.messageService.add({ severity: 'info', summary: 'Archivo Cargado', detail: '' });
-      fileUpload.clear();
+      let requestCrearArchivos: RequestArchivo = this.objectModelInitializer.getDataRequestArchivoFile();
+      requestCrearArchivos.idUnidadDocumental = this.selectedFiles.data;
+      this.uploadedFiles.forEach(file => {
+        let archivo: Archivo = this.objectModelInitializer.getDataArchivo();
+        archivo.nombreArchivo = file.name;
+        archivo.archivo = file;
+        requestCrearArchivos.listaArchivosPorSubir.push(archivo);
+      });
+
+      let readers = [];
+      requestCrearArchivos.listaArchivosPorSubir.forEach(file => {
+        readers.push(this.readFileAsText(file));
+      });
+
+      Promise.all(readers).then((values) => {
+        //file.archivo = e.target.result.split('base64,')[1];
+        this.cargarArchivo(requestCrearArchivos);
+        this.messageService.add({ severity: 'info', summary: 'Archivo Cargado', detail: '' });
+
+        fileUpload.clear();
+      });
     } else {
       this.messageService.add({ severity: 'info', summary: 'No ha seleccionado una Unidad Documental', detail: '' });
     }
@@ -414,6 +432,22 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
 
   visualizarArchivo(file: TreeNode) {
     this.obtenerArchivo(file.data, file.label, false);
+  }
+
+  readFileAsText(file) {
+    return new Promise(function (resolve, reject) {
+      let fileReader = new FileReader();
+      fileReader.onload = (e: any) => {
+        file.archivo = e.target.result.split('base64,')[1];
+        resolve(fileReader.result);
+      };
+
+      fileReader.onerror = function () {
+        reject(fileReader);
+      };
+
+      fileReader.readAsDataURL(file.archivo);
+    });
   }
 
 }
