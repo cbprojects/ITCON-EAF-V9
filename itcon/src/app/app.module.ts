@@ -13,6 +13,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { TreeModule } from 'primeng/tree';
 import { ContextMenuModule } from 'primeng/contextmenu';
+import { FileUploadModule } from 'primeng/fileupload';
 
 // Imports Utilidades
 import { TextProperties } from './config/TextProperties';
@@ -151,7 +152,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     CalendarModule,
     ProgressBarModule,
     TreeModule,
-    ContextMenuModule
+    ContextMenuModule,
+    FileUploadModule
   ],
   providers: [TextProperties, Enumerados, ObjectModelInitializer, Guardian, Util, Functions, MessageService, SesionService, { provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]

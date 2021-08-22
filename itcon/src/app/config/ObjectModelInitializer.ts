@@ -735,8 +735,8 @@ export class ObjectModelInitializer {
 
   getDataRequestConsultarUnidadDocumentalMasivo() {
     return {
-      idCajaUno: '',
-      idCajaDos: ''
+      idCajaUno: 0,
+      idCajaDos: 0
     }
   }
 

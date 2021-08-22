@@ -645,4 +645,101 @@ export class Util {
   toggleCollapseByID(id) {
     $('#' + id).toggleClass('card-collapsed');
   }
+
+  devolverMimeType(ext) {
+    let mapaMimeType = this.mapaMimeType();
+    return mapaMimeType.get(ext);
+  }
+
+  mapaMimeType() {
+    let mapaMimeType = new Map();
+    // Otros docs
+    mapaMimeType.set('.abw', 'application/x-abiword');
+    mapaMimeType.set('.arc', 'application/x-freearc');
+    mapaMimeType.set('.azw', 'application/vnd.amazon.ebook');
+    mapaMimeType.set('.bin', 'application/octet-stream');
+    mapaMimeType.set('.bz', 'application/x-bzip');
+    mapaMimeType.set('.bz2', 'application/x-bzip2');
+    mapaMimeType.set('.csh', 'application/x-csh');
+    mapaMimeType.set('.doc', 'application/msword');
+    mapaMimeType.set('.docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+    mapaMimeType.set('.eot', 'application/vnd.ms-fontobject');
+    mapaMimeType.set('.epub', 'application/epub+zip');
+    mapaMimeType.set('.gz', 'application/gzip');
+    mapaMimeType.set('.jar', 'application/java-archive');
+    mapaMimeType.set('.json', 'application/json');
+    mapaMimeType.set('.jsonld', 'application/ld+json');
+    mapaMimeType.set('.mpkg', 'application/vnd.apple.installer+xml');
+    mapaMimeType.set('.odp', 'application/vnd.oasis.opendocument.presentation');
+    mapaMimeType.set('.ods', 'application/vnd.oasis.opendocument.spreadsheet');
+    mapaMimeType.set('.odt', 'application/vnd.oasis.opendocument.text');
+    mapaMimeType.set('.ogx', 'application/ogg');
+    mapaMimeType.set('.pdf', 'application/pdf');
+    mapaMimeType.set('.php', 'application/x-httpd-php');
+    mapaMimeType.set('.ppt', 'application/vnd.ms-powerpoint');
+    mapaMimeType.set('.pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation');
+    mapaMimeType.set('.rar', 'application/vnd.rar');
+    mapaMimeType.set('.rtf', 'application/rtf');
+    mapaMimeType.set('.sh', 'application/x-sh');
+    mapaMimeType.set('.vsd', 'application/vnd.visio');
+    mapaMimeType.set('.xhtml', 'application/xhtml+xml');
+    mapaMimeType.set('.xls', 'application/vnd.ms-excel');
+    mapaMimeType.set('.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    mapaMimeType.set('.xml', 'application/xml text/xml');
+    mapaMimeType.set('.xul', 'application/vnd.mozilla.xul+xml');
+    mapaMimeType.set('.zip', 'application/zip');
+    mapaMimeType.set('.7z', 'application/x-7z-compressed');
+    mapaMimeType.set('.swf', 'application/x-shockwave-flash');
+    mapaMimeType.set('.tar', 'application/x-tar');
+
+    // Video
+    mapaMimeType.set('.avi', 'video/x-msvideo');
+    mapaMimeType.set('.mpeg', 'video/mpeg');
+    mapaMimeType.set('.ogv', 'video/ogg');
+    mapaMimeType.set('.ts', 'video/mp2t');
+    mapaMimeType.set('.webm', 'video/webm');
+    mapaMimeType.set('.3gp', 'video/3gpp');
+    mapaMimeType.set('.3g2', 'video/3gpp2');
+
+    // Imagen
+    mapaMimeType.set('.bmp', 'image/bmp');
+    mapaMimeType.set('.gif', 'image/gif');
+    mapaMimeType.set('.ico', 'image/vnd.microsoft.icon');
+    mapaMimeType.set('.jpg', 'image/jpeg');
+    mapaMimeType.set('.jpeg', 'image/jpeg');
+    mapaMimeType.set('.png', 'image/png');
+    mapaMimeType.set('.svg', 'image/svg+xml');
+    mapaMimeType.set('.tif', 'image/tiff');
+    mapaMimeType.set('.tiff', 'image/tiff');
+    mapaMimeType.set('.webp', 'image/webp');
+
+    // Texto Plano
+    mapaMimeType.set('.css', 'text/css');
+    mapaMimeType.set('.csv', 'text/csv');
+    mapaMimeType.set('.htm', 'text/html');
+    mapaMimeType.set('.ics', 'text/calendar');
+    mapaMimeType.set('.js', 'text/javascript');
+    mapaMimeType.set('.mjs', 'text/javascript');
+    mapaMimeType.set('.txt', 'text/plain');
+
+    // Audio
+    mapaMimeType.set('.aac', 'audio/aac');
+    mapaMimeType.set('.mid', 'audio/midi');
+    mapaMimeType.set('.midi', 'audio/x-midi');
+    mapaMimeType.set('.mp3', 'audio/mpeg');
+    mapaMimeType.set('.oga', 'audio/ogg');
+    mapaMimeType.set('.opus', 'audio/opus');
+    mapaMimeType.set('.wav', 'audio/wav');
+    mapaMimeType.set('.weba', 'audio/webm');
+    mapaMimeType.set('.3gp', 'audio/3gpp');
+    mapaMimeType.set('.3g2', 'audio/3gpp2');
+
+    // Fuentes
+    mapaMimeType.set('.otf', 'font/otf');
+    mapaMimeType.set('.ttf', 'font/ttf');
+    mapaMimeType.set('.woff', 'font/woff');
+    mapaMimeType.set('.woff2', 'font/woff2');
+
+    return mapaMimeType;
+  }
 }

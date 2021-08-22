@@ -50,7 +50,15 @@ export class RestService {
     return this.http.get(url, { responseType: 'blob' });
   }
 
-  postFileREST(url, data: File) {
+  postFileREST(url, data) {
+    return this.http.post(url, data, { responseType: 'blob' });
+  }
+
+  postFileTextREST(url, data) {
+    return this.http.post(url, data, { responseType: 'text' });
+  }
+
+  postFileSendREST(url, data: File) {
     let formData: FormData = new FormData();
     formData.append('file', data);
 
@@ -58,7 +66,7 @@ export class RestService {
   }
 
   postFileOnlyDownREST(url, data) {
-    return this.http.post(url, data, { responseType: 'text' });
+    return this.http.post(url, data, { responseType: 'blob' });
   }
   // END SERVICES WITHOUT SECURITY
 
@@ -92,7 +100,7 @@ export class RestService {
     });
   }
   // END SERVICES WITH SECURITY
-  
+
   // FORK ITEMS PARA MULTIPLES REST
   getMultipleREST(listaUrls): Observable<any[]> {
     let responses = [];
