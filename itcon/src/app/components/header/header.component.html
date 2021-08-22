@@ -94,7 +94,7 @@
             <div class="col-lg order-lg-first">
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                     <li class="nav-item">
-                        <a href="./index.html" class="nav-link active"><i class="fe fe-home"></i> Home</a>
+                        <a routerLink="/home" class="nav-link active"><i class="fe fe-home"></i> Home</a>
                     </li>
                     <li class="nav-item dropdown" *ngIf="validarRol('ITCMSE')">
                         <a id="pagesMenu" href="#" class="nav-link" data-toggle="dropdown" aria-expanded="false"><i
@@ -116,8 +116,10 @@
                             <a routerLink="/q-caja" class="dropdown-item " *ngIf="validarRol('ITCCAJ')">Caja</a>
                             <a routerLink="/q-unidad-documental" class="dropdown-item "
                                 *ngIf="validarRol('ITCUDO')">Unidad Documental</a>
-                                <a routerLink="/traslado-unidad-documental" class="dropdown-item "
+                            <a routerLink="/traslado-unidad-documental" class="dropdown-item "
                                 *ngIf="validarRol('ITCTUD')">Traslado Unidad Documental</a>
+                            <a routerLink="/digitalizar-unidad-documental" class="dropdown-item "
+                                *ngIf="validarRol('ITCDUD')">Digitalizar Unidad Documental</a>
                         </div>
                     </li>
                 </ul>

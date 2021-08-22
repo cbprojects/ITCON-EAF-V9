@@ -93,7 +93,8 @@
   opacity: 1;
 }
 
-.c3-target.c3-focused path.c3-line, .c3-target.c3-focused path.c3-step {
+.c3-target.c3-focused path.c3-line,
+.c3-target.c3-focused path.c3-step {
   stroke-width: 2px;
 }
 
@@ -104,12 +105,12 @@
 /*-- Region --*/
 .c3-region {
   fill: steelblue;
-  fill-opacity: .1;
+  fill-opacity: 0.1;
 }
 
 /*-- Brush --*/
 .c3-brush .extent {
-  fill-opacity: .1;
+  fill-opacity: 0.1;
 }
 
 /*-- Select - Drag --*/
@@ -127,6 +128,7 @@
   fill: transparent;
   stroke: lightgray;
   stroke-width: 0;
+  display: none;
 }
 
 /*-- Title --*/

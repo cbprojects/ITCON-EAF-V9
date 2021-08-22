@@ -61,7 +61,7 @@ export class TrasladoUnidadDocumentalComponent implements OnInit {
     this.listaSociedades = [];
     this.loading = true;
     try {
-      this.restService.getREST(this.const.urlConsultarSociedadesActivas)
+      this.restService.getREST(this.const.urlConsultarSociedadActiva)
         .subscribe(resp => {
           let temp: Sociedad[] = JSON.parse(JSON.stringify(resp));
           if (temp !== undefined && temp.length > 0) {
@@ -130,8 +130,8 @@ export class TrasladoUnidadDocumentalComponent implements OnInit {
     this.loading = true;
     this.limpiarUnidadDocumental();
     try {
-      this.requestUnidadDocumentalMasivo = { value: this.objectModelInitializer.getDataRequestConsultarUnidadDocumentalMasivo, label: this.msg.lbl_enum_generico_valor_vacio };
-      this.responseUnidadDocumentalMasivo = { value: this.objectModelInitializer.getDataResponseConsultarUnidadDocumentalMasivo, label: this.msg.lbl_enum_generico_valor_vacio };
+      this.requestUnidadDocumentalMasivo = { value: this.objectModelInitializer.getDataRequestConsultarUnidadDocumentalMasivo(), label: this.msg.lbl_enum_generico_valor_vacio };
+      this.responseUnidadDocumentalMasivo = { value: this.objectModelInitializer.getDataResponseConsultarUnidadDocumentalMasivo(), label: this.msg.lbl_enum_generico_valor_vacio };
       if (this.caja1Select != null && this.caja2Select != null) {
         if (this.caja1Select.id !== this.caja2Select.id) {
           this.requestUnidadDocumentalMasivo.idCajaUno = this.caja1Select.id;

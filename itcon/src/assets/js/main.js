@@ -1,458 +1,575 @@
-function chartDevelopmentActivity() {
-    $(document).ready(function () {
-        var chart = c3.generate({
-            bindto: '#chart-development-activity', // id of chart wrapper
-            data: {
-                columns: [
-                    // each columns data
-                    ['data1', '0', '115', '1', '2', '7', '5', '6', '8', '24', '7', '12', '5', '6', '3', '2', '2', '6', '30', '10', '10', '15', '14', '47', '65', '5'],
-                    ['data2', 10, 15, 1, 2, 7, 5, 61, 81, 24, 7, 12, 5, 6, 3, 2, 2, 6, 30, 10, 10, 15, 14, 47, 65, 55],
-                    ['data3', 0, 5, 11, 21, 71, 51, 6, 8, 24, 7, 12, 5, 6, 3, 2, 2, 6, 30, 10, 10, 15, 14, 47, 65, 55],
-                ],
-                type: 'area', // default type of chart
-                groups: [
-                    ['data1', 'data2', 'data3']
-                ],
-                colors: {
-                    'data1': tabler.colors["blue"],
-                    'data2': tabler.colors["green"],
-                    'data3': tabler.colors["red"]
+function crearMapaGraficaDeLista(lista) {
+    var mapaGrafica = new Map();
+    lista.forEach(punto => {
+        if (mapaGrafica.size === 0) {
+            var listaInterna = [punto];
+            mapaGrafica.set(punto.column, listaInterna);
+        } else {
+            if (mapaGrafica.has(punto.column)) {
+                mapaGrafica.get(punto.column).push(punto);
+            } else {
+                var listaInterna = [punto];
+                mapaGrafica.set(punto.column, listaInterna);
+            }
+        }
+    });
+    return mapaGrafica;
+}
+
+function chartDevelopmentActivity(dataEJM) {
+    if (dataEJM !== undefined && dataEJM !== null) {
+        // Armamos mapa de las gráficas
+        var mapaGrafica = this.crearMapaGraficaDeLista(dataEJM);
+        var keysGrafica = [...mapaGrafica.keys()];
+        var columnas = [];
+        var strColores = "{";
+        var strLabels = "{";
+        keysGrafica.forEach(key => {
+            // Colores
+            strColores = strColores + '"' + key + '": "' + mapaGrafica.get(key)[0].color + '", ';
+
+            // Labels
+            strLabels = strLabels + '"' + key + '": "' + mapaGrafica.get(key)[0].label + '", ';
+
+            // Columnas
+            var columnInterno = [key];
+            mapaGrafica.get(key).forEach(punto => {
+                columnInterno.push(punto.value);
+            });
+
+            columnas.push(columnInterno);
+        });
+        strColores = strColores.substring(0, strColores.length - 2) + "}";
+        strLabels = strLabels.substring(0, strLabels.length - 2) + "}";
+        var objColores = JSON.parse(strColores);
+        var objLabels = JSON.parse(strLabels);
+
+        $(document).ready(function () {
+            var chart = c3.generate({
+                bindto: '#chart-development-activity', // id of chart wrapper
+                data: {
+                    columns: columnas,
+                    type: 'area', // default type of chart
+                    groups: [
+                        keysGrafica
+                    ],
+                    colors: objColores,
+                    names: objLabels
                 },
-                names: {
-                    // name of each serie
-                    'data1': 'Carlos',
-                    'data2': 'Felipe',
-                    'data3': 'Julio'
-                }
-            },
-            axis: {
-                y: {
-                    padding: {
-                        bottom: 0,
+                axis: {
+                    y: {
+                        padding: {
+                            bottom: 0,
+                        },
+                        show: false,
+                        tick: {
+                            outer: false
+                        }
                     },
-                    show: false,
-                    tick: {
-                        outer: false
+                    x: {
+                        padding: {
+                            left: 0,
+                            right: 0
+                        },
+                        show: false
                     }
                 },
-                x: {
-                    padding: {
-                        left: 0,
-                        right: 0
-                    },
+                legend: {
+                    position: 'inset',
+                    padding: 0,
+                    inset: {
+                        anchor: 'top-left',
+                        x: 20,
+                        y: 8,
+                        step: 10
+                    }
+                },
+                tooltip: {
+                    format: {
+                        title: function (d) { return 'Data ' + d; },
+                        value: function (value, ratio, id) {
+                            var format = id === 'data1' ? d3.format(',') : d3.format('$');
+                            return format(value);
+                        }
+                    }
+                },
+                padding: {
+                    bottom: 0,
+                    left: -1,
+                    right: -1
+                },
+                point: {
                     show: false
                 }
-            },
-            legend: {
-                position: 'inset',
-                padding: 0,
-                inset: {
-                    anchor: 'top-left',
-                    x: 20,
-                    y: 8,
-                    step: 10
-                }
-            },
-            tooltip: {
-                format: {
-                    title: function (x) {
-                        return '';
-                    }
-                }
-            },
-            padding: {
-                bottom: 0,
-                left: -1,
-                right: -1
-            },
-            point: {
-                show: false
-            }
+            });
         });
-    });
+    }
 }
 
-function chartTable1(charTable1) {
-    $(document).ready(function () {
-        // Extraer info del parámetro
-        var chart = c3.generate({
-            bindto: '#chart-development-activity', // id of chart wrapper
-            data: {
-                columns: [
-                    // each columns data
-                    ['data1', '0', '115', '1', '2', '7', '5', '6', '8', '24', '7', '12', '5', '6', '3', '2', '2', '6', '30', '10', '10', '15', '14', '47', '65', '5'],
-                    ['data2', 10, 15, 1, 2, 7, 5, 61, 81, 24, 7, 12, 5, 6, 3, 2, 2, 6, 30, 10, 10, 15, 14, 47, 65, 55],
-                    ['data3', 0, 5, 11, 21, 71, 51, 6, 8, 24, 7, 12, 5, 6, 3, 2, 2, 6, 30, 10, 10, 15, 14, 47, 65, 55],
-                ],
-                type: 'area', // default type of chart
-                groups: [
-                    ['data1', 'data2', 'data3']
-                ],
-                colors: {
-                    'data1': tabler.colors["blue"],
-                    'data2': tabler.colors["green"],
-                    'data3': tabler.colors["red"]
+function chartDonut(dataEJM) {
+    if (dataEJM !== undefined && dataEJM !== null) {
+        // Armamos mapa de las gráficas
+        var mapaGrafica = this.crearMapaGraficaDeLista(dataEJM);
+        var keysGrafica = [...mapaGrafica.keys()];
+        var columnas = [];
+        var strColores = "{";
+        var strLabels = "{";
+        keysGrafica.forEach(key => {
+            // Colores
+            strColores = strColores + '"' + key + '": "' + mapaGrafica.get(key)[0].color + '", ';
+
+            // Labels
+            strLabels = strLabels + '"' + key + '": "' + mapaGrafica.get(key)[0].label + '", ';
+
+            // Columnas
+            var columnInterno = [key];
+            mapaGrafica.get(key).forEach(punto => {
+                columnInterno.push(punto.value);
+            });
+
+            columnas.push(columnInterno);
+        });
+        strColores = strColores.substring(0, strColores.length - 2) + "}";
+        strLabels = strLabels.substring(0, strLabels.length - 2) + "}";
+        var objColores = JSON.parse(strColores);
+        var objLabels = JSON.parse(strLabels);
+
+        $(document).ready(function () {
+            var chart = c3.generate({
+                bindto: '#chart-donut', // id of chart wrapper
+                data: {
+                    columns: columnas,
+                    type: 'donut', // default type of chart
+                    groups: [
+                        keysGrafica
+                    ],
+                    colors: objColores,
+                    names: objLabels
                 },
-                names: {
-                    // name of each serie
-                    'data1': 'Carlos',
-                    'data2': 'Felipe',
-                    'data3': 'Julio'
-                }
-            },
-            axis: {
-                y: {
-                    padding: {
-                        bottom: 0,
-                    },
-                    show: false,
-                    tick: {
-                        outer: false
-                    }
+                axis: {
                 },
-                x: {
-                    padding: {
-                        left: 0,
-                        right: 0
-                    },
+                legend: {
+                    show: false, //hide legend
+                },
+                padding: {
+                    bottom: 0,
+                    top: 0
+                },
+            });
+        });
+    }
+}
+
+function chartPie(dataEJM) {
+    if (dataEJM !== undefined && dataEJM !== null) {
+        // Armamos mapa de las gráficas
+        var mapaGrafica = this.crearMapaGraficaDeLista(dataEJM);
+        var keysGrafica = [...mapaGrafica.keys()];
+        var columnas = [];
+        var strColores = "{";
+        var strLabels = "{";
+        keysGrafica.forEach(key => {
+            // Colores
+            strColores = strColores + '"' + key + '": "' + mapaGrafica.get(key)[0].color + '", ';
+
+            // Labels
+            strLabels = strLabels + '"' + key + '": "' + mapaGrafica.get(key)[0].label + '", ';
+
+            // Columnas
+            var columnInterno = [key];
+            mapaGrafica.get(key).forEach(punto => {
+                columnInterno.push(punto.value);
+            });
+
+            columnas.push(columnInterno);
+        });
+        strColores = strColores.substring(0, strColores.length - 2) + "}";
+        strLabels = strLabels.substring(0, strLabels.length - 2) + "}";
+        var objColores = JSON.parse(strColores);
+        var objLabels = JSON.parse(strLabels);
+
+        $(document).ready(function () {
+            var chart = c3.generate({
+                bindto: '#chart-pie', // id of chart wrapper
+                data: {
+                    columns: columnas,
+                    type: 'pie', // default type of chart
+                    groups: [
+                        keysGrafica
+                    ],
+                    colors: objColores,
+                    names: objLabels
+                },
+                axis: {
+                },
+                legend: {
+                    show: false, //hide legend
+                },
+                padding: {
+                    bottom: 0,
+                    top: 0
+                },
+            });
+        });
+    }
+}
+
+function chartBgUsers1(dataEJM) {
+    if (dataEJM !== undefined && dataEJM !== null) {
+        // Armamos mapa de las gráficas
+        var mapaGrafica = this.crearMapaGraficaDeLista(dataEJM);
+        var keysGrafica = [...mapaGrafica.keys()];
+        var columnas = [];
+        var strColores = "{";
+        var strLabels = "{";
+        keysGrafica.forEach(key => {
+            // Colores
+            strColores = strColores + '"' + key + '": "' + mapaGrafica.get(key)[0].color + '", ';
+
+            // Labels
+            strLabels = strLabels + '"' + key + '": "' + mapaGrafica.get(key)[0].label + '", ';
+
+            // Columnas
+            var columnInterno = [key];
+            mapaGrafica.get(key).forEach(punto => {
+                columnInterno.push(punto.value);
+            });
+
+            columnas.push(columnInterno);
+        });
+        strColores = strColores.substring(0, strColores.length - 2) + "}";
+        strLabels = strLabels.substring(0, strLabels.length - 2) + "}";
+        var objColores = JSON.parse(strColores);
+        var objLabels = JSON.parse(strLabels);
+        $(document).ready(function () {
+            var chart = c3.generate({
+                bindto: '#chart-bg-users-1',
+                padding: {
+                    bottom: -10,
+                    left: -1,
+                    right: -1
+                },
+                data: {
+                    names: objLabels,
+                    columns: columnas,
+                    colors: objColores,
+                    type: 'area' // default type of chart
+                },
+                legend: {
                     show: false
-                }
-            },
-            legend: {
-                position: 'inset',
-                padding: 0,
-                inset: {
-                    anchor: 'top-left',
-                    x: 20,
-                    y: 8,
-                    step: 10
-                }
-            },
-            tooltip: {
-                format: {
-                    title: function (x) {
-                        return '';
-                    }
-                }
-            },
-            padding: {
-                bottom: 0,
-                left: -1,
-                right: -1
-            },
-            point: {
-                show: false
-            }
-        });
-    });
-}
-
-function chartDonut() {
-    $(document).ready(function () {
-        var chart = c3.generate({
-            bindto: '#chart-donut', // id of chart wrapper
-            data: {
-                columns: [
-                    // each columns data
-                    ['data1', 63],
-                    ['data2', 37]
-                ],
-                type: 'donut', // default type of chart
-                colors: {
-                    'data1': tabler.colors["green"],
-                    'data2': tabler.colors["green-light"]
                 },
-                names: {
-                    // name of each serie
-                    'data1': 'Maximum',
-                    'data2': 'Minimum'
-                }
-            },
-            axis: {
-            },
-            legend: {
-                show: false, //hide legend
-            },
-            padding: {
-                bottom: 0,
-                top: 0
-            },
-        });
-    });
-}
-
-function chartPie() {
-    $(document).ready(function () {
-        var chart = c3.generate({
-            bindto: '#chart-pie', // id of chart wrapper
-            data: {
-                columns: [
-                    // each columns data
-                    ['data1', 63],
-                    ['data2', 44],
-                    ['data3', 12],
-                    ['data4', 14]
-                ],
-                type: 'pie', // default type of chart
-                colors: {
-                    'data1': tabler.colors["blue-darker"],
-                    'data2': tabler.colors["blue"],
-                    'data3': tabler.colors["blue-light"],
-                    'data4': tabler.colors["blue-lighter"]
+                transition: {
+                    duration: 0
                 },
-                names: {
-                    // name of each serie
-                    'data1': 'A',
-                    'data2': 'B',
-                    'data3': 'C',
-                    'data4': 'D'
-                }
-            },
-            axis: {
-            },
-            legend: {
-                show: false, //hide legend
-            },
-            padding: {
-                bottom: 0,
-                top: 0
-            },
-        });
-    });
-}
-
-function chartBgUsers1() {
-    $(document).ready(function () {
-        var chart = c3.generate({
-            bindto: '#chart-bg-users-1',
-            padding: {
-                bottom: -10,
-                left: -1,
-                right: -1
-            },
-            data: {
-                names: {
-                    data1: 'Users online'
-                },
-                columns: [
-                    ['data1', 30, 40, 10, 40, 12, 22, 40]
-                ],
-                type: 'area'
-            },
-            legend: {
-                show: false
-            },
-            transition: {
-                duration: 0
-            },
-            point: {
-                show: false
-            },
-            tooltip: {
-                format: {
-                    title: function (x) {
-                        return '';
-                    }
-                }
-            },
-            axis: {
-                y: {
-                    padding: {
-                        bottom: 0,
-                    },
-                    show: false,
-                    tick: {
-                        outer: false
-                    }
-                },
-                x: {
-                    padding: {
-                        left: 0,
-                        right: 0
-                    },
+                point: {
                     show: false
+                },
+                tooltip: {
+                    format: {
+                        title: function (d) { return 'Data ' + d; },
+                        value: function (value, ratio, id) {
+                            var format = id === 'data1' ? d3.format(',') : d3.format('$');
+                            return format(value);
+                        }
+                    }
+                },
+                axis: {
+                    y: {
+                        padding: {
+                            bottom: 0,
+                        },
+                        show: false,
+                        tick: {
+                            outer: false
+                        }
+                    },
+                    x: {
+                        padding: {
+                            left: 0,
+                            right: 0
+                        },
+                        show: false
+                    }
+                },
+                color: {
+                    pattern: [dataEJM.color]
                 }
-            },
-            color: {
-                pattern: ['#467fcf']
-            }
+            });
         });
-    });
+    }
 }
 
-function chartBgUsers2() {
-    $(document).ready(function () {
-        var chart = c3.generate({
-            bindto: '#chart-bg-users-2',
-            padding: {
-                bottom: -10,
-                left: -1,
-                right: -1
-            },
-            data: {
-                names: {
-                    data1: 'Users online'
-                },
-                columns: [
-                    ['data1', 30, 40, 10, 40, 12, 22, 40]
-                ],
-                type: 'area'
-            },
-            legend: {
-                show: false
-            },
-            transition: {
-                duration: 0
-            },
-            point: {
-                show: false
-            },
-            tooltip: {
-                format: {
-                    title: function (x) {
-                        return '';
-                    }
-                }
-            },
-            axis: {
-                y: {
-                    padding: {
-                        bottom: 0,
-                    },
-                    show: false,
-                    tick: {
-                        outer: false
-                    }
-                },
-                x: {
-                    padding: {
-                        left: 0,
-                        right: 0
-                    },
-                    show: false
-                }
-            },
-            color: {
-                pattern: ['#e74c3c']
-            }
+function chartBgUsers2(dataEJM) {
+    if (dataEJM !== undefined && dataEJM !== null) {
+        // Armamos mapa de las gráficas
+        var mapaGrafica = this.crearMapaGraficaDeLista(dataEJM);
+        var keysGrafica = [...mapaGrafica.keys()];
+        var columnas = [];
+        var strColores = "{";
+        var strLabels = "{";
+        keysGrafica.forEach(key => {
+            // Colores
+            strColores = strColores + '"' + key + '": "' + mapaGrafica.get(key)[0].color + '", ';
+
+            // Labels
+            strLabels = strLabels + '"' + key + '": "' + mapaGrafica.get(key)[0].label + '", ';
+
+            // Columnas
+            var columnInterno = [key];
+            mapaGrafica.get(key).forEach(punto => {
+                columnInterno.push(punto.value);
+            });
+
+            columnas.push(columnInterno);
         });
-    });
+        strColores = strColores.substring(0, strColores.length - 2) + "}";
+        strLabels = strLabels.substring(0, strLabels.length - 2) + "}";
+        var objColores = JSON.parse(strColores);
+        var objLabels = JSON.parse(strLabels);
+        $(document).ready(function () {
+            var chart = c3.generate({
+                bindto: '#chart-bg-users-2',
+                padding: {
+                    bottom: -10,
+                    left: -1,
+                    right: -1
+                },
+                data: {
+                    names: objLabels,
+                    columns: columnas,
+                    colors: objColores,
+                    type: 'area' // default type of chart
+                },
+                legend: {
+                    show: false
+                },
+                transition: {
+                    duration: 0
+                },
+                point: {
+                    show: false
+                },
+                tooltip: {
+                    format: {
+                        title: function (d) { return 'Data ' + d; },
+                        value: function (value, ratio, id) {
+                            var format = id === 'data1' ? d3.format(',') : d3.format('$');
+                            return format(value);
+                        }
+                    }
+                },
+                axis: {
+                    y: {
+                        padding: {
+                            bottom: 0,
+                        },
+                        show: false,
+                        tick: {
+                            outer: false
+                        }
+                    },
+                    x: {
+                        padding: {
+                            left: 0,
+                            right: 0
+                        },
+                        show: false
+                    }
+                },
+                color: {
+                    pattern: [dataEJM.color]
+                }
+            });
+        });
+    }
 }
 
-function chartBgUsers3() {
-    $(document).ready(function () {
-        var chart = c3.generate({
-            bindto: '#chart-bg-users-3',
-            padding: {
-                bottom: -10,
-                left: -1,
-                right: -1
-            },
-            data: {
-                names: {
-                    data1: 'Users online'
-                },
-                columns: [
-                    ['data1', 30, 40, 10, 40, 12, 22, 40]
-                ],
-                type: 'area'
-            },
-            legend: {
-                show: false
-            },
-            transition: {
-                duration: 0
-            },
-            point: {
-                show: false
-            },
-            tooltip: {
-                format: {
-                    title: function (x) {
-                        return '';
-                    }
-                }
-            },
-            axis: {
-                y: {
-                    padding: {
-                        bottom: 0,
-                    },
-                    show: false,
-                    tick: {
-                        outer: false
-                    }
-                },
-                x: {
-                    padding: {
-                        left: 0,
-                        right: 0
-                    },
-                    show: false
-                }
-            },
-            color: {
-                pattern: ['#5eba00']
-            }
+function chartBgUsers3(dataEJM) {
+    if (dataEJM !== undefined && dataEJM !== null) {
+        // Armamos mapa de las gráficas
+        var mapaGrafica = this.crearMapaGraficaDeLista(dataEJM);
+        var keysGrafica = [...mapaGrafica.keys()];
+        var columnas = [];
+        var strColores = "{";
+        var strLabels = "{";
+        keysGrafica.forEach(key => {
+            // Colores
+            strColores = strColores + '"' + key + '": "' + mapaGrafica.get(key)[0].color + '", ';
+
+            // Labels
+            strLabels = strLabels + '"' + key + '": "' + mapaGrafica.get(key)[0].label + '", ';
+
+            // Columnas
+            var columnInterno = [key];
+            mapaGrafica.get(key).forEach(punto => {
+                columnInterno.push(punto.value);
+            });
+
+            columnas.push(columnInterno);
         });
-    });
+        strColores = strColores.substring(0, strColores.length - 2) + "}";
+        strLabels = strLabels.substring(0, strLabels.length - 2) + "}";
+        var objColores = JSON.parse(strColores);
+        var objLabels = JSON.parse(strLabels);
+        $(document).ready(function () {
+            var chart = c3.generate({
+                bindto: '#chart-bg-users-3',
+                padding: {
+                    bottom: -10,
+                    left: -1,
+                    right: -1
+                },
+                data: {
+                    names: objLabels,
+                    columns: columnas,
+                    colors: objColores,
+                    type: 'area' // default type of chart
+                },
+                legend: {
+                    show: false
+                },
+                transition: {
+                    duration: 0
+                },
+                point: {
+                    show: false
+                },
+                tooltip: {
+                    format: {
+                        title: function (d) { return 'Data ' + d; },
+                        value: function (value, ratio, id) {
+                            var format = id === 'data1' ? d3.format(',') : d3.format('$');
+                            return format(value);
+                        }
+                    }
+                },
+                axis: {
+                    y: {
+                        padding: {
+                            bottom: 0,
+                        },
+                        show: false,
+                        tick: {
+                            outer: false
+                        }
+                    },
+                    x: {
+                        padding: {
+                            left: 0,
+                            right: 0
+                        },
+                        show: false
+                    }
+                },
+                color: {
+                    pattern: [dataEJM.color]
+                }
+            });
+        });
+    }
 }
 
-function chartBgUsers4() {
-    $(document).ready(function () {
-        var chart = c3.generate({
-            bindto: '#chart-bg-users-4',
-            padding: {
-                bottom: -10,
-                left: -1,
-                right: -1
-            },
-            data: {
-                names: {
-                    data1: 'Users online'
-                },
-                columns: [
-                    ['data1', 30, 40, 10, 40, 12, 22, 40]
-                ],
-                type: 'area'
-            },
-            legend: {
-                show: false
-            },
-            transition: {
-                duration: 0
-            },
-            point: {
-                show: false
-            },
-            tooltip: {
-                format: {
-                    title: function (x) {
-                        return '';
-                    }
-                }
-            },
-            axis: {
-                y: {
-                    padding: {
-                        bottom: 0,
-                    },
-                    show: false,
-                    tick: {
-                        outer: false
-                    }
-                },
-                x: {
-                    padding: {
-                        left: 0,
-                        right: 0
-                    },
-                    show: false
-                }
-            },
-            color: {
-                pattern: ['#f1c40f']
-            }
+function chartBgUsers4(dataEJM) {
+    if (dataEJM !== undefined && dataEJM !== null) {
+        // Armamos mapa de las gráficas
+        var mapaGrafica = this.crearMapaGraficaDeLista(dataEJM);
+        var keysGrafica = [...mapaGrafica.keys()];
+        var columnas = [];
+        var strColores = "{";
+        var strLabels = "{";
+        keysGrafica.forEach(key => {
+            // Colores
+            strColores = strColores + '"' + key + '": "' + mapaGrafica.get(key)[0].color + '", ';
+
+            // Labels
+            strLabels = strLabels + '"' + key + '": "' + mapaGrafica.get(key)[0].label + '", ';
+
+            // Columnas
+            var columnInterno = [key];
+            mapaGrafica.get(key).forEach(punto => {
+                columnInterno.push(punto.value);
+            });
+
+            columnas.push(columnInterno);
         });
+        strColores = strColores.substring(0, strColores.length - 2) + "}";
+        strLabels = strLabels.substring(0, strLabels.length - 2) + "}";
+        var objColores = JSON.parse(strColores);
+        var objLabels = JSON.parse(strLabels);
+        $(document).ready(function () {
+            var chart = c3.generate({
+                bindto: '#chart-bg-users-4',
+                padding: {
+                    bottom: -10,
+                    left: -1,
+                    right: -1
+                },
+                data: {
+                    names: objLabels,
+                    columns: columnas,
+                    colors: objColores,
+                    type: 'area' // default type of chart
+                },
+                legend: {
+                    show: false
+                },
+                transition: {
+                    duration: 0
+                },
+                point: {
+                    show: false
+                },
+                tooltip: {
+                    format: {
+                        title: function (d) { return 'Data ' + d; },
+                        value: function (value, ratio, id) {
+                            var format = id === 'data1' ? d3.format(',') : d3.format('$');
+                            return format(value);
+                        }
+                    }
+                },
+                axis: {
+                    y: {
+                        padding: {
+                            bottom: 0,
+                        },
+                        show: false,
+                        tick: {
+                            outer: false
+                        }
+                    },
+                    x: {
+                        padding: {
+                            left: 0,
+                            right: 0
+                        },
+                        show: false
+                    }
+                },
+                color: {
+                    pattern: [dataEJM.color]
+                }
+            });
+        });
+    }
+}
+
+function chartsCircles() {
+    $(document).ready(function () {
+        if ($('.chart-circle').length) {
+            $('.chart-circle').each(function () {
+                let $this = $(this);
+
+                $this.circleProgress({
+                    fill: {
+                        color: tabler.colors[$this.attr('data-color')] || tabler.colors.blue
+                    },
+                    size: $this.height(),
+                    startAngle: -Math.PI / 4 * 2,
+                    emptyFill: '#F4F4F4',
+                    lineCap: 'round'
+                });
+            });
+        }
     });
 }

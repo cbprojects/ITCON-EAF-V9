@@ -18,6 +18,7 @@ import { QCajaComponent } from '../components/query/caja/q-cajas.component';
 import { MUnidadDocumentalComponent } from '../components/management/unidad-documental/m-unidad-documental.component';
 import { QUnidadDocumentalComponent } from '../components/query/unidad-documental/q-unidad-documental.component';
 import { TrasladoUnidadDocumentalComponent } from '../components/management/traslado-unidad-documental/traslado-unidad-documental.component';
+import { DigitalizarUnidadDocumentalComponent } from '../components/management/digitalizar-unidad-documental/digitalizar-unidad-documental.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -35,6 +36,7 @@ const routes: Routes = [
   { path: 'q-unidad-documental', component: QUnidadDocumentalComponent, canActivate: [Guardian] },
   { path: 'm-unidad-documental', component: MUnidadDocumentalComponent, canActivate: [Guardian] },
   { path: 'traslado-unidad-documental', component: TrasladoUnidadDocumentalComponent, canActivate: [Guardian] },
+  { path: 'digitalizar-unidad-documental', component: DigitalizarUnidadDocumentalComponent, canActivate: [Guardian] },
 
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/login' },

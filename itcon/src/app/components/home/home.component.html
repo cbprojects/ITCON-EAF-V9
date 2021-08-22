@@ -8,196 +8,168 @@
 
 		<!-- CONTENT -->
 		<div class="my-3 my-md-5">
-			<div class="container">
+			<div *ngIf="dashboardModel" class="container">
 				<div class="page-header">
 					<h1 class="page-title">
 						Dashboard
 					</h1>
 				</div>
 				<div class="row row-cards">
-					<!-- BOXES -->
-					<div class="col-6 col-sm-4 col-lg-2">
-						<div class="card">
+					<!-- BOXES1 -->
+					<div *ngIf="dashboardModel.boxes1.box1" class="col-6 col-sm-4 col-lg-2">
+						<div *ngIf="dashboardModel.boxes1.box1" class="card">
 							<div class="card-body p-3 text-center">
 								<div class="text-right text-green">
-									6%
+									{{dashboardModel.boxes1.box1.upperValue}}{{dashboardModel.boxes1.box1.upperLabel}}
 									<i class="fe fe-chevron-up"></i>
 								</div>
-								<div class="h1 m-0">43</div>
-								<div class="text-muted mb-4">New Tickets</div>
+								<div class="h1 m-0">{{dashboardModel.boxes1.box1.principalValue}}</div>
+								<div class="text-muted mb-4">{{dashboardModel.boxes1.box1.principalLabel}}</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-6 col-sm-4 col-lg-2">
-						<div class="card">
-							<div class="card-body p-3 text-center">
-								<div class="text-right text-red">
-									-3%
-									<i class="fe fe-chevron-down"></i>
-								</div>
-								<div class="h1 m-0">17</div>
-								<div class="text-muted mb-4">Closed Today</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-6 col-sm-4 col-lg-2">
-						<div class="card">
+					<div *ngIf="dashboardModel.boxes1.box2" class="col-6 col-sm-4 col-lg-2">
+						<div *ngIf="dashboardModel.boxes1.box2" class="card">
 							<div class="card-body p-3 text-center">
 								<div class="text-right text-green">
-									9%
+									{{dashboardModel.boxes1.box2.upperValue}}{{dashboardModel.boxes1.box2.upperLabel}}
 									<i class="fe fe-chevron-up"></i>
 								</div>
-								<div class="h1 m-0">7</div>
-								<div class="text-muted mb-4">New Replies</div>
+								<div class="h1 m-0">{{dashboardModel.boxes1.box2.principalValue}}</div>
+								<div class="text-muted mb-4">{{dashboardModel.boxes1.box2.principalLabel}}</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-6 col-sm-4 col-lg-2">
-						<div class="card">
+					<div *ngIf="dashboardModel.boxes1.box3" class="col-6 col-sm-4 col-lg-2">
+						<div *ngIf="dashboardModel.boxes1.box3" class="card">
 							<div class="card-body p-3 text-center">
 								<div class="text-right text-green">
-									3%
+									{{dashboardModel.boxes1.box3.upperValue}}{{dashboardModel.boxes1.box3.upperLabel}}
 									<i class="fe fe-chevron-up"></i>
 								</div>
-								<div class="h1 m-0">27.3K</div>
-								<div class="text-muted mb-4">Followers</div>
+								<div class="h1 m-0">{{dashboardModel.boxes1.box3.principalValue}}</div>
+								<div class="text-muted mb-4">{{dashboardModel.boxes1.box3.principalLabel}}</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-6 col-sm-4 col-lg-2">
-						<div class="card">
+					<div *ngIf="dashboardModel.boxes1.box4" class="col-6 col-sm-4 col-lg-2">
+						<div *ngIf="dashboardModel.boxes1.box4" class="card">
 							<div class="card-body p-3 text-center">
 								<div class="text-right text-red">
-									-2%
-									<i class="fe fe-chevron-down"></i>
+									{{dashboardModel.boxes1.box4.upperValue}}{{dashboardModel.boxes1.box4.upperLabel}}
+									<i class="fe fe-chevron-up"></i>
 								</div>
-								<div class="h1 m-0">$95</div>
-								<div class="text-muted mb-4">Daily Earnings</div>
+								<div class="h1 m-0">{{dashboardModel.boxes1.box4.principalValue}}</div>
+								<div class="text-muted mb-4">{{dashboardModel.boxes1.box4.principalLabel}}</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-6 col-sm-4 col-lg-2">
-						<div class="card">
+					<div *ngIf="dashboardModel.boxes1.box5" class="col-6 col-sm-4 col-lg-2">
+						<div *ngIf="dashboardModel.boxes1.box5" class="card">
 							<div class="card-body p-3 text-center">
 								<div class="text-right text-red">
-									-1%
-									<i class="fe fe-chevron-down"></i>
+									{{dashboardModel.boxes1.box5.upperValue}}{{dashboardModel.boxes1.box5.upperLabel}}
+									<i class="fe fe-chevron-up"></i>
 								</div>
-								<div class="h1 m-0">621</div>
-								<div class="text-muted mb-4">Products</div>
+								<div class="h1 m-0">{{dashboardModel.boxes1.box5.principalValue}}</div>
+								<div class="text-muted mb-4">{{dashboardModel.boxes1.box5.principalLabel}}</div>
 							</div>
 						</div>
 					</div>
-					<!-- END BOXES -->
+					<div *ngIf="dashboardModel.boxes1.box6" class="col-6 col-sm-4 col-lg-2">
+						<div *ngIf="dashboardModel.boxes1.box6" class="card">
+							<div class="card-body p-3 text-center">
+								<div class="text-right text-red">
+									{{dashboardModel.boxes1.box6.upperValue}}{{dashboardModel.boxes1.box6.upperLabel}}
+									<i class="fe fe-chevron-up"></i>
+								</div>
+								<div class="h1 m-0">{{dashboardModel.boxes1.box6.principalValue}}</div>
+								<div class="text-muted mb-4">{{dashboardModel.boxes1.box6.principalLabel}}</div>
+							</div>
+						</div>
+					</div>
+					<!-- END BOXES1 -->
 
+					<!-- CHART-TABLE BOXES2 -->
 					<div class="col-lg-6">
-						<div class="card">
+						<div *ngIf="dashboardModel.chartTable1" class="card">
 							<div class="card-header">
 								<h3 class="card-title">Development Activity</h3>
 							</div>
 							<div id="chart-development-activity" style="height: 10rem"></div>
-							<div class="table-responsive">
+							<div *ngIf="dashboardModel.chartTable1.table" class="table-responsive">
 								<table class="table card-table table-striped table-vcenter">
 									<thead>
 										<tr>
-											<th colspan="2">User</th>
-											<th>Commit</th>
-											<th>Date</th>
+											<th></th>
+											<th *ngFor="let titulo of dashboardModel.chartTable1.table.cabeceras">
+												{{titulo}}</th>
 											<th></th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
+										<tr *ngFor="let persona of dashboardModel.chartTable1.table.values">
 											<td class="w-1"><span class="avatar"
-													style="background-image: url(./assets/images/faces/male/9.jpg)"></span>
+													style="background-image: url(./assets/images/faces/female/26.jpg)"></span>
 											</td>
-											<td>Ronald Bradley</td>
-											<td>Initial commit</td>
-											<td class="text-nowrap">May 6, 2018</td>
-											<td class="w-1"><a href="#" class="icon"><i class="fe fe-trash"></i></a>
+											<td>{{persona.usuario}}</td>
+											<td>{{persona.commit}}</td>
+											<td class="text-nowrap">{{persona.fechaCommit}}</td>
+											<td class="w-1"><a class="icon"><i class="fe fe-trash hoverRed"></i></a>
 											</td>
-										</tr>
-										<tr>
-											<td><span class="avatar">BM</span></td>
-											<td>Russell Gibson</td>
-											<td>Main structure</td>
-											<td class="text-nowrap">April 22, 2018</td>
-											<td><a href="#" class="icon"><i class="fe fe-trash"></i></a></td>
-										</tr>
-										<tr>
-											<td><span class="avatar"
-													style="background-image: url(./assets/images/faces/female/1.jpg)"></span>
-											</td>
-											<td>Beverly Armstrong</td>
-											<td>Left sidebar adjustments</td>
-											<td class="text-nowrap">April 15, 2018</td>
-											<td><a href="#" class="icon"><i class="fe fe-trash"></i></a></td>
-										</tr>
-										<tr>
-											<td><span class="avatar"
-													style="background-image: url(./assets/images/faces/male/4.jpg)"></span>
-											</td>
-											<td>Bobby Knight</td>
-											<td>Topbar dropdown style</td>
-											<td class="text-nowrap">April 8, 2018</td>
-											<td><a href="#" class="icon"><i class="fe fe-trash"></i></a></td>
-										</tr>
-										<tr>
-											<td><span class="avatar"
-													style="background-image: url(./assets/images/faces/female/11.jpg)"></span>
-											</td>
-											<td>Sharon Wells</td>
-											<td>Fixes #625</td>
-											<td class="text-nowrap">April 9, 2018</td>
-											<td><a href="#" class="icon"><i class="fe fe-trash"></i></a></td>
 										</tr>
 									</tbody>
 								</table>
 							</div>
 						</div>
-						<div class="row">
+						<div *ngIf="dashboardModel.boxes2" class="row">
 							<div class="col-sm-6">
 								<div class="card">
 									<div class="card-body text-center">
-										<div class="h5">New feedback</div>
-										<div class="display-4 font-weight-bold mb-4">62</div>
-										<div class="progress progress-sm">
-											<div class="progress-bar bg-red" style="width: 45%"></div>
-										</div>
+										<div class="h5">{{dashboardModel.boxes2.box1.principalLabel}}</div>
+										<div class="display-4 font-weight-bold mb-4">
+											{{dashboardModel.boxes2.box1.principalValue}}</div>
+										<p-progressBar [style]="{'height': '6px'}"
+											[value]="dashboardModel.boxes2.box1.principalValue">
+										</p-progressBar>
 									</div>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="card">
 									<div class="card-body text-center">
-										<div class="h5">Today profit</div>
-										<div class="display-4 font-weight-bold mb-4">$652</div>
-										<div class="progress progress-sm">
-											<div class="progress-bar bg-green" style="width: 84%"></div>
-										</div>
+										<div class="h5">{{dashboardModel.boxes2.box2.principalLabel}}</div>
+										<div class="display-4 font-weight-bold mb-4">
+											{{dashboardModel.boxes2.box2.principalValue}}</div>
+										<p-progressBar [style]="{'height': '6px'}"
+											[value]="calcPercent(dashboardModel.boxes2.box2.principalValue)">
+										</p-progressBar>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+					<!-- END CHART-TABLE BOXES2 -->
+
+					<!-- CHARTPIES -->
 					<div class="col-md-6">
 						<div class="alert alert-primary">Are you in trouble? <a href="#" class="alert-link">Read
 								our documentation</a> with code samples.</div>
 						<div class="row">
-							<div class="col-sm-6">
+							<div *ngIf="dashboardModel.chartPie1" class="col-sm-6">
 								<div class="card">
 									<div class="card-header">
-										<h3 class="card-title">Chart title</h3>
+										<h3 class="card-title">Chart Donut</h3>
 									</div>
 									<div class="card-body">
 										<div id="chart-donut" style="height: 12rem;"></div>
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-6">
+							<div *ngIf="dashboardModel.chartPie2" class="col-sm-6">
 								<div class="card">
 									<div class="card-header">
-										<h3 class="card-title">Chart title</h3>
+										<h3 class="card-title">Chart Pie</h3>
 									</div>
 									<div class="card-body">
 										<div id="chart-pie" style="height: 12rem;"></div>
@@ -212,60 +184,74 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-6 col-lg-3">
+					<!-- END CHARTPIES -->
+
+					<!-- BOXES3 -->
+					<div *ngIf="dashboardModel.boxes3.box1" class="col-sm-6 col-lg-3">
 						<div class="card p-3">
 							<div class="d-flex align-items-center">
 								<span class="stamp stamp-md bg-blue mr-3">
 									<i class="fe fe-dollar-sign"></i>
 								</span>
 								<div>
-									<h4 class="m-0"><a href="#">132 <small>Sales</small></a></h4>
-									<small class="text-muted">12 waiting payments</small>
+									<h4 class="m-0"><a href="#">{{dashboardModel.boxes3.box1.principalValue}}
+											<small>{{dashboardModel.boxes3.box1.principalLabel}}</small></a></h4>
+									<small class="text-muted">{{dashboardModel.boxes3.box1.subtitleValue}}
+										{{dashboardModel.boxes3.box1.subtitleLabel}}</small>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-6 col-lg-3">
+					<div *ngIf="dashboardModel.boxes3.box2" class="col-sm-6 col-lg-3">
 						<div class="card p-3">
 							<div class="d-flex align-items-center">
 								<span class="stamp stamp-md bg-green mr-3">
-									<i class="fe fe-shopping-cart"></i>
+									<i class="fe fe-dollar-sign"></i>
 								</span>
 								<div>
-									<h4 class="m-0"><a href="#">78 <small>Orders</small></a></h4>
-									<small class="text-muted">32 shipped</small>
+									<h4 class="m-0"><a href="#">{{dashboardModel.boxes3.box2.principalValue}}
+											<small>{{dashboardModel.boxes3.box2.principalLabel}}</small></a></h4>
+									<small class="text-muted">{{dashboardModel.boxes3.box2.subtitleValue}}
+										{{dashboardModel.boxes3.box2.subtitleLabel}}</small>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-6 col-lg-3">
+					<div *ngIf="dashboardModel.boxes3.box3" class="col-sm-6 col-lg-3">
 						<div class="card p-3">
 							<div class="d-flex align-items-center">
 								<span class="stamp stamp-md bg-red mr-3">
-									<i class="fe fe-users"></i>
+									<i class="fe fe-dollar-sign"></i>
 								</span>
 								<div>
-									<h4 class="m-0"><a href="#">1,352 <small>Members</small></a></h4>
-									<small class="text-muted">163 registered today</small>
+									<h4 class="m-0"><a href="#">{{dashboardModel.boxes3.box3.principalValue}}
+											<small>{{dashboardModel.boxes3.box3.principalLabel}}</small></a></h4>
+									<small class="text-muted">{{dashboardModel.boxes3.box3.subtitleValue}}
+										{{dashboardModel.boxes3.box3.subtitleLabel}}</small>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-6 col-lg-3">
+					<div *ngIf="dashboardModel.boxes3.box4" class="col-sm-6 col-lg-3">
 						<div class="card p-3">
 							<div class="d-flex align-items-center">
 								<span class="stamp stamp-md bg-yellow mr-3">
-									<i class="fe fe-message-square"></i>
+									<i class="fe fe-dollar-sign"></i>
 								</span>
 								<div>
-									<h4 class="m-0"><a href="#">132 <small>Comments</small></a></h4>
-									<small class="text-muted">16 waiting</small>
+									<h4 class="m-0"><a href="#">{{dashboardModel.boxes3.box4.principalValue}}
+											<small>{{dashboardModel.boxes3.box4.principalLabel}}</small></a></h4>
+									<small class="text-muted">{{dashboardModel.boxes3.box4.subtitleValue}}
+										{{dashboardModel.boxes3.box4.subtitleLabel}}</small>
 								</div>
 							</div>
 						</div>
 					</div>
+					<!-- END BOXES3 -->
 				</div>
+
 				<div class="row row-cards row-deck">
+					<!-- CARDIMAGE -->
 					<div class="col-lg-6">
 						<div class="card card-aside">
 							<a href="#" class="card-aside-column"
@@ -314,10 +300,13 @@
 							</div>
 						</div>
 					</div>
+					<!-- END CARDIMAGE -->
 				</div>
+
 				<div class="row row-cards row-deck">
+					<!-- TABLE1 -->
 					<div class="col-12">
-						<div class="card">
+						<div *ngIf="dashboardModel.table1" class="card">
 							<div class="table-responsive">
 								<table class="table table-hover table-outline table-vcenter text-nowrap card-table">
 									<thead>
@@ -332,7 +321,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
+										<tr *ngFor="let usuarioTb1 of dashboardModel.table1.values">
 											<td class="text-center">
 												<div class="avatar d-block"
 													style="background-image: url(assets/images/faces/female/26.jpg)">
@@ -340,471 +329,37 @@
 												</div>
 											</td>
 											<td>
-												<div>Elizabeth Martin</div>
+												<div>{{usuarioTb1.usuario}}</div>
 												<div class="small text-muted">
-													Registered: Mar 7, 2019
+													Registrado: {{usuarioTb1.fechaCommit}}
 												</div>
 											</td>
 											<td>
 												<div class="clearfix">
 													<div class="float-left">
-														<strong>42%</strong>
+														<strong>{{usuarioTb1.usage.split('|')[0]}}</strong>
 													</div>
 													<div class="float-right">
-														<small class="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
+														<small
+															class="text-muted">{{usuarioTb1.usage.split('|')[1]}}</small>
 													</div>
 												</div>
-												<div class="progress progress-xs">
-													<div class="progress-bar bg-yellow" role="progressbar"
-														style="width: 42%" aria-valuenow="42" aria-valuemin="0"
-														aria-valuemax="100"></div>
-												</div>
+												<p-progressBar [style]="{'height': '6px'}"
+													[value]="valueOfPercentStr(usuarioTb1.usage.split('|')[0])">
+												</p-progressBar>
 											</td>
 											<td class="text-center">
-												<i class="payment payment-visa"></i>
+												<i class="payment payment-{{usuarioTb1.payment}}"></i>
 											</td>
 											<td>
-												<div class="small text-muted">Last login</div>
-												<div>4 minutes ago</div>
+												<div class="small text-muted">{{usuarioTb1.activity.split('|')[0]}}
+												</div>
+												<div>{{usuarioTb1.activity.split('|')[1]}}</div>
 											</td>
 											<td class="text-center">
 												<div class="mx-auto chart-circle chart-circle-xs" data-value="0.42"
 													data-thickness="3" data-color="blue">
-													<div class="chart-circle-value">42%</div>
-												</div>
-											</td>
-											<td class="text-center">
-												<div class="item-action dropdown">
-													<a href="#" data-toggle="dropdown" class="icon"><i
-															class="fe fe-more-vertical"></i></a>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-tag"></i>
-															Action </a>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-edit-2"></i> Another action
-														</a>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-message-square"></i>
-															Something else here</a>
-														<div class="dropdown-divider"></div>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-link"></i> Separated link</a>
-													</div>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td class="text-center">
-												<div class="avatar d-block"
-													style="background-image: url(assets/images/faces/female/17.jpg)">
-													<span class="avatar-status bg-green"></span>
-												</div>
-											</td>
-											<td>
-												<div>Michelle Schultz</div>
-												<div class="small text-muted">
-													Registered: Feb 19, 2019
-												</div>
-											</td>
-											<td>
-												<div class="clearfix">
-													<div class="float-left">
-														<strong>0%</strong>
-													</div>
-													<div class="float-right">
-														<small class="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-													</div>
-												</div>
-												<div class="progress progress-xs">
-													<div class="progress-bar bg-red" role="progressbar"
-														style="width: 0%" aria-valuenow="0" aria-valuemin="0"
-														aria-valuemax="100"></div>
-												</div>
-											</td>
-											<td class="text-center">
-												<i class="payment payment-googlewallet"></i>
-											</td>
-											<td>
-												<div class="small text-muted">Last login</div>
-												<div>5 minutes ago</div>
-											</td>
-											<td class="text-center">
-												<div class="mx-auto chart-circle chart-circle-xs" data-value="0.0"
-													data-thickness="3" data-color="blue">
-													<div class="chart-circle-value">0%</div>
-												</div>
-											</td>
-											<td class="text-center">
-												<div class="item-action dropdown">
-													<a href="#" data-toggle="dropdown" class="icon"><i
-															class="fe fe-more-vertical"></i></a>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-tag"></i>
-															Action </a>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-edit-2"></i> Another action
-														</a>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-message-square"></i>
-															Something else here</a>
-														<div class="dropdown-divider"></div>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-link"></i> Separated link</a>
-													</div>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td class="text-center">
-												<div class="avatar d-block"
-													style="background-image: url(assets/images/faces/female/21.jpg)">
-													<span class="avatar-status bg-green"></span>
-												</div>
-											</td>
-											<td>
-												<div>Crystal Austin</div>
-												<div class="small text-muted">
-													Registered: Mar 26, 2019
-												</div>
-											</td>
-											<td>
-												<div class="clearfix">
-													<div class="float-left">
-														<strong>96%</strong>
-													</div>
-													<div class="float-right">
-														<small class="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-													</div>
-												</div>
-												<div class="progress progress-xs">
-													<div class="progress-bar bg-green" role="progressbar"
-														style="width: 96%" aria-valuenow="96" aria-valuemin="0"
-														aria-valuemax="100"></div>
-												</div>
-											</td>
-											<td class="text-center">
-												<i class="payment payment-mastercard"></i>
-											</td>
-											<td>
-												<div class="small text-muted">Last login</div>
-												<div>a minute ago</div>
-											</td>
-											<td class="text-center">
-												<div class="mx-auto chart-circle chart-circle-xs" data-value="0.96"
-													data-thickness="3" data-color="blue">
-													<div class="chart-circle-value">96%</div>
-												</div>
-											</td>
-											<td class="text-center">
-												<div class="item-action dropdown">
-													<a href="#" data-toggle="dropdown" class="icon"><i
-															class="fe fe-more-vertical"></i></a>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-tag"></i>
-															Action </a>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-edit-2"></i> Another action
-														</a>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-message-square"></i>
-															Something else here</a>
-														<div class="dropdown-divider"></div>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-link"></i> Separated link</a>
-													</div>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td class="text-center">
-												<div class="avatar d-block"
-													style="background-image: url(assets/images/faces/male/32.jpg)">
-													<span class="avatar-status bg-green"></span>
-												</div>
-											</td>
-											<td>
-												<div>Douglas Ray</div>
-												<div class="small text-muted">
-													Registered: Jan 4, 2019
-												</div>
-											</td>
-											<td>
-												<div class="clearfix">
-													<div class="float-left">
-														<strong>6%</strong>
-													</div>
-													<div class="float-right">
-														<small class="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-													</div>
-												</div>
-												<div class="progress progress-xs">
-													<div class="progress-bar bg-red" role="progressbar"
-														style="width: 6%" aria-valuenow="6" aria-valuemin="0"
-														aria-valuemax="100"></div>
-												</div>
-											</td>
-											<td class="text-center">
-												<i class="payment payment-shopify"></i>
-											</td>
-											<td>
-												<div class="small text-muted">Last login</div>
-												<div>a minute ago</div>
-											</td>
-											<td class="text-center">
-												<div class="mx-auto chart-circle chart-circle-xs" data-value="0.06"
-													data-thickness="3" data-color="blue">
-													<div class="chart-circle-value">6%</div>
-												</div>
-											</td>
-											<td class="text-center">
-												<div class="item-action dropdown">
-													<a href="#" data-toggle="dropdown" class="icon"><i
-															class="fe fe-more-vertical"></i></a>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-tag"></i>
-															Action </a>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-edit-2"></i> Another action
-														</a>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-message-square"></i>
-															Something else here</a>
-														<div class="dropdown-divider"></div>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-link"></i> Separated link</a>
-													</div>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td class="text-center">
-												<div class="avatar d-block"
-													style="background-image: url(assets/images/faces/female/12.jpg)">
-													<span class="avatar-status bg-green"></span>
-												</div>
-											</td>
-											<td>
-												<div>Teresa Reyes</div>
-												<div class="small text-muted">
-													Registered: Feb 21, 2019
-												</div>
-											</td>
-											<td>
-												<div class="clearfix">
-													<div class="float-left">
-														<strong>36%</strong>
-													</div>
-													<div class="float-right">
-														<small class="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-													</div>
-												</div>
-												<div class="progress progress-xs">
-													<div class="progress-bar bg-red" role="progressbar"
-														style="width: 36%" aria-valuenow="36" aria-valuemin="0"
-														aria-valuemax="100"></div>
-												</div>
-											</td>
-											<td class="text-center">
-												<i class="payment payment-ebay"></i>
-											</td>
-											<td>
-												<div class="small text-muted">Last login</div>
-												<div>2 minutes ago</div>
-											</td>
-											<td class="text-center">
-												<div class="mx-auto chart-circle chart-circle-xs" data-value="0.36"
-													data-thickness="3" data-color="blue">
-													<div class="chart-circle-value">36%</div>
-												</div>
-											</td>
-											<td class="text-center">
-												<div class="item-action dropdown">
-													<a href="#" data-toggle="dropdown" class="icon"><i
-															class="fe fe-more-vertical"></i></a>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-tag"></i>
-															Action </a>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-edit-2"></i> Another action
-														</a>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-message-square"></i>
-															Something else here</a>
-														<div class="dropdown-divider"></div>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-link"></i> Separated link</a>
-													</div>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td class="text-center">
-												<div class="avatar d-block"
-													style="background-image: url(assets/images/faces/female/4.jpg)">
-													<span class="avatar-status bg-green"></span>
-												</div>
-											</td>
-											<td>
-												<div>Emma Wade</div>
-												<div class="small text-muted">
-													Registered: Mar 8, 2019
-												</div>
-											</td>
-											<td>
-												<div class="clearfix">
-													<div class="float-left">
-														<strong>7%</strong>
-													</div>
-													<div class="float-right">
-														<small class="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-													</div>
-												</div>
-												<div class="progress progress-xs">
-													<div class="progress-bar bg-red" role="progressbar"
-														style="width: 7%" aria-valuenow="7" aria-valuemin="0"
-														aria-valuemax="100"></div>
-												</div>
-											</td>
-											<td class="text-center">
-												<i class="payment payment-paypal"></i>
-											</td>
-											<td>
-												<div class="small text-muted">Last login</div>
-												<div>a minute ago</div>
-											</td>
-											<td class="text-center">
-												<div class="mx-auto chart-circle chart-circle-xs" data-value="0.07"
-													data-thickness="3" data-color="blue">
-													<div class="chart-circle-value">7%</div>
-												</div>
-											</td>
-											<td class="text-center">
-												<div class="item-action dropdown">
-													<a href="#" data-toggle="dropdown" class="icon"><i
-															class="fe fe-more-vertical"></i></a>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-tag"></i>
-															Action </a>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-edit-2"></i> Another action
-														</a>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-message-square"></i>
-															Something else here</a>
-														<div class="dropdown-divider"></div>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-link"></i> Separated link</a>
-													</div>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td class="text-center">
-												<div class="avatar d-block"
-													style="background-image: url(assets/images/faces/female/27.jpg)">
-													<span class="avatar-status bg-green"></span>
-												</div>
-											</td>
-											<td>
-												<div>Carol Henderson</div>
-												<div class="small text-muted">
-													Registered: Feb 10, 2019
-												</div>
-											</td>
-											<td>
-												<div class="clearfix">
-													<div class="float-left">
-														<strong>80%</strong>
-													</div>
-													<div class="float-right">
-														<small class="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-													</div>
-												</div>
-												<div class="progress progress-xs">
-													<div class="progress-bar bg-green" role="progressbar"
-														style="width: 80%" aria-valuenow="80" aria-valuemin="0"
-														aria-valuemax="100"></div>
-												</div>
-											</td>
-											<td class="text-center">
-												<i class="payment payment-visa"></i>
-											</td>
-											<td>
-												<div class="small text-muted">Last login</div>
-												<div>9 minutes ago</div>
-											</td>
-											<td class="text-center">
-												<div class="mx-auto chart-circle chart-circle-xs" data-value="0.8"
-													data-thickness="3" data-color="blue">
-													<div class="chart-circle-value">80%</div>
-												</div>
-											</td>
-											<td class="text-center">
-												<div class="item-action dropdown">
-													<a href="#" data-toggle="dropdown" class="icon"><i
-															class="fe fe-more-vertical"></i></a>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-tag"></i>
-															Action </a>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-edit-2"></i> Another action
-														</a>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-message-square"></i>
-															Something else here</a>
-														<div class="dropdown-divider"></div>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-link"></i> Separated link</a>
-													</div>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td class="text-center">
-												<div class="avatar d-block"
-													style="background-image: url(assets/images/faces/male/20.jpg)">
-													<span class="avatar-status bg-green"></span>
-												</div>
-											</td>
-											<td>
-												<div>Christopher Harvey</div>
-												<div class="small text-muted">
-													Registered: Jan 10, 2019
-												</div>
-											</td>
-											<td>
-												<div class="clearfix">
-													<div class="float-left">
-														<strong>83%</strong>
-													</div>
-													<div class="float-right">
-														<small class="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-													</div>
-												</div>
-												<div class="progress progress-xs">
-													<div class="progress-bar bg-green" role="progressbar"
-														style="width: 83%" aria-valuenow="83" aria-valuemin="0"
-														aria-valuemax="100"></div>
-												</div>
-											</td>
-											<td class="text-center">
-												<i class="payment payment-googlewallet"></i>
-											</td>
-											<td>
-												<div class="small text-muted">Last login</div>
-												<div>8 minutes ago</div>
-											</td>
-											<td class="text-center">
-												<div class="mx-auto chart-circle chart-circle-xs" data-value="0.83"
-													data-thickness="3" data-color="blue">
-													<div class="chart-circle-value">83%</div>
+													<div class="chart-circle-value">{{usuarioTb1.satisfaction}}</div>
 												</div>
 											</td>
 											<td class="text-center">
@@ -833,284 +388,59 @@
 							</div>
 						</div>
 					</div>
+					<!-- END TABLE1 -->
+
+					<!-- TABLE2-3-4 -->
 					<div class="col-sm-6 col-lg-4">
-						<div class="card">
+						<div *ngIf="dashboardModel.table2" class="card">
 							<div class="card-header">
 								<h4 class="card-title">Browser Stats</h4>
 							</div>
 							<table class="table card-table">
-								<tr>
+								<tr *ngFor="let usuarioTb2 of dashboardModel.table2.values">
 									<td width="1"><i class="fa fa-chrome text-muted"></i></td>
-									<td>Google Chrome</td>
-									<td class="text-right"><span class="text-muted">23%</span></td>
-								</tr>
-								<tr>
-									<td><i class="fa fa-firefox text-muted"></i></td>
-									<td>Mozila Firefox</td>
-									<td class="text-right"><span class="text-muted">15%</span></td>
-								</tr>
-								<tr>
-									<td><i class="fa fa-safari text-muted"></i></td>
-									<td>Apple Safari</td>
-									<td class="text-right"><span class="text-muted">7%</span></td>
-								</tr>
-								<tr>
-									<td><i class="fa fa-internet-explorer text-muted"></i></td>
-									<td>Internet Explorer</td>
-									<td class="text-right"><span class="text-muted">9%</span></td>
-								</tr>
-								<tr>
-									<td><i class="fa fa-opera text-muted"></i></td>
-									<td>Opera mini</td>
-									<td class="text-right"><span class="text-muted">23%</span></td>
-								</tr>
-								<tr>
-									<td><i class="fa fa-edge text-muted"></i></td>
-									<td>Microsoft edge</td>
-									<td class="text-right"><span class="text-muted">9%</span></td>
+									<td>{{usuarioTb2.usuario.split('|')[0]}}</td>
+									<td class="text-right"><span
+											class="text-muted">{{usuarioTb2.usuario.split('|')[1]}}</span></td>
 								</tr>
 							</table>
 						</div>
 					</div>
 					<div class="col-sm-6 col-lg-4">
-						<div class="card">
+						<div *ngIf="dashboardModel.table3" class="card">
 							<div class="card-header">
 								<h2 class="card-title">Projects</h2>
 							</div>
 							<table class="table card-table">
-								<tr>
-									<td>Admin Template</td>
+								<tr *ngFor="let usuarioTb3 of dashboardModel.table3.values">
+									<td>{{usuarioTb3.usuario.split('|')[0]}}</td>
 									<td class="text-right">
-										<span class="badge badge-default">65%</span>
-									</td>
-								</tr>
-								<tr>
-									<td>Landing Page</td>
-									<td class="text-right">
-										<span class="badge badge-success">Finished</span>
-									</td>
-								</tr>
-								<tr>
-									<td>Backend UI</td>
-									<td class="text-right">
-										<span class="badge badge-danger">Rejected</span>
-									</td>
-								</tr>
-								<tr>
-									<td>Personal Blog</td>
-									<td class="text-right">
-										<span class="badge badge-default">40%</span>
-									</td>
-								</tr>
-								<tr>
-									<td>E-mail Templates</td>
-									<td class="text-right">
-										<span class="badge badge-default">13%</span>
-									</td>
-								</tr>
-								<tr>
-									<td>Corporate Website</td>
-									<td class="text-right">
-										<span class="badge badge-warning">Pending</span>
+										<span class="badge badge-default">{{usuarioTb3.usuario.split('|')[1]}}</span>
 									</td>
 								</tr>
 							</table>
 						</div>
 					</div>
 					<div class="col-md-6 col-lg-4">
-						<div class="card">
+						<div *ngIf="dashboardModel.table4" class="card">
 							<div class="card-header">
 								<h3 class="card-title">Members</h3>
 							</div>
 							<div class="card-body o-auto" style="height: 15rem">
 								<ul class="list-unstyled list-separated">
-									<li class="list-separated-item">
+									<li *ngFor="let personaTb4 of dashboardModel.table4.values"
+										class="list-separated-item">
 										<div class="row align-items-center">
 											<div class="col-auto">
 												<span class="avatar avatar-md d-block"
-													style="background-image: url(assets/images/faces/female/12.jpg)"></span>
+													style="background-image: url(./assets/images/faces/female/26.jpg)"></span>
 											</div>
 											<div class="col">
 												<div>
-													<a href="#" class="text-inherit">Amanda Hunt</a>
+													<a href="#" class="text-inherit">{{personaTb4.activity}}</a>
 												</div>
 												<small
-													class="d-block item-except text-sm text-muted h-1x">amanda_hunt@example.com</small>
-											</div>
-											<div class="col-auto">
-												<div class="item-action dropdown">
-													<a href="#" data-toggle="dropdown" class="icon"><i
-															class="fe fe-more-vertical"></i></a>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-tag"></i>
-															Action </a>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-edit-2"></i> Another action
-														</a>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-message-square"></i>
-															Something else here</a>
-														<div class="dropdown-divider"></div>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-link"></i> Separated link</a>
-													</div>
-												</div>
-											</div>
-										</div>
-									</li>
-									<li class="list-separated-item">
-										<div class="row align-items-center">
-											<div class="col-auto">
-												<span class="avatar avatar-md d-block"
-													style="background-image: url(assets/images/faces/female/21.jpg)"></span>
-											</div>
-											<div class="col">
-												<div>
-													<a href="#" class="text-inherit">Laura Weaver</a>
-												</div>
-												<small
-													class="d-block item-except text-sm text-muted h-1x">lauraweaver@example.com</small>
-											</div>
-											<div class="col-auto">
-												<div class="item-action dropdown">
-													<a href="#" data-toggle="dropdown" class="icon"><i
-															class="fe fe-more-vertical"></i></a>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-tag"></i>
-															Action </a>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-edit-2"></i> Another action
-														</a>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-message-square"></i>
-															Something else here</a>
-														<div class="dropdown-divider"></div>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-link"></i> Separated link</a>
-													</div>
-												</div>
-											</div>
-										</div>
-									</li>
-									<li class="list-separated-item">
-										<div class="row align-items-center">
-											<div class="col-auto">
-												<span class="avatar avatar-md d-block"
-													style="background-image: url(assets/images/faces/female/29.jpg)"></span>
-											</div>
-											<div class="col">
-												<div>
-													<a href="#" class="text-inherit">Margaret Berry</a>
-												</div>
-												<small
-													class="d-block item-except text-sm text-muted h-1x">margaret88@example.com</small>
-											</div>
-											<div class="col-auto">
-												<div class="item-action dropdown">
-													<a href="#" data-toggle="dropdown" class="icon"><i
-															class="fe fe-more-vertical"></i></a>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-tag"></i>
-															Action </a>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-edit-2"></i> Another action
-														</a>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-message-square"></i>
-															Something else here</a>
-														<div class="dropdown-divider"></div>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-link"></i> Separated link</a>
-													</div>
-												</div>
-											</div>
-										</div>
-									</li>
-									<li class="list-separated-item">
-										<div class="row align-items-center">
-											<div class="col-auto">
-												<span class="avatar avatar-md d-block"
-													style="background-image: url(assets/images/faces/female/2.jpg)"></span>
-											</div>
-											<div class="col">
-												<div>
-													<a href="#" class="text-inherit">Nancy Herrera</a>
-												</div>
-												<small
-													class="d-block item-except text-sm text-muted h-1x">nancy_83@example.com</small>
-											</div>
-											<div class="col-auto">
-												<div class="item-action dropdown">
-													<a href="#" data-toggle="dropdown" class="icon"><i
-															class="fe fe-more-vertical"></i></a>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-tag"></i>
-															Action </a>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-edit-2"></i> Another action
-														</a>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-message-square"></i>
-															Something else here</a>
-														<div class="dropdown-divider"></div>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-link"></i> Separated link</a>
-													</div>
-												</div>
-											</div>
-										</div>
-									</li>
-									<li class="list-separated-item">
-										<div class="row align-items-center">
-											<div class="col-auto">
-												<span class="avatar avatar-md d-block"
-													style="background-image: url(assets/images/faces/male/34.jpg)"></span>
-											</div>
-											<div class="col">
-												<div>
-													<a href="#" class="text-inherit">Edward Larson</a>
-												</div>
-												<small
-													class="d-block item-except text-sm text-muted h-1x">edward90@example.com</small>
-											</div>
-											<div class="col-auto">
-												<div class="item-action dropdown">
-													<a href="#" data-toggle="dropdown" class="icon"><i
-															class="fe fe-more-vertical"></i></a>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-tag"></i>
-															Action </a>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-edit-2"></i> Another action
-														</a>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-message-square"></i>
-															Something else here</a>
-														<div class="dropdown-divider"></div>
-														<a href="#" class="dropdown-item"><i
-																class="dropdown-icon fe fe-link"></i> Separated link</a>
-													</div>
-												</div>
-											</div>
-										</div>
-									</li>
-									<li class="list-separated-item">
-										<div class="row align-items-center">
-											<div class="col-auto">
-												<span class="avatar avatar-md d-block"
-													style="background-image: url(assets/images/faces/female/11.jpg)"></span>
-											</div>
-											<div class="col">
-												<div>
-													<a href="#" class="text-inherit">Joan Hanson</a>
-												</div>
-												<small
-													class="d-block item-except text-sm text-muted h-1x">joan.hanson@example.com</small>
+													class="d-block item-except text-sm text-muted h-1x">{{personaTb4.usuario}}</small>
 											</div>
 											<div class="col-auto">
 												<div class="item-action dropdown">
@@ -1138,14 +468,20 @@
 							</div>
 						</div>
 					</div>
+					<!-- END TABLE2-3-4 -->
+
+					<!-- CHARTBOX1-2-3-4 -->
 					<div class="col-md-6 col-lg-12">
 						<div class="row">
 							<div class="col-sm-6 col-lg-3">
-								<div class="card">
+								<div *ngIf="dashboardModel.chartBox1" class="card">
 									<div class="card-body">
-										<div class="card-value float-right text-blue">+5%</div>
-										<h3 class="mb-1">423</h3>
-										<div class="text-muted">Users online</div>
+										<div class="card-value float-right"
+											[style]="colorBox(dashboardModel.chartBox1.box.color)">
+											{{dashboardModel.chartBox1.box.upperValue}}{{dashboardModel.chartBox1.box.upperLabel}}
+										</div>
+										<h3 class="mb-1">{{dashboardModel.chartBox1.box.principalValue}}</h3>
+										<div class="text-muted">{{dashboardModel.chartBox1.box.principalLabel}}</div>
 									</div>
 									<div class="card-chart-bg">
 										<div id="chart-bg-users-1" style="height: 100%"></div>
@@ -1153,11 +489,14 @@
 								</div>
 							</div>
 							<div class="col-sm-6 col-lg-3">
-								<div class="card">
+								<div *ngIf="dashboardModel.chartBox2" class="card">
 									<div class="card-body">
-										<div class="card-value float-right text-red">-3%</div>
-										<h3 class="mb-1">423</h3>
-										<div class="text-muted">Users online</div>
+										<div class="card-value float-right"
+											[style]="colorBox(dashboardModel.chartBox2.box.color)">
+											{{dashboardModel.chartBox2.box.upperValue}}{{dashboardModel.chartBox2.box.upperLabel}}
+										</div>
+										<h3 class="mb-1">{{dashboardModel.chartBox2.box.principalValue}}</h3>
+										<div class="text-muted">{{dashboardModel.chartBox2.box.principalLabel}}</div>
 									</div>
 									<div class="card-chart-bg">
 										<div id="chart-bg-users-2" style="height: 100%"></div>
@@ -1165,11 +504,14 @@
 								</div>
 							</div>
 							<div class="col-sm-6 col-lg-3">
-								<div class="card">
+								<div *ngIf="dashboardModel.chartBox3" class="card">
 									<div class="card-body">
-										<div class="card-value float-right text-green">-3%</div>
-										<h3 class="mb-1">423</h3>
-										<div class="text-muted">Users online</div>
+										<div class="card-value float-right"
+											[style]="colorBox(dashboardModel.chartBox3.box.color)">
+											{{dashboardModel.chartBox3.box.upperValue}}{{dashboardModel.chartBox3.box.upperLabel}}
+										</div>
+										<h3 class="mb-1">{{dashboardModel.chartBox3.box.principalValue}}</h3>
+										<div class="text-muted">{{dashboardModel.chartBox3.box.principalLabel}}</div>
 									</div>
 									<div class="card-chart-bg">
 										<div id="chart-bg-users-3" style="height: 100%"></div>
@@ -1177,11 +519,14 @@
 								</div>
 							</div>
 							<div class="col-sm-6 col-lg-3">
-								<div class="card">
+								<div *ngIf="dashboardModel.chartBox4" class="card">
 									<div class="card-body">
-										<div class="card-value float-right text-yellow">9%</div>
-										<h3 class="mb-1">423</h3>
-										<div class="text-muted">Users online</div>
+										<div class="card-value float-right"
+											[style]="colorBox(dashboardModel.chartBox4.box.color)">
+											{{dashboardModel.chartBox4.box.upperValue}}{{dashboardModel.chartBox4.box.upperLabel}}
+										</div>
+										<h3 class="mb-1">{{dashboardModel.chartBox4.box.principalValue}}</h3>
+										<div class="text-muted">{{dashboardModel.chartBox4.box.principalLabel}}</div>
 									</div>
 									<div class="card-chart-bg">
 										<div id="chart-bg-users-4" style="height: 100%"></div>
@@ -1190,8 +535,11 @@
 							</div>
 						</div>
 					</div>
+					<!-- END CHARTBOX1-2-3-4 -->
+
+					<!-- TABLE5 -->
 					<div class="col-12">
-						<div class="card">
+						<div *ngIf="dashboardModel.table5" class="card">
 							<div class="card-header">
 								<h3 class="card-title">Invoices</h3>
 							</div>
@@ -1207,468 +555,27 @@
 											<th>Status</th>
 											<th>Price</th>
 											<th></th>
-											<th></th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td><span class="text-muted">001401</span></td>
-											<td><a href="invoice.html" class="text-inherit">Design Works</a></td>
-											<td>
-												Carlson Limited
-											</td>
-											<td>
-												87956621
-											</td>
-											<td>
-												15 Dec 2017
-											</td>
-											<td>
-												<span class="status-icon bg-success"></span> Paid
-											</td>
-											<td>$887</td>
-											<td class="text-right">
-												<a href="#" class="btn btn-secondary btn-sm">Manage</a>
-												<div class="dropdown">
-													<button class="btn btn-secondary btn-sm dropdown-toggle"
-														data-toggle="dropdown">Actions</button>
-												</div>
-											</td>
-											<td>
-												<a class="icon" href="#">
-													<i class="fe fe-edit"></i>
-												</a>
-											</td>
-										</tr>
-										<tr>
-											<td><span class="text-muted">001402</span></td>
-											<td><a href="invoice.html" class="text-inherit">UX Wireframes</a></td>
-											<td>
-												Adobe
-											</td>
-											<td>
-												87956421
-											</td>
-											<td>
-												12 Apr 2017
-											</td>
-											<td>
-												<span class="status-icon bg-warning"></span> Pending
-											</td>
-											<td>$1200</td>
-											<td class="text-right">
-												<a href="#" class="btn btn-secondary btn-sm">Manage</a>
-												<div class="dropdown">
-													<button class="btn btn-secondary btn-sm dropdown-toggle"
-														data-toggle="dropdown">Actions</button>
-												</div>
-											</td>
-											<td>
-												<a class="icon" href="#">
-													<i class="fe fe-edit"></i>
-												</a>
-											</td>
-										</tr>
-										<tr>
-											<td><span class="text-muted">001403</span></td>
-											<td><a href="invoice.html" class="text-inherit">New Dashboard</a></td>
-											<td>
-												Bluewolf
-											</td>
-											<td>
-												87952621
-											</td>
-											<td>
-												23 Oct 2017
-											</td>
-											<td>
-												<span class="status-icon bg-warning"></span> Pending
-											</td>
-											<td>$534</td>
-											<td class="text-right">
-												<a href="#" class="btn btn-secondary btn-sm">Manage</a>
-												<div class="dropdown">
-													<button class="btn btn-secondary btn-sm dropdown-toggle"
-														data-toggle="dropdown">Actions</button>
-												</div>
-											</td>
-											<td>
-												<a class="icon" href="#">
-													<i class="fe fe-edit"></i>
-												</a>
-											</td>
-										</tr>
-										<tr>
-											<td><span class="text-muted">001404</span></td>
-											<td><a href="invoice.html" class="text-inherit">Landing Page</a></td>
-											<td>
-												Salesforce
-											</td>
-											<td>
-												87953421
-											</td>
-											<td>
-												2 Sep 2017
-											</td>
-											<td>
-												<span class="status-icon bg-secondary"></span> Due in 2 Weeks
-											</td>
-											<td>$1500</td>
-											<td class="text-right">
-												<a href="#" class="btn btn-secondary btn-sm">Manage</a>
-												<div class="dropdown">
-													<button class="btn btn-secondary btn-sm dropdown-toggle"
-														data-toggle="dropdown">Actions</button>
-												</div>
-											</td>
-											<td>
-												<a class="icon" href="#">
-													<i class="fe fe-edit"></i>
-												</a>
-											</td>
-										</tr>
-										<tr>
-											<td><span class="text-muted">001405</span></td>
-											<td><a href="invoice.html" class="text-inherit">Marketing Templates</a></td>
-											<td>
-												Printic
-											</td>
-											<td>
-												87956621
-											</td>
-											<td>
-												29 Jan 2018
-											</td>
-											<td>
-												<span class="status-icon bg-danger"></span> Paid Today
-											</td>
-											<td>$648</td>
-											<td class="text-right">
-												<a href="#" class="btn btn-secondary btn-sm">Manage</a>
-												<div class="dropdown">
-													<button class="btn btn-secondary btn-sm dropdown-toggle"
-														data-toggle="dropdown">Actions</button>
-												</div>
-											</td>
-											<td>
-												<a class="icon" href="#">
-													<i class="fe fe-edit"></i>
-												</a>
-											</td>
-										</tr>
-										<tr>
-											<td><span class="text-muted">001406</span></td>
-											<td><a href="invoice.html" class="text-inherit">Sales Presentation</a></td>
-											<td>
-												Tabdaq
-											</td>
-											<td>
-												87956621
-											</td>
-											<td>
-												4 Feb 2018
-											</td>
-											<td>
-												<span class="status-icon bg-secondary"></span> Due in 3 Weeks
-											</td>
-											<td>$300</td>
-											<td class="text-right">
-												<a href="#" class="btn btn-secondary btn-sm">Manage</a>
-												<div class="dropdown">
-													<button class="btn btn-secondary btn-sm dropdown-toggle"
-														data-toggle="dropdown">Actions</button>
-												</div>
-											</td>
-											<td>
-												<a class="icon" href="#">
-													<i class="fe fe-edit"></i>
-												</a>
-											</td>
-										</tr>
-										<tr>
-											<td><span class="text-muted">001407</span></td>
-											<td><a href="invoice.html" class="text-inherit">Logo & Print</a></td>
-											<td>
-												Apple
-											</td>
-											<td>
-												87956621
-											</td>
-											<td>
-												22 Mar 2018
-											</td>
-											<td>
-												<span class="status-icon bg-success"></span> Paid Today
-											</td>
-											<td>$2500</td>
-											<td class="text-right">
-												<a href="#" class="btn btn-secondary btn-sm">Manage</a>
-												<div class="dropdown">
-													<button class="btn btn-secondary btn-sm dropdown-toggle"
-														data-toggle="dropdown">Actions</button>
-												</div>
-											</td>
-											<td>
-												<a class="icon" href="#">
-													<i class="fe fe-edit"></i>
-												</a>
-											</td>
-										</tr>
-										<tr>
-											<td><span class="text-muted">001408</span></td>
-											<td><a href="invoice.html" class="text-inherit">Icons</a></td>
-											<td>
-												Tookapic
-											</td>
-											<td>
-												87956621
-											</td>
-											<td>
-												13 May 2018
+										<tr *ngFor="let facturaTb5 of dashboardModel.table5.values">
+											<td><span class="text-muted">{{facturaTb5.numero}}</span></td>
+											<td><a href="invoice.html" class="text-inherit">{{facturaTb5.empresa}}</a>
 											</td>
 											<td>
-												<span class="status-icon bg-success"></span> Paid Today
+												{{facturaTb5.cliente}}
 											</td>
-											<td>$940</td>
-											<td class="text-right">
-												<a href="#" class="btn btn-secondary btn-sm">Manage</a>
-												<div class="dropdown">
-													<button class="btn btn-secondary btn-sm dropdown-toggle"
-														data-toggle="dropdown">Actions</button>
-												</div>
-											</td>
-											<td>
-												<a class="icon" href="#">
-													<i class="fe fe-edit"></i>
-												</a>
-											</td>
-										</tr>
-										<tr>
-											<td><span class="text-muted">001409</span></td>
-											<td><a href="invoice.html" class="text-inherit">Design Works</a></td>
-											<td>
-												Carlson Limited
-											</td>
-											<td>
-												87956621
-											</td>
-											<td>
-												15 Dec 2017
-											</td>
-											<td>
-												<span class="status-icon bg-success"></span> Paid
-											</td>
-											<td>$887</td>
-											<td class="text-right">
-												<a href="#" class="btn btn-secondary btn-sm">Manage</a>
-												<div class="dropdown">
-													<button class="btn btn-secondary btn-sm dropdown-toggle"
-														data-toggle="dropdown">Actions</button>
-												</div>
-											</td>
-											<td>
-												<a class="icon" href="#">
-													<i class="fe fe-edit"></i>
-												</a>
-											</td>
-										</tr>
-										<tr>
-											<td><span class="text-muted">001410</span></td>
-											<td><a href="invoice.html" class="text-inherit">UX Wireframes</a></td>
-											<td>
-												Adobe
-											</td>
-											<td>
-												87956421
-											</td>
-											<td>
-												12 Apr 2017
-											</td>
-											<td>
-												<span class="status-icon bg-warning"></span> Pending
-											</td>
-											<td>$1200</td>
-											<td class="text-right">
-												<a href="#" class="btn btn-secondary btn-sm">Manage</a>
-												<div class="dropdown">
-													<button class="btn btn-secondary btn-sm dropdown-toggle"
-														data-toggle="dropdown">Actions</button>
-												</div>
-											</td>
-											<td>
-												<a class="icon" href="#">
-													<i class="fe fe-edit"></i>
-												</a>
-											</td>
-										</tr>
-										<tr>
-											<td><span class="text-muted">001411</span></td>
-											<td><a href="invoice.html" class="text-inherit">New Dashboard</a></td>
-											<td>
-												Bluewolf
-											</td>
-											<td>
-												87952621
-											</td>
-											<td>
-												23 Oct 2017
-											</td>
-											<td>
-												<span class="status-icon bg-warning"></span> Pending
-											</td>
-											<td>$534</td>
-											<td class="text-right">
-												<a href="#" class="btn btn-secondary btn-sm">Manage</a>
-												<div class="dropdown">
-													<button class="btn btn-secondary btn-sm dropdown-toggle"
-														data-toggle="dropdown">Actions</button>
-												</div>
-											</td>
-											<td>
-												<a class="icon" href="#">
-													<i class="fe fe-edit"></i>
-												</a>
-											</td>
-										</tr>
-										<tr>
-											<td><span class="text-muted">001412</span></td>
-											<td><a href="invoice.html" class="text-inherit">Landing Page</a></td>
-											<td>
-												Salesforce
-											</td>
-											<td>
-												87953421
-											</td>
-											<td>
-												2 Sep 2017
-											</td>
-											<td>
-												<span class="status-icon bg-secondary"></span> Due in 2 Weeks
-											</td>
-											<td>$1500</td>
-											<td class="text-right">
-												<a href="#" class="btn btn-secondary btn-sm">Manage</a>
-												<div class="dropdown">
-													<button class="btn btn-secondary btn-sm dropdown-toggle"
-														data-toggle="dropdown">Actions</button>
-												</div>
-											</td>
-											<td>
-												<a class="icon" href="#">
-													<i class="fe fe-edit"></i>
-												</a>
-											</td>
-										</tr>
-										<tr>
-											<td><span class="text-muted">001413</span></td>
-											<td><a href="invoice.html" class="text-inherit">Marketing Templates</a></td>
-											<td>
-												Printic
-											</td>
-											<td>
-												87956621
-											</td>
-											<td>
-												29 Jan 2018
-											</td>
-											<td>
-												<span class="status-icon bg-danger"></span> Paid Today
-											</td>
-											<td>$648</td>
-											<td class="text-right">
-												<a href="#" class="btn btn-secondary btn-sm">Manage</a>
-												<div class="dropdown">
-													<button class="btn btn-secondary btn-sm dropdown-toggle"
-														data-toggle="dropdown">Actions</button>
-												</div>
-											</td>
-											<td>
-												<a class="icon" href="#">
-													<i class="fe fe-edit"></i>
-												</a>
-											</td>
-										</tr>
-										<tr>
-											<td><span class="text-muted">001414</span></td>
-											<td><a href="invoice.html" class="text-inherit">Sales Presentation</a></td>
-											<td>
-												Tabdaq
-											</td>
-											<td>
-												87956621
-											</td>
 											<td>
-												4 Feb 2018
+												{{facturaTb5.vatNo}}
 											</td>
 											<td>
-												<span class="status-icon bg-secondary"></span> Due in 3 Weeks
+												{{facturaTb5.fechaCreacion}}
 											</td>
-											<td>$300</td>
-											<td class="text-right">
-												<a href="#" class="btn btn-secondary btn-sm">Manage</a>
-												<div class="dropdown">
-													<button class="btn btn-secondary btn-sm dropdown-toggle"
-														data-toggle="dropdown">Actions</button>
-												</div>
-											</td>
-											<td>
-												<a class="icon" href="#">
-													<i class="fe fe-edit"></i>
-												</a>
-											</td>
-										</tr>
-										<tr>
-											<td><span class="text-muted">001415</span></td>
-											<td><a href="invoice.html" class="text-inherit">Logo & Print</a></td>
-											<td>
-												Apple
-											</td>
-											<td>
-												87956621
-											</td>
-											<td>
-												22 Mar 2018
-											</td>
-											<td>
-												<span class="status-icon bg-success"></span> Paid Today
-											</td>
-											<td>$2500</td>
-											<td class="text-right">
-												<a href="#" class="btn btn-secondary btn-sm">Manage</a>
-												<div class="dropdown">
-													<button class="btn btn-secondary btn-sm dropdown-toggle"
-														data-toggle="dropdown">Actions</button>
-												</div>
-											</td>
-											<td>
-												<a class="icon" href="#">
-													<i class="fe fe-edit"></i>
-												</a>
-											</td>
-										</tr>
-										<tr>
-											<td><span class="text-muted">001416</span></td>
-											<td><a href="invoice.html" class="text-inherit">Icons</a></td>
-											<td>
-												Tookapic
-											</td>
-											<td>
-												87956621
-											</td>
 											<td>
-												13 May 2018
-											</td>
-											<td>
-												<span class="status-icon bg-success"></span> Paid Today
-											</td>
-											<td>$940</td>
-											<td class="text-right">
-												<a href="#" class="btn btn-secondary btn-sm">Manage</a>
-												<div class="dropdown">
-													<button class="btn btn-secondary btn-sm dropdown-toggle"
-														data-toggle="dropdown">Actions</button>
-												</div>
+												<span class="status-icon bg-{{facturaTb5.estado}}"></span>
+												{{facturaTb5.estado}}
 											</td>
+											<td>{{facturaTb5.precio}}</td>
 											<td>
 												<a class="icon" href="#">
 													<i class="fe fe-edit"></i>
@@ -1682,75 +589,6 @@
 					</div>
 				</div>
 			</div>
-			<div class="bottombar js-bottombar" style="display: none">
-				<a href="#" class="bottombar-close js-bottombar-close">
-					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-						stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-						class="feather feather-x">
-						<line x1="18" y1="6" x2="6" y2="18"></line>
-						<line x1="6" y1="6" x2="18" y2="18"></line>
-					</svg>
-				</a>
-				<div class="container position-relative d-flex align-items-center">
-					<a href="https://gumroad.com/l/tabler-email?utm_source=demo" class="bottombar-image">
-						<picture>
-							<source srcset="https://tabler.io/img/bottombar.webp" type="image/webp">
-							<source srcset="https://tabler.io/img/bottombar.png" type="image/jpeg">
-							<img src="https://tabler.io/img/bottombar.png" alt="">
-						</picture>
-					</a>
-					<div class="d-lg-flex flex-fill align-items-center">
-						<div class="mr-2">
-							50 eye-catching templates tested in 90+ email clients. Compose your own, mobile optimized
-							email message
-							in less than 5 minutes!
-						</div>
-						<div class=" ml-auto mt-2 mt-lg-0">
-							<a href="https://gumroad.com/l/tabler-email?utm_source=demo"
-								class="btn btn-sm btn-green text-nowrap" target="_blank">More info</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<script>
-				require(['jquery'], function () {
-					$(document).ready(function () {
-
-						function setCookie(name, value, days) {
-							var expires = "";
-							if (days) {
-								var date = new Date();
-								date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-								expires = "; expires=" + date.toUTCString();
-							}
-							document.cookie = name + "=" + (value || "") + expires + "; path=/";
-						}
-
-						function getCookie(name) {
-							var nameEQ = name + "=";
-							var ca = document.cookie.split(';');
-							for (var i = 0; i < ca.length; i++) {
-								var c = ca[i];
-								while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-								if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-							}
-							return null;
-						}
-
-						if (!getCookie('bottombar-hidden')) {
-							$('.js-bottombar').show();
-						}
-
-						$('.js-bottombar-close').on('click', function (e) {
-							$('.js-bottombar').hide();
-							setCookie('bottombar-hidden', 1, 7);
-
-							e.preventDefault();
-							return false;
-						});
-					});
-				});
-			</script>
 		</div>
 		<!-- CONTENT -->
 

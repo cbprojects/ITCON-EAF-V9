@@ -48,7 +48,7 @@
 
     img {
         width: 75px;
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+        //box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
         margin-right: 1rem;
     }
 
@@ -129,4 +129,12 @@ tr:hover {
 h3 {
     font-weight: bold !important;
     color: #495057;
+}
+
+.hoverRed:hover {
+    color: red !important;
+}
+
+.p-contextmenu {
+    margin-top: -400px !important;
 }
