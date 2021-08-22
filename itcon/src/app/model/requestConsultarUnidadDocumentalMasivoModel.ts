@@ -1,4 +1,4 @@
-export interface RequestConsultaCaja {
+export interface RequestConsultaUDXCaja {
     idCajaUno;
     idCajaDos;  
 }
