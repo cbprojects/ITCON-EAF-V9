@@ -37,15 +37,15 @@ export interface Dashboard {
     };
     table1: {
         cabeceras: string[];
-        values: Box[];
+        values: Persona[];
     };
     table2: {
         cabeceras: string[];
-        values: Box[];
+        values: Persona[];
     };
     table3: {
         cabeceras: string[];
-        values: Box[];
+        values: Persona[];
     };
     table4: {
         cabeceras: string[];

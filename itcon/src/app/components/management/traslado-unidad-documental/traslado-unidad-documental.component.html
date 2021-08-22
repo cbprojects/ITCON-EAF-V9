@@ -29,14 +29,18 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group col-sm-6 col-lg-4">
-                                        <label class="form-label">Caja 1<span class="form-required">*</span></label>
+                                        <label
+                                            class="form-label">{{msg.lbl_traslado_unidad_documental_caja_origen}}<span
+                                                class="form-required">*</span></label>
                                         <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
-                                            [(ngModel)]="caja1Select" [items]="listaCajas" bindLabel="codigoAlterno" 
+                                            [(ngModel)]="caja1Select" [items]="listaCajas" bindLabel="codigoAlterno"
                                             (change)="limpiarUnidadDocumental()">
                                         </ng-select>
                                     </div>
                                     <div class="form-group col-sm-6 col-lg-4">
-                                        <label class="form-label">Caja 2<span class="form-required">*</span></label>
+                                        <label
+                                            class="form-label">{{msg.lbl_traslado_unidad_documental_caja_destino}}<span
+                                                class="form-required">*</span></label>
                                         <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
                                             [(ngModel)]="caja2Select" [items]="listaCajas" bindLabel="codigoAlterno"
                                             (change)="limpiarUnidadDocumental()">
@@ -49,8 +53,7 @@
                                 </div>
                             </div>
                             <div class="card-body">
-
-                                <div class="card-footer" *ngIf="responseUnidadDocumentalMasivo !=null ">
+                                <div *ngIf="responseUnidadDocumentalMasivo !=null ">
                                     <p-pickList id="AsoUniDocu"
                                         [source]="responseUnidadDocumentalMasivo.lstUnidadDocumentalCajaUno"
                                         [target]="responseUnidadDocumentalMasivo.lstUnidadDocumentalCajaDos"
@@ -63,7 +66,7 @@
                                         <ng-template let-UniDocu pTemplate="item">
                                             <div class="product-item">
                                                 <div class="image-container">
-                                                    <img src="assets/images/rol.png"
+                                                    <img src="assets/images/folder.png"
                                                         style="display:inline-block;margin:2px 0 2px 2px" width="48">
                                                 </div>
                                                 <div class="product-list-detail" style="margin-left: 2rem;">

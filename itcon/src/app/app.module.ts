@@ -10,6 +10,9 @@ import { PickListModule } from 'primeng/picklist';
 import { PasswordModule } from "primeng/password";
 import { DividerModule } from "primeng/divider";
 import { CalendarModule } from 'primeng/calendar';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { TreeModule } from 'primeng/tree';
+import { ContextMenuModule } from 'primeng/contextmenu';
 
 // Imports Utilidades
 import { TextProperties } from './config/TextProperties';
@@ -57,6 +60,7 @@ import { RestaurarClaveComponent } from './components/restaurar-clave/restaurar-
 import { QUnidadDocumentalComponent } from './components/query/unidad-documental/q-unidad-documental.component';
 import { MUnidadDocumentalComponent } from './components/management/unidad-documental/m-unidad-documental.component';
 import { TrasladoUnidadDocumentalComponent } from './components/management/traslado-unidad-documental/traslado-unidad-documental.component';
+import { DigitalizarUnidadDocumentalComponent } from './components/management/digitalizar-unidad-documental/digitalizar-unidad-documental.component';
 
 
 // Constantes
@@ -107,7 +111,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MCajaComponent,
     QUnidadDocumentalComponent,
     MUnidadDocumentalComponent,
-    TrasladoUnidadDocumentalComponent
+    TrasladoUnidadDocumentalComponent,
+    DigitalizarUnidadDocumentalComponent
   ],
   imports: [
     AppRoutingModule,
@@ -143,7 +148,10 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     DropdownModule,
     PasswordModule,
     DividerModule,
-    CalendarModule
+    CalendarModule,
+    ProgressBarModule,
+    TreeModule,
+    ContextMenuModule
   ],
   providers: [TextProperties, Enumerados, ObjectModelInitializer, Guardian, Util, Functions, MessageService, SesionService, { provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]

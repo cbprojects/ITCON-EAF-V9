@@ -48,7 +48,7 @@ export class ObjectModelInitializer {
       urlRestOauth: `${HOST}/oauth/token`,
       urlVCode: `${SYSTEM}/vCode/`,
       // Dashboard
-      urlCargarDashboard: `${HOST}/central/dashboard/cargarDashboard`,
+      urlCargarDashboard: `${HOST}/central/DashBoard/buscarDashBoardPorPerfil/`,
       // Login
       urlLogin: `${HOST}/central/usuario/login`,
       urlRestaurarClave: `${HOST}/central/usuario/restaurarClave`,
@@ -74,7 +74,6 @@ export class ObjectModelInitializer {
       urlConsultarCajasPorFiltros: `${HOST}/central/caja/consultarCajaFiltros`,
       urlCrearCaja: `${HOST}/central/caja/crearCaja`,
       urlModificarCaja: `${HOST}/central/caja/modificarCaja`,
-      urlConsultarSociedadActiva: `${HOST}/central/sociedad/consultarSociedadActiva`,
       urlBuscarEntrepanosActivosPorEstante: `${HOST}/central/Entrepano/buscarEntrepanosActivosPorEstante`,
       urlBuscarEstantesActivosPorCuerpo: `${HOST}/central/Estante/buscarEstantesActivosPorCuerpo`,
       urlBuscarCuerposActivosPorBloque: `${HOST}/central/Cuerpo/buscarCuerposActivosPorBloque`,
@@ -85,15 +84,18 @@ export class ObjectModelInitializer {
       urlConsultarUDPorFiltros: `${HOST}/central/unidadDocumental/consultarUnidadDocumentalFiltros`,
       urlCrearUD: `${HOST}/central/unidadDocumental/crearUnidadDocumental`,
       urlModificarUD: `${HOST}/central/unidadDocumental/modificarUnidadDocumental`,
-      urlBuscarContenedoresActivos: `${HOST}/central/Contenedor/buscarContenedoresActivos`,
       urlBuscarTipoUDActivos: `${HOST}/central/TipoUD/buscarTipoUDActivos`,
-      urlBuscarAreasActivasPorSociedad: `${HOST}/central/SociedadArea/buscarAreasActivasPorSociedad`,
       urlConsultarUnidadDocumentalPorCajaMasiva: `${HOST}/central/unidadDocumental/consultarUnidadDocumentalPorCajaMasiva`,
       urlCambiarCajaUnidadDocumentalMasiva: `${HOST}/central/unidadDocumental/cambiarCajaUnidadDocumentalMasiva`,
-      //Sociedades
-      urlConsultarSociedadesActivas: `${HOST}/central/sociedad/consultarSociedadActiva`,
-
-
+      // Contenedores
+      urlBuscarContenedoresActivos: `${HOST}/central/Contenedor/buscarContenedoresActivos`,
+      urlBuscarAreasActivasPorSociedad: `${HOST}/central/SociedadArea/buscarAreasActivasPorSociedad`,
+      // Sociedades      
+      urlConsultarSociedadActiva: `${HOST}/central/sociedad/consultarSociedadActiva`,
+      // Archivos
+      urlConsultarArchivos: `${HOST}/central/archivos/obtenerArchivos`,
+      urlCrearArchivos: `${HOST}/central/archivos/subirImagen`,
+      urlBorrarArchivos: `${HOST}/central/archivos/borrarImagen`,
 
       tokenUsernameAUTH: 'BaeneApp',
       tokenPasswordAUTH: 'Baene2021codex',
@@ -736,7 +738,6 @@ export class ObjectModelInitializer {
       idCajaUno: '',
       idCajaDos: ''
     }
-
   }
 
   getDataResponseConsultarUnidadDocumentalMasivo() {
@@ -753,7 +754,6 @@ export class ObjectModelInitializer {
       lstUnidadDocumentalCajaUno: [],
       lstUnidadDocumentalCajaDos: []
     }
-
   }
 
   getDataResponseCambiarUnidadDocumentalMasivo() {
@@ -761,6 +761,25 @@ export class ObjectModelInitializer {
       codigo: '',
       mensaje: ''
     }
+  }
 
+  getDataArchivo() {
+    return {
+      nombreArchivo: '',
+      archivo: null
+    }
+  }
+
+  getDataRequestArchivoDir() {
+    return {
+      idUnidadDocumental: 0
+    }
+  }
+
+  getDataRequestArchivoFile() {
+    return {
+      idUnidadDocumental: 0,
+      listaArchivosPorSubir: []
+    }
   }
 }

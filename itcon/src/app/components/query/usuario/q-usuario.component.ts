@@ -11,7 +11,6 @@ import { ResponseConsultaUsuario } from 'src/app/model/responseConsultaUsuarioMo
 import { Usuario } from 'src/app/model/usuarioModel';
 import { RestService } from 'src/app/services/rest.service';
 import { SesionService } from 'src/app/services/sesionService/sesion.service';
-import * as CryptoJS from 'crypto-js';
 
 
 @Component({

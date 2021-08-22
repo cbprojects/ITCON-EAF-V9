@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ObjectModelInitializer } from '../config/ObjectModelInitializer';
+import { Observable, forkJoin } from 'rxjs';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -55,6 +56,10 @@ export class RestService {
 
     return this.http.post(url, formData, { responseType: 'text' });
   }
+
+  postFileOnlyDownREST(url, data) {
+    return this.http.post(url, data, { responseType: 'text' });
+  }
   // END SERVICES WITHOUT SECURITY
 
   // SERVICES WITH SECURITY
@@ -87,4 +92,42 @@ export class RestService {
     });
   }
   // END SERVICES WITH SECURITY
+  
+  // FORK ITEMS PARA MULTIPLES REST
+  getMultipleREST(listaUrls): Observable<any[]> {
+    let responses = [];
+    listaUrls.forEach(url => {
+      responses.push(this.http.get(url));
+    });
+    // Observable.forkJoin (RxJS 5) changes to just forkJoin() in RxJS 6
+    return forkJoin(responses);
+  }
+
+  postMultipleREST(url, listaRequest): Observable<any[]> {
+    let responses = [];
+    listaRequest.forEach(request => {
+      responses.push(this.http.post(url, request));
+    });
+    // Observable.forkJoin (RxJS 5) changes to just forkJoin() in RxJS 6
+    return forkJoin(responses);
+  }
+
+  postFileMultipleREST(url, listaRequest): Observable<any[]> {
+    let responses = [];
+    listaRequest.forEach(request => {
+      responses.push(this.http.post(url, request, { responseType: 'text' }));
+    });
+    // Observable.forkJoin (RxJS 5) changes to just forkJoin() in RxJS 6
+    return forkJoin(responses);
+  }
+
+  putMultipleREST(url, listaRequest): Observable<any[]> {
+    let responses = [];
+    listaRequest.forEach(request => {
+      responses.push(this.http.put(url, request));
+    });
+    // Observable.forkJoin (RxJS 5) changes to just forkJoin() in RxJS 6
+    return forkJoin(responses);
+  }
+  // END FORK ITEMS PARA MULTIPLES REST
 }

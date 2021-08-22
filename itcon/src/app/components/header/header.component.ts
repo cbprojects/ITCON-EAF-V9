@@ -34,10 +34,14 @@ export class HeaderComponent implements OnInit {
   constructor(public router: Router, private route: ActivatedRoute, public restService: RestService, public messageService: MessageService, public textProperties: TextProperties, public objectModelInitializer: ObjectModelInitializer, public sesionService: SesionService, public util: Util) {
     this.msg = this.textProperties.getProperties(this.sesionService.objServiceSesion.idioma);
     this.const = this.objectModelInitializer.getConst();
-    
+
   }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit(): void {
+    $('.dropdown').click();
   }
 
   obtenerBreadcrumb(url: string) {
@@ -66,14 +70,14 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  validarRol(rol: string){
-    let validar=false;
+  validarRol(rol: string) {
+    let validar = false;
     this.sesionService.objServiceSesion.usuarioSesion.listaRoles.forEach(roles => {
-      if(!validar){
-        if(roles.codigo==rol){
-          validar= true;
+      if (!validar) {
+        if (roles.codigo == rol) {
+          validar = true;
         }
-    }
+      }
     });
     return validar;
   }

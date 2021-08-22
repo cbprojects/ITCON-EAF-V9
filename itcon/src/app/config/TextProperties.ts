@@ -300,7 +300,12 @@ export class TextProperties {
       lbl_rol_perfil_busqueda: idioma === constant.idiomaEs ? 'Busqueda por código' : 'Search by code',
 
       lbl_traslado_unidad_documental: idioma === constant.idiomaEs ? 'Traslado Unidad Documental' : 'Documentary Unit Transfer',
+      lbl_traslado_unidad_documental_caja_origen: idioma === constant.idiomaEs ? 'Caja Origen' : 'Source Box',
+      lbl_traslado_unidad_documental_caja_destino: idioma === constant.idiomaEs ? 'Caja Destino' : 'Target Box',
       lbl_caja_repetida: idioma === constant.idiomaEs ? 'Por favor escoger dos cajas diferentes' : 'Please choose two different boxes',
+
+      lbl_digitalizar_unidad_documental: idioma === constant.idiomaEs ? 'Digitalizar Unidad Documental' : 'Documentary Unit Digitalize',
+      lbl_sociedad_obligatorio: idioma === constant.idiomaEs ? 'Por favor seleccionar una sociedad' : 'Please choose a society',
 
       //Usuario
       lbl_validar_contrasena: idioma === constant.idiomaEs ? 'Contraseña incorrecta' : 'Password incorrect',

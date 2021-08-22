@@ -17,6 +17,7 @@ declare var chartBgUsers1: any;
 declare var chartBgUsers2: any;
 declare var chartBgUsers3: any;
 declare var chartBgUsers4: any;
+declare var chartsCircles: any;
 
 @Component({
   selector: 'app-home',
@@ -50,36 +51,28 @@ export class HomeComponent implements OnInit {
   }
 
   inicializar() {
-    chartDevelopmentActivity();
-    chartDonut();
-    chartPie();
-    chartBgUsers1();
-    chartBgUsers2();
-    chartBgUsers3();
-    chartBgUsers4();
-    $('.datatable').DataTable();
     this.sesionService.objRolCargado = null;
     this.cargarDashboard();
   }
 
   cargarDashboard() {
     try {
-      let request = { idUser: this.sesionService.objServiceSesion.usuarioSesion.usuario };
-      let box = this.objectModelInitializer.getDataBox();
-      console.log(box);
-      let chart = this.objectModelInitializer.getDataChart();
-      console.log(chart);
-      let persona = this.objectModelInitializer.getDataPersona();
-      console.log(persona);
-      let factura = this.objectModelInitializer.getDataFactura();
-      console.log(factura);
-      let ejemploResponse = this.objectModelInitializer.getDataDashboardModel();
-      console.log(ejemploResponse);
-      this.restService.postREST(this.const.urlCargarDashboard, request)
+      let url = this.const.urlCargarDashboard + this.sesionService.objServiceSesion.usuarioSesion.usuario.id;
+      this.restService.getREST(url)
         .subscribe(resp => {
           let respuesta: Dashboard = JSON.parse(JSON.stringify(resp));
           if (respuesta !== null) {
             this.dashboardModel = respuesta;
+
+            $('.datatable').DataTable();
+            chartDevelopmentActivity(this.dashboardModel.chartTable1.data);
+            chartDonut(this.dashboardModel.chartPie1.data);
+            chartPie(this.dashboardModel.chartPie2.data);
+            chartBgUsers1(this.dashboardModel.chartBox1.data);
+            chartBgUsers2(this.dashboardModel.chartBox2.data);
+            chartBgUsers3(this.dashboardModel.chartBox3.data);
+            chartBgUsers4(this.dashboardModel.chartBox4.data);
+            chartsCircles();
           }
         },
           error => {
@@ -100,4 +93,29 @@ export class HomeComponent implements OnInit {
       console.log(e);
     }
   }
+
+  urlImagenUsuario(rutaImagen) {
+    return 'background-image: url(' + rutaImagen + ');';
+  }
+
+  colorBox(color) {
+    return 'color: ' + color + ' !important;';
+  }
+
+  bgColorBox(color) {
+    return 'background-color: ' + color + ' !important;';
+  }
+
+  bgColorAndProgressValueBox(color, valueProgress) {
+    return 'background-color: ' + color + ' !important; width: ' + valueProgress + '%;';
+  }
+
+  valueOfPercentStr(value) {
+    return Number.parseFloat(value.substring(0, value.length - 1));
+  }
+
+  calcPercent(value) {
+    return Number.parseFloat(value.substring(1, value.length)) / 100;
+  }
+
 }
