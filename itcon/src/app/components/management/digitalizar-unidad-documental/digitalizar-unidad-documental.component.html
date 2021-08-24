@@ -54,7 +54,7 @@
                                         <h5>Nodo Seleccionado: {{selectedFiles.label}}</h5>
                                         <p-fileUpload #fileUpload name="demo[]" multiple="multiple"
                                             (uploadHandler)="onBasicUpload($event, fileUpload)" maxFileSize="5000000"
-                                            customUpload="true" chooseLabel="Cargar Archivo">
+                                            customUpload="true" chooseLabel="Cargar Archivo" uploadLabel="Subir" cancelLabel="Cancelar">
                                         </p-fileUpload>
                                     </div>
                                 </div>

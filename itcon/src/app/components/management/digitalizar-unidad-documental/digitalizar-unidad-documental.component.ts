@@ -61,8 +61,8 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
     this.sociedadSelect = { value: this.objectModelInitializer.getDataSociedad(), label: this.msg.lbl_enum_generico_valor_vacio };
     this.consultarSociedades();
     this.items = [
-      { label: 'Ver', icon: 'pi pi-eye', command: (event) => this.visualizarArchivo(this.selectedFiles) },
-      { label: 'Descargar', icon: 'pi pi-download', command: (event) => this.descargarArchivo(this.selectedFiles) }
+      { label: 'Descargar', icon: 'pi pi-download', command: (event) => this.descargarArchivo(this.selectedFiles) },
+      { label: 'Eliminar', icon: 'pi pi-trash', command: (event) => this.eliminarArchivo(this.selectedFiles) },
     ];
   }
 
@@ -277,6 +277,7 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
   construirArbolArchivos(idCaja, idUnidadDoc, listaArchivos: Archivo[]) {
     this.files.forEach(nodoCaja => {
       if (nodoCaja.data === idCaja) {
+        debugger;
         nodoCaja.children.forEach(nodoUnidadDoc => {
           if (nodoUnidadDoc.data === idUnidadDoc) {
             let listaNodoUD = this.construirNodosHijosArchivo(idUnidadDoc, listaArchivos);
@@ -339,6 +340,45 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
             } else {
 
             }
+          }
+        },
+          error => {
+            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+            let titleError = listaMensajes[0];
+            listaMensajes.splice(0, 1);
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+            this.messageService.clear();
+
+            listaMensajes.forEach(mensaje => {
+              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+            });
+            this.messageService.add(mensajeFinal);
+
+            console.log(error, "error");
+          });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  // Cargar Archivos y directorios del server
+
+  consumirWSEliminarArchivo(idUnidadDoc, nombreDoc) {
+    try {
+      let requestEliminarArchivos: RequestArchivo = this.objectModelInitializer.getDataRequestArchivoFile();
+      requestEliminarArchivos.idUnidadDocumental = idUnidadDoc;
+      let archivo: Archivo = this.objectModelInitializer.getDataArchivo();
+      archivo.nombreArchivo = nombreDoc;
+      requestEliminarArchivos.listaArchivosPorSubir.push(archivo);
+      this.restService.postFileTextREST(this.const.urlBorrarArchivos, requestEliminarArchivos)
+        .subscribe(resp => {
+          debugger;
+          let temp = JSON.parse(JSON.stringify(resp));
+          if (temp !== undefined && temp !== null) {
+            let listaArchivos: Archivo[] = JSON.parse(temp.replaceAll('\"', '"'));
+
+            this.construirArbolArchivos(this.selectedFiles.parent.parent.data,this.selectedFiles.parent.data, listaArchivos);
+            this.loading = false;
           }
         },
           error => {
@@ -430,8 +470,10 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
     this.obtenerArchivo(file.data, file.label, true);
   }
 
-  visualizarArchivo(file: TreeNode) {
-    this.obtenerArchivo(file.data, file.label, false);
+  eliminarArchivo(file: TreeNode) {
+    if(this.selectedFiles.icon === 'pi pi-file'){
+      this.consumirWSEliminarArchivo(file.data, file.label);
+    }
   }
 
   readFileAsText(file) {
