@@ -37,6 +37,8 @@
                                     <div *ngIf="files.length > 0" class="form-group col-sm-12 col-lg-12 text-center">
                                         <button class="btn-confirm-nodisp" id="confirmPP"
                                             (click)="confirm($event)"></button>
+                                        <button class="btn-confirm-nodisp" id="confirmPPCoincidencias"
+                                            (click)="confirmCoincidencias($event)"></button>
                                         <p-tree [value]="files" [filter]="true" selectionMode="single"
                                             [(selection)]="selectedFiles" [contextMenu]="cm"
                                             (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)">
