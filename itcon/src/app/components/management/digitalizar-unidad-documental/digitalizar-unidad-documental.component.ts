@@ -468,7 +468,7 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
     return listaNodosUD;
   }
 
-  /*construirArbolArchivos(idCaja, idUnidadDoc, listaArchivos: Archivo[]) {
+  construirArbolArchivos(idCaja, idUnidadDoc, listaArchivos: Archivo[]) {
     this.files.forEach(nodoCaja => {
       if (nodoCaja.data === idCaja) {
         nodoCaja.children.forEach(nodoUnidadDoc => {
@@ -479,10 +479,11 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
         });
       }
     });
-  }*/
+  }
 
 
   construirNodosHijosArchivo(idUnidadDoc, listaArchivos) {
+    debugger;
     let hijosFile = []
     listaArchivos.forEach(archivo => {
       let nodoFile = {
@@ -569,7 +570,7 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
           if (temp !== undefined && temp !== null) {
             let listaArchivos: Archivo[] = JSON.parse(temp.replaceAll('\"', '"'));
 
-            //this.construirArbolArchivos(this.selectedFiles.parent.parent.data, this.selectedFiles.parent.data, listaArchivos);
+            this.construirArbolArchivos(this.selectedFiles.parent.parent.data, this.selectedFiles.parent.data, listaArchivos);
             this.loading = false;
           }
         },
@@ -592,7 +593,7 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
     }
   }
 
- /* cargarArchivo(requestCrearArchivos) {
+  cargarArchivo(requestCrearArchivos) {
     try {
       this.restService.postREST(this.const.urlCrearArchivos, requestCrearArchivos)
         .subscribe(resp => {
@@ -621,7 +622,7 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
     } catch (e) {
       console.log(e);
     }
-  }*/
+  }
 
   onBasicUpload(event, fileUpload) {
     this.messageService.clear();
@@ -670,7 +671,7 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
 
       Promise.all(readers).then((values) => {
         //file.archivo = e.target.result.split('base64,')[1];
-       // this.cargarArchivo(requestCrearArchivos);
+        this.cargarArchivo(requestCrearArchivos);
         this.messageService.add({ severity: 'info', summary: 'Archivo Cargado', detail: '' });
 
           fileUpload.clear();
@@ -684,7 +685,6 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
   // Contextmenu archivos
 
   descargarArchivo(file: TreeNode) {
-    debugger;
     this.obtenerArchivo(file.data, file.label, true);
   }
 
