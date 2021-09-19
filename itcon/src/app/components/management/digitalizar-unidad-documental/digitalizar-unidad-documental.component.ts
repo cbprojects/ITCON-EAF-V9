@@ -42,6 +42,8 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
   files: TreeNode[];
   selectedFiles: TreeNode;
   items: MenuItem[];
+  fileUploadPrecargado: any;
+  archivosPrecargados: any[];
 
   // Utilidades
   msg: any;
@@ -431,33 +433,58 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
   }
 
   onBasicUpload(event, fileUpload) {
+    this.messageService.clear();
     this.uploadedFiles = [];
+    this.fileUploadPrecargado = undefined;
+    this.archivosPrecargados = [];
     if (this.selectedFiles !== undefined && this.selectedFiles !== null && this.selectedFiles.label.includes('(UD)')) {
+      let coincidenciaEncontrada = false;
+      let namesArchivos = [];
+      this.selectedFiles.children.forEach(archivo => {
+        namesArchivos.push(archivo.label);
+      });
+
+      let namesIguales = "[";
       for (let file of event.files) {
-        this.uploadedFiles.push(file);
+        if (namesArchivos.includes(file.name)) {
+          coincidenciaEncontrada = true;
+          namesIguales = namesIguales + file.name + ", ";
+        }
       }
+      namesIguales = namesIguales.substring(0, (namesIguales.length - 2)) + "]";
 
-      let requestCrearArchivos: RequestArchivo = this.objectModelInitializer.getDataRequestArchivoFile();
-      requestCrearArchivos.idUnidadDocumental = this.selectedFiles.data;
-      this.uploadedFiles.forEach(file => {
-        let archivo: Archivo = this.objectModelInitializer.getDataArchivo();
-        archivo.nombreArchivo = file.name;
-        archivo.archivo = file;
-        requestCrearArchivos.listaArchivosPorSubir.push(archivo);
-      });
+      if (coincidenciaEncontrada) {
+        this.fileUploadPrecargado = fileUpload;
+        this.archivosPrecargados = event.files;
+        this.mostrarConfirmarPopUpCoincidencias();
+        this.messageService.add({ sticky: true, severity: 'info', summary: 'Los siguientes nombres de archivos ya se encuentran en la Unidad Documental: ' + namesIguales, detail: '' });
+      } else {
+        for (let file of event.files) {
+          this.uploadedFiles.push(file);
+        }
 
-      let readers = [];
-      requestCrearArchivos.listaArchivosPorSubir.forEach(file => {
-        readers.push(this.readFileAsText(file));
-      });
+        let requestCrearArchivos: RequestArchivo = this.objectModelInitializer.getDataRequestArchivoFile();
+        requestCrearArchivos.idUnidadDocumental = this.selectedFiles.data;
+        this.uploadedFiles.forEach(file => {
+          let archivo: Archivo = this.objectModelInitializer.getDataArchivo();
+          archivo.nombreArchivo = file.name;
+          archivo.archivo = file;
+          requestCrearArchivos.listaArchivosPorSubir.push(archivo);
+        });
 
-      Promise.all(readers).then((values) => {
-        //file.archivo = e.target.result.split('base64,')[1];
-        this.cargarArchivo(requestCrearArchivos);
-        this.messageService.add({ severity: 'info', summary: 'Archivo Cargado', detail: '' });
+        let readers = [];
+        requestCrearArchivos.listaArchivosPorSubir.forEach(file => {
+          readers.push(this.readFileAsText(file));
+        });
 
-        fileUpload.clear();
-      });
+        Promise.all(readers).then((values) => {
+          //file.archivo = e.target.result.split('base64,')[1];
+          this.cargarArchivo(requestCrearArchivos);
+          this.messageService.add({ severity: 'info', summary: 'Archivo Cargado', detail: '' });
+
+          fileUpload.clear();
+        });
+      }
     } else {
       this.messageService.add({ severity: 'info', summary: 'No ha seleccionado una Unidad Documental', detail: '' });
     }
@@ -491,6 +518,46 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
     });
   }
 
+  confirmCoincidencias(event: Event) {
+    this.confirmationService.confirm({
+      target: event.target,
+      message: '¿Está seguro que desea reemplazar los archivos con nombres iguales?',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: this.msg.lbl_enum_si,
+      rejectLabel: this.msg.lbl_enum_no,
+      accept: () => {
+        for (let file of this.archivosPrecargados) {
+          this.uploadedFiles.push(file);
+        }
+
+        let requestCrearArchivos: RequestArchivo = this.objectModelInitializer.getDataRequestArchivoFile();
+        requestCrearArchivos.idUnidadDocumental = this.selectedFiles.data;
+        this.uploadedFiles.forEach(file => {
+          let archivo: Archivo = this.objectModelInitializer.getDataArchivo();
+          archivo.nombreArchivo = file.name;
+          archivo.archivo = file;
+          requestCrearArchivos.listaArchivosPorSubir.push(archivo);
+        });
+
+        let readers = [];
+        requestCrearArchivos.listaArchivosPorSubir.forEach(file => {
+          readers.push(this.readFileAsText(file));
+        });
+
+        Promise.all(readers).then((values) => {
+          //file.archivo = e.target.result.split('base64,')[1];
+          this.cargarArchivo(requestCrearArchivos);
+          this.messageService.add({ severity: 'info', summary: 'Archivo Cargado', detail: '' });
+
+          this.fileUploadPrecargado.clear();
+        });
+      },
+      reject: () => {
+
+      }
+    });
+  }
+
   confirm(event: Event) {
     this.confirmationService.confirm({
       target: event.target,
@@ -509,5 +576,9 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
 
   mostrarConfirmarPopUp() {
     setTimeout(() => $('#confirmPP').click(), 100);
+  }
+
+  mostrarConfirmarPopUpCoincidencias() {
+    setTimeout(() => $('#confirmPPCoincidencias').click(), 100);
   }
 }
