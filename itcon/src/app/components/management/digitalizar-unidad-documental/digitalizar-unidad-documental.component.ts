@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MenuItem, MessageService, TreeNode } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService, TreeNode } from 'primeng/api';
 import { Enumerados } from 'src/app/config/Enumerados';
 import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
@@ -19,6 +19,8 @@ import { UnidadDocumental } from 'src/app/model/unidadDocumentalModel';
 import { UniDocuTree } from 'src/app/model/uniDocuTreeModel';
 import { RestService } from 'src/app/services/rest.service';
 import { SesionService } from 'src/app/services/sesionService/sesion.service';
+
+declare var $: any;
 
 @Component({
   selector: 'app-digitalizar-unidad-documental',
@@ -54,13 +56,15 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
   files: TreeNode[];
   selectedFiles: TreeNode;
   items: MenuItem[];
+  fileUploadPrecargado: any;
+  archivosPrecargados: any[];
 
   // Utilidades
   msg: any;
   const: any;
   loading: boolean;
 
-  constructor(private router: Router, private route: ActivatedRoute, public restService: RestService, public textProperties: TextProperties, public util: Util, public objectModelInitializer: ObjectModelInitializer, public enumerados: Enumerados, public sesionService: SesionService, private messageService: MessageService) {
+  constructor(private router: Router, private route: ActivatedRoute, public restService: RestService, public textProperties: TextProperties, public util: Util, public objectModelInitializer: ObjectModelInitializer, public enumerados: Enumerados, public sesionService: SesionService, private messageService: MessageService, private confirmationService: ConfirmationService) {
     this.sesion = this.objectModelInitializer.getDataServiceSesion();
     this.msg = this.textProperties.getProperties(this.sesionService.objServiceSesion.idioma);
     this.const = this.objectModelInitializer.getConst();
@@ -80,8 +84,8 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
     this.consultarSociedades();
     this.consultarTipoUD();
     this.items = [
-      { label: 'Ver', icon: 'pi pi-eye', command: (event) => this.visualizarArchivo(this.selectedFiles) },
-      { label: 'Descargar', icon: 'pi pi-download', command: (event) => this.descargarArchivo(this.selectedFiles) }
+      { label: 'Descargar', icon: 'pi pi-download', command: (event) => this.descargarArchivo(this.selectedFiles) },
+      { label: 'Eliminar', icon: 'pi pi-trash', command: (event) => this.mostrarConfirmarPopUp() },
     ];
   }
 
@@ -550,6 +554,44 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
     }
   }
 
+  // Cargar Archivos y directorios del server
+
+  consumirWSEliminarArchivo(idUnidadDoc, nombreDoc) {
+    try {
+      let requestEliminarArchivos: RequestArchivo = this.objectModelInitializer.getDataRequestArchivoFile();
+      requestEliminarArchivos.idUnidadDocumental = idUnidadDoc;
+      let archivo: Archivo = this.objectModelInitializer.getDataArchivo();
+      archivo.nombreArchivo = nombreDoc;
+      requestEliminarArchivos.listaArchivosPorSubir.push(archivo);
+      this.restService.postFileTextREST(this.const.urlBorrarArchivos, requestEliminarArchivos)
+        .subscribe(resp => {
+          let temp = JSON.parse(JSON.stringify(resp));
+          if (temp !== undefined && temp !== null) {
+            let listaArchivos: Archivo[] = JSON.parse(temp.replaceAll('\"', '"'));
+
+            //this.construirArbolArchivos(this.selectedFiles.parent.parent.data, this.selectedFiles.parent.data, listaArchivos);
+            this.loading = false;
+          }
+        },
+          error => {
+            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+            let titleError = listaMensajes[0];
+            listaMensajes.splice(0, 1);
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+            this.messageService.clear();
+
+            listaMensajes.forEach(mensaje => {
+              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+            });
+            this.messageService.add(mensajeFinal);
+
+            console.log(error, "error");
+          });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
  /* cargarArchivo(requestCrearArchivos) {
     try {
       this.restService.postREST(this.const.urlCrearArchivos, requestCrearArchivos)
@@ -582,33 +624,58 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
   }*/
 
   onBasicUpload(event, fileUpload) {
+    this.messageService.clear();
     this.uploadedFiles = [];
+    this.fileUploadPrecargado = undefined;
+    this.archivosPrecargados = [];
     if (this.selectedFiles !== undefined && this.selectedFiles !== null && this.selectedFiles.label.includes('(UD)')) {
+      let coincidenciaEncontrada = false;
+      let namesArchivos = [];
+      this.selectedFiles.children.forEach(archivo => {
+        namesArchivos.push(archivo.label);
+      });
+
+      let namesIguales = "[";
       for (let file of event.files) {
-        this.uploadedFiles.push(file);
+        if (namesArchivos.includes(file.name)) {
+          coincidenciaEncontrada = true;
+          namesIguales = namesIguales + file.name + ", ";
+        }
       }
+      namesIguales = namesIguales.substring(0, (namesIguales.length - 2)) + "]";
 
-      let requestCrearArchivos: RequestArchivo = this.objectModelInitializer.getDataRequestArchivoFile();
-      requestCrearArchivos.idUnidadDocumental = this.selectedFiles.data;
-      this.uploadedFiles.forEach(file => {
-        let archivo: Archivo = this.objectModelInitializer.getDataArchivo();
-        archivo.nombreArchivo = file.name;
-        archivo.archivo = file;
-        requestCrearArchivos.listaArchivosPorSubir.push(archivo);
-      });
+      if (coincidenciaEncontrada) {
+        this.fileUploadPrecargado = fileUpload;
+        this.archivosPrecargados = event.files;
+        this.mostrarConfirmarPopUpCoincidencias();
+        this.messageService.add({ sticky: true, severity: 'info', summary: 'Los siguientes nombres de archivos ya se encuentran en la Unidad Documental: ' + namesIguales, detail: '' });
+      } else {
+        for (let file of event.files) {
+          this.uploadedFiles.push(file);
+        }
 
-      let readers = [];
-      requestCrearArchivos.listaArchivosPorSubir.forEach(file => {
-        readers.push(this.readFileAsText(file));
-      });
+        let requestCrearArchivos: RequestArchivo = this.objectModelInitializer.getDataRequestArchivoFile();
+        requestCrearArchivos.idUnidadDocumental = this.selectedFiles.data;
+        this.uploadedFiles.forEach(file => {
+          let archivo: Archivo = this.objectModelInitializer.getDataArchivo();
+          archivo.nombreArchivo = file.name;
+          archivo.archivo = file;
+          requestCrearArchivos.listaArchivosPorSubir.push(archivo);
+        });
+
+        let readers = [];
+        requestCrearArchivos.listaArchivosPorSubir.forEach(file => {
+          readers.push(this.readFileAsText(file));
+        });
 
       Promise.all(readers).then((values) => {
         //file.archivo = e.target.result.split('base64,')[1];
        // this.cargarArchivo(requestCrearArchivos);
         this.messageService.add({ severity: 'info', summary: 'Archivo Cargado', detail: '' });
 
-        fileUpload.clear();
-      });
+          fileUpload.clear();
+        });
+      }
     } else {
       this.messageService.add({ severity: 'info', summary: 'No ha seleccionado una Unidad Documental', detail: '' });
     }
@@ -621,8 +688,10 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
     this.obtenerArchivo(file.data, file.label, true);
   }
 
-  visualizarArchivo(file: TreeNode) {
-    this.obtenerArchivo(file.data, file.label, false);
+  eliminarArchivo(file: TreeNode) {
+    if (this.selectedFiles.icon === 'pi pi-file') {
+      this.consumirWSEliminarArchivo(file.data, file.label);
+    }
   }
 
   readFileAsText(file) {
@@ -641,4 +710,67 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
     });
   }
 
+  confirmCoincidencias(event: Event) {
+    this.confirmationService.confirm({
+      target: event.target,
+      message: '¿Está seguro que desea reemplazar los archivos con nombres iguales?',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: this.msg.lbl_enum_si,
+      rejectLabel: this.msg.lbl_enum_no,
+      accept: () => {
+        for (let file of this.archivosPrecargados) {
+          this.uploadedFiles.push(file);
+        }
+
+        let requestCrearArchivos: RequestArchivo = this.objectModelInitializer.getDataRequestArchivoFile();
+        requestCrearArchivos.idUnidadDocumental = this.selectedFiles.data;
+        this.uploadedFiles.forEach(file => {
+          let archivo: Archivo = this.objectModelInitializer.getDataArchivo();
+          archivo.nombreArchivo = file.name;
+          archivo.archivo = file;
+          requestCrearArchivos.listaArchivosPorSubir.push(archivo);
+        });
+
+        let readers = [];
+        requestCrearArchivos.listaArchivosPorSubir.forEach(file => {
+          readers.push(this.readFileAsText(file));
+        });
+
+        Promise.all(readers).then((values) => {
+          //file.archivo = e.target.result.split('base64,')[1];
+          //this.cargarArchivo(requestCrearArchivos);
+          this.messageService.add({ severity: 'info', summary: 'Archivo Cargado', detail: '' });
+
+          this.fileUploadPrecargado.clear();
+        });
+      },
+      reject: () => {
+
+      }
+    });
+  }
+
+  confirm(event: Event) {
+    this.confirmationService.confirm({
+      target: event.target,
+      message: '¿Está seguro que desea eliminar el archivo seleccionado?',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: this.msg.lbl_enum_si,
+      rejectLabel: this.msg.lbl_enum_no,
+      accept: () => {
+        this.eliminarArchivo(this.selectedFiles)
+      },
+      reject: () => {
+
+      }
+    });
+  }
+
+  mostrarConfirmarPopUp() {
+    setTimeout(() => $('#confirmPP').click(), 100);
+  }
+
+  mostrarConfirmarPopUpCoincidencias() {
+    setTimeout(() => $('#confirmPPCoincidencias').click(), 100);
+  }
 }
