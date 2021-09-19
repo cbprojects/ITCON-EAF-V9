@@ -16,6 +16,8 @@ import { UnidadDocumental } from 'src/app/model/unidadDocumentalModel';
 import { RestService } from 'src/app/services/rest.service';
 import { SesionService } from 'src/app/services/sesionService/sesion.service';
 
+declare var $: any;
+
 @Component({
   selector: 'app-digitalizar-unidad-documental',
   templateUrl: './digitalizar-unidad-documental.component.html',
@@ -62,7 +64,7 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
     this.consultarSociedades();
     this.items = [
       { label: 'Descargar', icon: 'pi pi-download', command: (event) => this.descargarArchivo(this.selectedFiles) },
-      { label: 'Eliminar', icon: 'pi pi-trash', command: (event) => this.eliminarArchivo(this.selectedFiles) },
+      { label: 'Eliminar', icon: 'pi pi-trash', command: (event) => this.mostrarConfirmarPopUp() },
     ];
   }
 
@@ -277,7 +279,6 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
   construirArbolArchivos(idCaja, idUnidadDoc, listaArchivos: Archivo[]) {
     this.files.forEach(nodoCaja => {
       if (nodoCaja.data === idCaja) {
-        debugger;
         nodoCaja.children.forEach(nodoUnidadDoc => {
           if (nodoUnidadDoc.data === idUnidadDoc) {
             let listaNodoUD = this.construirNodosHijosArchivo(idUnidadDoc, listaArchivos);
@@ -371,12 +372,11 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
       requestEliminarArchivos.listaArchivosPorSubir.push(archivo);
       this.restService.postFileTextREST(this.const.urlBorrarArchivos, requestEliminarArchivos)
         .subscribe(resp => {
-          debugger;
           let temp = JSON.parse(JSON.stringify(resp));
           if (temp !== undefined && temp !== null) {
             let listaArchivos: Archivo[] = JSON.parse(temp.replaceAll('\"', '"'));
 
-            this.construirArbolArchivos(this.selectedFiles.parent.parent.data,this.selectedFiles.parent.data, listaArchivos);
+            this.construirArbolArchivos(this.selectedFiles.parent.parent.data, this.selectedFiles.parent.data, listaArchivos);
             this.loading = false;
           }
         },
@@ -470,7 +470,7 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
   }
 
   eliminarArchivo(file: TreeNode) {
-    if(this.selectedFiles.icon === 'pi pi-file'){
+    if (this.selectedFiles.icon === 'pi pi-file') {
       this.consumirWSEliminarArchivo(file.data, file.label);
     }
   }
@@ -496,8 +496,10 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
       target: event.target,
       message: '¿Está seguro que desea eliminar el archivo seleccionado?',
       icon: 'pi pi-exclamation-triangle',
+      acceptLabel: this.msg.lbl_enum_si,
+      rejectLabel: this.msg.lbl_enum_no,
       accept: () => {
-
+        this.eliminarArchivo(this.selectedFiles)
       },
       reject: () => {
 
@@ -505,4 +507,7 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
     });
   }
 
+  mostrarConfirmarPopUp() {
+    setTimeout(() => $('#confirmPP').click(), 100);
+  }
 }
