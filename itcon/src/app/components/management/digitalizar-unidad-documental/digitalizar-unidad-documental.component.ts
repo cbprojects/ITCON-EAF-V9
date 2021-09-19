@@ -6,13 +6,17 @@ import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
 import { Archivo } from 'src/app/model/archivoModel';
+import { Area } from 'src/app/model/areaModel';
 import { Caja } from 'src/app/model/cajaModel';
+import { CajaTree } from 'src/app/model/cajaTreeModel';
 import { RequestArchivo } from 'src/app/model/requestArchivoModel';
 import { RequestConsultaUDXCaja } from 'src/app/model/requestConsultarUnidadDocumentalMasivoModel';
 import { RequestDirectorio } from 'src/app/model/requestDirectorioModel';
 import { ResponseConsultarUnidadDocumentalMasivo } from 'src/app/model/responseConsultarUnidadDocumentalMasivoModel';
 import { Sociedad } from 'src/app/model/sociedadModel';
+import { TipoDocumental } from 'src/app/model/tipoDocumentalModel';
 import { UnidadDocumental } from 'src/app/model/unidadDocumentalModel';
+import { UniDocuTree } from 'src/app/model/uniDocuTreeModel';
 import { RestService } from 'src/app/services/rest.service';
 import { SesionService } from 'src/app/services/sesionService/sesion.service';
 
@@ -30,9 +34,19 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
   // Objetos de datos
   uploadedFiles: any[] = [];
   listaSociedades: Sociedad[] = [];
-  listaCajas: Caja[] = [];
+  listaAreas: Area[] = [];
+  listaCajas: CajaTree[] = [];
+  listaCajasFiltro: Caja[] = [];
+  listaUniDocu: UnidadDocumental[] = [];
+  listaTipoUniDocu: TipoDocumental[] = [];
+
   sociedadSelect: any;
-  requestConsultaCajasPorSociedad: any;
+  areaSelect: any;
+  cajaSelect: any;
+  uniDocuSelect: any;
+  archivoFiltro: any;
+  tipoUniDocuSelect: any;
+  requestObtenerArchivos: any;
   requestUnidadDocumentalMasivo: any[];
   responseUnidadDocumentalMasivo: any;
   requestCambiarUnidadDocumentalMasivo: any;
@@ -59,7 +73,12 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
   inicializar() {
     this.files = [];
     this.sociedadSelect = { value: this.objectModelInitializer.getDataSociedad(), label: this.msg.lbl_enum_generico_valor_vacio };
+    this.areaSelect = { value: this.objectModelInitializer.getDataArea(), label: this.msg.lbl_enum_generico_valor_vacio };
+    this.cajaSelect = { value: this.objectModelInitializer.getDataCaja(), label: this.msg.lbl_enum_generico_valor_vacio };
+    this.uniDocuSelect = { value: this.objectModelInitializer.getDataUnidadDocumental(), label: this.msg.lbl_enum_generico_valor_vacio };
+    this.tipoUniDocuSelect = { value: this.objectModelInitializer.getDataTipoDocumental(), label: this.msg.lbl_enum_generico_valor_vacio };
     this.consultarSociedades();
+    this.consultarTipoUD();
     this.items = [
       { label: 'Ver', icon: 'pi pi-eye', command: (event) => this.visualizarArchivo(this.selectedFiles) },
       { label: 'Descargar', icon: 'pi pi-download', command: (event) => this.descargarArchivo(this.selectedFiles) }
@@ -97,22 +116,188 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
     }
   }
 
-  consultarCajasPorSociedad() {
+  limpiarUDYtipoUD() {
+
+    this.uniDocuSelect = this.objectModelInitializer.getDataUnidadDocumental();
+    this.tipoUniDocuSelect = this.objectModelInitializer.getDataTipoDocumental();
+  }
+  consultarAreasPorSociedad() {
+    this.listaAreas = [];
+    this.listaCajasFiltro = [];
+    this.areaSelect = this.objectModelInitializer.getDataArea();
+    this.cajaSelect = this.objectModelInitializer.getDataCaja();
+    this.uniDocuSelect = this.objectModelInitializer.getDataUnidadDocumental();
+    this.loading = true;
+    try {
+      var requestAreaPorSociedad = this.objectModelInitializer.getDataRequestConsultaCajasPorSociedad();
+      requestAreaPorSociedad.id = this.sociedadSelect.id;
+      this.restService.postREST(this.const.urlBuscarAreasActivasPorSociedad, requestAreaPorSociedad)
+        .subscribe(resp => {
+          let temp: Area[] = JSON.parse(JSON.stringify(resp));
+          if (temp !== undefined && temp.length > 0) {
+            this.listaAreas = temp;
+            this.loading = false;
+          }
+        },
+          error => {
+            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+            let titleError = listaMensajes[0];
+            listaMensajes.splice(0, 1);
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+            this.messageService.clear();
+
+            listaMensajes.forEach(mensaje => {
+              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+            });
+            this.messageService.add(mensajeFinal);
+
+            console.log(error, "error");
+          });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  counstarAreaYCaja() {
+    this.consultarAreasPorSociedad();
+    this.consultarCajaPorSociedad();
+  }
+
+
+  consultarCajaPorSociedad() {
+    this.listaCajasFiltro = [];
+    this.loading = true;
+    try {
+      var requestCajaPorSociedad = this.objectModelInitializer.getDataRequestConsultaCajasPorSociedad();
+      requestCajaPorSociedad.id = this.sociedadSelect.id;
+      this.restService.postREST(this.const.urlConsultarCajasPorSociedad, requestCajaPorSociedad)
+        .subscribe(resp => {
+          let temp: Caja[] = JSON.parse(JSON.stringify(resp));
+          if (temp !== undefined && temp.length > 0) {
+            this.listaCajasFiltro = temp;
+            this.loading = false;
+          }
+        },
+          error => {
+            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+            let titleError = listaMensajes[0];
+            listaMensajes.splice(0, 1);
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+            this.messageService.clear();
+
+            listaMensajes.forEach(mensaje => {
+              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+            });
+            this.messageService.add(mensajeFinal);
+
+            console.log(error, "error");
+          });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  consultarUDPorFiltros() {
+
+    this.listaUniDocu = [];
+    this.loading = true;
+    try {
+      var requestUDPorFiltros = this.objectModelInitializer.getDataRequestConsultarUnidadDocumentalLista();
+      requestUDPorFiltros.idSociedad = this.sociedadSelect.id;
+      if (this.areaSelect.id === 0) {
+        requestUDPorFiltros.idArea = null;
+      } else {
+        requestUDPorFiltros.idArea = this.areaSelect.id;
+      }
+      if (this.tipoUniDocuSelect.id === 0) {
+        requestUDPorFiltros.idTipoUD = null;
+      } else {
+        requestUDPorFiltros.idTipoUD = this.tipoUniDocuSelect.id;
+      }
+      requestUDPorFiltros.idCaja = this.cajaSelect.id;
+      this.restService.postREST(this.const.urlConsultarUnidadDocumentalLista, requestUDPorFiltros)
+        .subscribe(resp => {
+          let temp: UnidadDocumental[] = JSON.parse(JSON.stringify(resp));
+          if (temp !== undefined && temp.length > 0) {
+            this.listaUniDocu = temp;
+            this.loading = false;
+          }
+        },
+          error => {
+            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+            let titleError = listaMensajes[0];
+            listaMensajes.splice(0, 1);
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+            this.messageService.clear();
+
+            listaMensajes.forEach(mensaje => {
+              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+            });
+            this.messageService.add(mensajeFinal);
+
+            console.log(error, "error");
+          });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  consultarTipoUD() {
+    this.listaTipoUniDocu = [];
+    this.loading = true;
+    try {
+      this.restService.getREST(this.const.urlBuscarTipoUDActivos)
+        .subscribe(resp => {
+          let temp: Sociedad[] = JSON.parse(JSON.stringify(resp));
+          if (temp !== undefined && temp.length > 0) {
+            this.listaTipoUniDocu = temp;
+            this.loading = false;
+          }
+        },
+          error => {
+            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+            let titleError = listaMensajes[0];
+            listaMensajes.splice(0, 1);
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+            this.messageService.clear();
+
+            listaMensajes.forEach(mensaje => {
+              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+            });
+            this.messageService.add(mensajeFinal);
+
+            console.log(error, "error");
+          });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+
+  obtenerArchivos() {
     this.limpiarUnidadDocumental();
     this.listaCajas = [];
     this.loading = true;
     try {
-      this.requestConsultaCajasPorSociedad = this.objectModelInitializer.getDataRequestConsultaCajasPorSociedad();
+      this.requestObtenerArchivos = this.objectModelInitializer.getDataRequestObtenerArchivos();
       if (this.sociedadSelect != undefined && this.sociedadSelect != null && this.sociedadSelect.id > 0) {
-        this.requestConsultaCajasPorSociedad.id = this.sociedadSelect.id;
+        this.requestObtenerArchivos.idSociedad = this.sociedadSelect.id;
+        this.requestObtenerArchivos.idCaja = this.cajaSelect.id;
+        this.requestObtenerArchivos.idUnidadDocumental = this.uniDocuSelect.id;
+        this.requestObtenerArchivos.idTipoUD = this.tipoUniDocuSelect.id;
+        if (this.areaSelect.id === 0) {
+          this.requestObtenerArchivos.idArea = null;
+        } else {
+          this.requestObtenerArchivos.idArea = this.areaSelect.id;
+        }
+        this.requestObtenerArchivos.filtroBusqueda = this.archivoFiltro;
 
-        this.restService.postREST(this.const.urlConsultarCajasPorSociedad, this.requestConsultaCajasPorSociedad)
+        this.restService.postREST(this.const.urlObtenerArchivos, this.requestObtenerArchivos)
           .subscribe(resp => {
-            let temp: Caja[] = JSON.parse(JSON.stringify(resp));
+            let temp: CajaTree[] = JSON.parse(JSON.stringify(resp));
             if (temp !== undefined && temp.length > 0) {
               this.listaCajas = temp;
               this.construirArbolCajas();
-              //this.consultarUnidadDocumentalMasivo();
               this.loading = false;
             }
           },
@@ -145,56 +330,56 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
 
 
   // Seleccionar nodos
-  nodeSelect(event) {
-    if (event.node.label.includes('(Caja)')) {
-      this.cargarUDXCaja(event.node.data);
-    } else if (event.node.label.includes('(UD)')) {
-      this.cargarArchivosXUD(event.node.parent.data, event.node.data);
-    }
-    console.clear();
-    this.messageService.add({ severity: 'info', summary: 'Seleccionado', detail: event.node.label });
-  }
+  /* nodeSelect(event) {
+     if (event.node.label.includes('(Caja)')) {
+       this.cargarUDXCaja(event.node.data);
+     } else if (event.node.label.includes('(UD)')) {
+       this.cargarArchivosXUD(event.node.parent.data, event.node.data);
+     }
+     console.clear();
+     this.messageService.add({ severity: 'info', summary: 'Seleccionado', detail: event.node.label });
+   }*/
 
   nodeUnselect(event) {
     this.messageService.add({ severity: 'info', summary: 'No seleccionado', detail: event.node.label });
   }
 
   // Cargar elementos para los treenode
-  cargarUDXCaja(idCaja) {
-    this.loading = true;
-    try {
-      let requestUdXCaja: RequestConsultaUDXCaja = this.objectModelInitializer.getDataRequestConsultarUnidadDocumentalMasivo();
-      requestUdXCaja.idCajaUno = idCaja;
+  /* cargarUDXCaja(idCaja) {
+     this.loading = true;
+     try {
+       let requestUdXCaja: RequestConsultaUDXCaja = this.objectModelInitializer.getDataRequestConsultarUnidadDocumentalMasivo();
+       requestUdXCaja.idCajaUno = idCaja;
+ 
+       this.restService.postREST(this.const.urlConsultarUnidadDocumentalPorCajaMasiva, requestUdXCaja)
+         .subscribe(resp => {
+           let temp: ResponseConsultarUnidadDocumentalMasivo = JSON.parse(JSON.stringify(resp));
+           if (temp !== undefined && temp !== null) {
+             this.responseUnidadDocumentalMasivo = temp;
+             this.construirArbolUDs(idCaja, this.responseUnidadDocumentalMasivo.lstUnidadDocumentalCajaUno);
+             this.loading = false;
+           }
+         },
+           error => {
+             let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+             let titleError = listaMensajes[0];
+             listaMensajes.splice(0, 1);
+             let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+             this.messageService.clear();
+ 
+             listaMensajes.forEach(mensaje => {
+               mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+             });
+             this.messageService.add(mensajeFinal);
+ 
+             console.log(error, "error");
+           });
+     } catch (e) {
+       console.log(e);
+     }
+   }*/
 
-      this.restService.postREST(this.const.urlConsultarUnidadDocumentalPorCajaMasiva, requestUdXCaja)
-        .subscribe(resp => {
-          let temp: ResponseConsultarUnidadDocumentalMasivo = JSON.parse(JSON.stringify(resp));
-          if (temp !== undefined && temp !== null) {
-            this.responseUnidadDocumentalMasivo = temp;
-            this.construirArbolUDs(idCaja, this.responseUnidadDocumentalMasivo.lstUnidadDocumentalCajaUno);
-            this.loading = false;
-          }
-        },
-          error => {
-            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
-            let titleError = listaMensajes[0];
-            listaMensajes.splice(0, 1);
-            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
-            this.messageService.clear();
-
-            listaMensajes.forEach(mensaje => {
-              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
-            });
-            this.messageService.add(mensajeFinal);
-
-            console.log(error, "error");
-          });
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  cargarArchivosXUD(idCaja, idUnidadDoc) {
+  /*cargarArchivosXUD(idCaja, idUnidadDoc) {
     try {
       let requestArchivos: RequestDirectorio = this.objectModelInitializer.getDataRequestArchivoDir();
       requestArchivos.idUnidadDocumental = idUnidadDoc;
@@ -226,47 +411,52 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
     } catch (e) {
       console.log(e);
     }
-  }
+  }*/
 
   // Construir treenode
   construirArbolCajas() {
     this.files = [];
     this.listaCajas.forEach(caja => {
       let nodoCaja = this.construirNodoPadre(caja);
+      let nodoUD = this.construirNodosHijosUD(caja.lstUdTotales);
+      nodoCaja.children = nodoUD;
       this.files.push(nodoCaja);
     });
   }
 
-  construirNodoPadre(caja: Caja) {
+  construirNodoPadre(caja: CajaTree) {
     return {
-      "label": caja.descripcion + " (Caja)",
-      "data": caja.id,
+      "label": caja.codigoCaja + " (Caja)",
+      "data": caja.idCaja,
       "expandedIcon": "pi pi-folder-open",
       "collapsedIcon": "pi pi-folder",
       "children": []
     };
   }
 
-  construirArbolUDs(idCaja, listaUD: UnidadDocumental[]) {
+  /*construirArbolUDs(idCaja, listaUD: UnidadDocumental[]) {
     this.files.forEach(nodoCaja => {
       if (nodoCaja.data === idCaja) {
         let listaNodoUD = this.construirNodosHijosUD(listaUD);
         nodoCaja.children = listaNodoUD;
       }
     });
-  }
+  }*/
 
-  construirNodosHijosUD(listaUnidadDoc: UnidadDocumental[]) {
+  construirNodosHijosUD(listaUnidadDoc: UniDocuTree[]) {
     let listaNodosUD = [];
 
     listaUnidadDoc.forEach(unidadDoc => {
       let nodoUD = {
-        "label": unidadDoc.nombre + " (UD)",
-        "data": unidadDoc.id,
+        "label": unidadDoc.codigoUd + " (UD)",
+        "data": unidadDoc.idUd,
         "expandedIcon": "pi pi-folder-open",
         "collapsedIcon": "pi pi-folder",
         "children": []
       };
+      debugger;
+      let nodoArchivo = this.construirNodosHijosArchivo(unidadDoc.idUd, unidadDoc.documentosUd);
+      nodoUD.children = nodoArchivo;
 
       listaNodosUD.push(nodoUD);
     });
@@ -274,7 +464,7 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
     return listaNodosUD;
   }
 
-  construirArbolArchivos(idCaja, idUnidadDoc, listaArchivos: Archivo[]) {
+  /*construirArbolArchivos(idCaja, idUnidadDoc, listaArchivos: Archivo[]) {
     this.files.forEach(nodoCaja => {
       if (nodoCaja.data === idCaja) {
         nodoCaja.children.forEach(nodoUnidadDoc => {
@@ -285,14 +475,14 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
         });
       }
     });
-  }
+  }*/
 
 
-  construirNodosHijosArchivo(idUnidadDoc, listaArchivos: Archivo[]) {
+  construirNodosHijosArchivo(idUnidadDoc, listaArchivos) {
     let hijosFile = []
     listaArchivos.forEach(archivo => {
       let nodoFile = {
-        "label": archivo.nombreArchivo,
+        "label": archivo,
         "data": idUnidadDoc,
         "icon": "pi pi-file"
       };
@@ -360,7 +550,7 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
     }
   }
 
-  cargarArchivo(requestCrearArchivos) {
+ /* cargarArchivo(requestCrearArchivos) {
     try {
       this.restService.postREST(this.const.urlCrearArchivos, requestCrearArchivos)
         .subscribe(resp => {
@@ -389,7 +579,7 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
     } catch (e) {
       console.log(e);
     }
-  }
+  }*/
 
   onBasicUpload(event, fileUpload) {
     this.uploadedFiles = [];
@@ -414,7 +604,7 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
 
       Promise.all(readers).then((values) => {
         //file.archivo = e.target.result.split('base64,')[1];
-        this.cargarArchivo(requestCrearArchivos);
+       // this.cargarArchivo(requestCrearArchivos);
         this.messageService.add({ severity: 'info', summary: 'Archivo Cargado', detail: '' });
 
         fileUpload.clear();
@@ -427,6 +617,7 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
   // Contextmenu archivos
 
   descargarArchivo(file: TreeNode) {
+    debugger;
     this.obtenerArchivo(file.data, file.label, true);
   }
 

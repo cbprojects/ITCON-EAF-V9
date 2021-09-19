@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 //export var HOST = 'http://localhost:9002';
 //export var HOST = 'http://10.176.56.211:9002';
-export var HOST = 'https://143.198.123.29:8443/CentralUsuarios';
+export var HOST = 'http://143.198.123.29:8080/CentralUsuarios';
 
 //export var SYSTEM = 'http://localhost:4200';
 //export var SYSTEM = 'http://10.176.56.211:7001';
@@ -84,18 +84,21 @@ export class ObjectModelInitializer {
       urlConsultarUDPorFiltros: `${HOST}/central/unidadDocumental/consultarUnidadDocumentalFiltros`,
       urlCrearUD: `${HOST}/central/unidadDocumental/crearUnidadDocumental`,
       urlModificarUD: `${HOST}/central/unidadDocumental/modificarUnidadDocumental`,
-      urlBuscarTipoUDActivos: `${HOST}/central/TipoUD/buscarTipoUDActivos`,
       urlConsultarUnidadDocumentalPorCajaMasiva: `${HOST}/central/unidadDocumental/consultarUnidadDocumentalPorCajaMasiva`,
       urlCambiarCajaUnidadDocumentalMasiva: `${HOST}/central/unidadDocumental/cambiarCajaUnidadDocumentalMasiva`,
+      urlConsultarUnidadDocumentalLista: `${HOST}/central/unidadDocumental/consultarUnidadDocumentalLista`,
+      // Tipo Unidad Documental
+      urlBuscarTipoUDActivos: `${HOST}/central/TipoUD/buscarTipoUDActivos`,
       // Contenedores
       urlBuscarContenedoresActivos: `${HOST}/central/Contenedor/buscarContenedoresActivos`,
       urlBuscarAreasActivasPorSociedad: `${HOST}/central/SociedadArea/buscarAreasActivasPorSociedad`,
       // Sociedades      
       urlConsultarSociedadActiva: `${HOST}/central/sociedad/consultarSociedadActiva`,
       // Archivos
-      urlConsultarArchivos: `${HOST}/central/archivos/obtenerArchivos`,
+      urlConsultarArchivos: `${HOST}/central/archivos/descargarArchivos`,
       urlCrearArchivos: `${HOST}/central/archivos/subirImagen`,
       urlBorrarArchivos: `${HOST}/central/archivos/borrarImagen`,
+      urlObtenerArchivos: `${HOST}/central/archivos/obtenerArchivos`,
 
       tokenUsernameAUTH: 'BaeneApp',
       tokenPasswordAUTH: 'Baene2021codex',
@@ -571,6 +574,17 @@ export class ObjectModelInitializer {
     }
   };
 
+  getDataRequestObtenerArchivos() {
+    return {
+      idSociedad:0,
+      idCaja:'',
+      idUnidadDocumental:'',
+      idTipoUD:'',
+      idArea:'',
+      filtroBusqueda:''
+    }
+  };
+
   getDataRequestAreasXSociedad() {
     return {
       id: ''
@@ -612,6 +626,17 @@ export class ObjectModelInitializer {
       idEstante: ''
     }
   }
+
+  getDataRequestConsultarUnidadDocumentalLista() {
+    return {
+      idSociedad: '',
+      idCaja: '',
+      idUnidadDocumental: '',
+      idTipoUD: '',
+      idArea: '',
+      idContenedor: ''
+    }
+  };
 
   getDataBox() {
     return {

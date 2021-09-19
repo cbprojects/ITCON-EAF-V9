@@ -20,13 +20,43 @@
                                     <div class="form-group col-sm-12 col-lg-4">
                                         <label class="form-label">Sociedad<span class="form-required">*</span></label>
                                         <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
-                                            [(ngModel)]="sociedadSelect" [items]="listaSociedades" bindLabel="nombre">
+                                            [(ngModel)]="sociedadSelect" [items]="listaSociedades" bindLabel="nombre" (change)="counstarAreaYCaja()">
+                                        </ng-select>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-lg-4">
+                                        <label class="form-label">Area<span class="form-required"></span></label>
+                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                            [(ngModel)]="areaSelect" [items]="listaAreas" bindLabel="nombre" (change)="limpiarUDYtipoUD()">
+                                        </ng-select>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-lg-4">
+                                        <label class="form-label">Caja<span class="form-required"></span></label>
+                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                            [(ngModel)]="cajaSelect" [items]="listaCajasFiltro" bindLabel="codigoAlterno" (change)="limpiarUDYtipoUD()">
                                         </ng-select>
                                     </div>
                                 </div>
                                 <div class="row justify-content-center">
+                                    <div class="form-group col-sm-12 col-lg-4">
+                                        <label class="form-label">Tipo Unidad Documental</label>
+                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                            [(ngModel)]="tipoUniDocuSelect" [items]="listaTipoUniDocu" bindLabel="nombre" (change)="consultarUDPorFiltros()">
+                                        </ng-select>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-lg-4">
+                                        <label class="form-label">Unidad Documental</label>
+                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                            [(ngModel)]="uniDocuSelect" [items]="listaUniDocu" bindLabel="codigoUD">
+                                        </ng-select>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-lg-4">
+                                        <label class="form-label">Nombre Archivo</label>
+                                        <input type="text" [(ngModel)]="archivoFiltro" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
                                     <div class="form-group col-sm-6 col-lg-4 text-center">
-                                        <button type="submit" (click)="consultarCajasPorSociedad()"
+                                        <button type="submit" (click)="obtenerArchivos()"
                                             class="btn btn-primary ml-auto">{{msg.lbl_btn_consultar}}</button>
                                     </div>
                                 </div>
@@ -35,7 +65,7 @@
                                 <div class="row justify-content-center">
                                     <div *ngIf="files.length > 0" class="form-group col-sm-12 col-lg-12 text-center">
                                         <p-tree [value]="files" selectionMode="single" [(selection)]="selectedFiles"
-                                            [contextMenu]="cm" (onNodeSelect)="nodeSelect($event)"
+                                            [contextMenu]="cm"
                                             (onNodeUnselect)="nodeUnselect($event)">
                                         </p-tree>
                                         <p-contextMenu #cm [model]="items"></p-contextMenu>
