@@ -34,11 +34,12 @@
                             <div class="card-body">
                                 <div class="row justify-content-center">
                                     <div *ngIf="files.length > 0" class="form-group col-sm-12 col-lg-12 text-center">
-                                        <p-tree [value]="files" selectionMode="single" [(selection)]="selectedFiles"
-                                            [contextMenu]="cm" (onNodeSelect)="nodeSelect($event)"
-                                            (onNodeUnselect)="nodeUnselect($event)">
+                                        <p-tree [value]="files" [filter]="true" selectionMode="single"
+                                            [(selection)]="selectedFiles" [contextMenu]="cm"
+                                            (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)">
                                         </p-tree>
                                         <p-contextMenu #cm [model]="items"></p-contextMenu>
+                                        <p-confirmPopup></p-confirmPopup>
                                     </div>
                                     <div *ngIf="files.length <= 0" class="service-grids">
                                         <div class="col-md-12 ser-grid">

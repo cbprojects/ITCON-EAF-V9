@@ -14,6 +14,7 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { TreeModule } from 'primeng/tree';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { FileUploadModule } from 'primeng/fileupload';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 
 // Imports Utilidades
 import { TextProperties } from './config/TextProperties';
@@ -153,7 +154,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ProgressBarModule,
     TreeModule,
     ContextMenuModule,
-    FileUploadModule
+    FileUploadModule,
+    ConfirmPopupModule
   ],
   providers: [TextProperties, Enumerados, ObjectModelInitializer, Guardian, Util, Functions, MessageService, SesionService, { provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]

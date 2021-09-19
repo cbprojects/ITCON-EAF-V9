@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MenuItem, MessageService, TreeNode } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService, TreeNode } from 'primeng/api';
 import { Enumerados } from 'src/app/config/Enumerados';
 import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
@@ -46,7 +46,7 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
   const: any;
   loading: boolean;
 
-  constructor(private router: Router, private route: ActivatedRoute, public restService: RestService, public textProperties: TextProperties, public util: Util, public objectModelInitializer: ObjectModelInitializer, public enumerados: Enumerados, public sesionService: SesionService, private messageService: MessageService) {
+  constructor(private router: Router, private route: ActivatedRoute, public restService: RestService, public textProperties: TextProperties, public util: Util, public objectModelInitializer: ObjectModelInitializer, public enumerados: Enumerados, public sesionService: SesionService, private messageService: MessageService, private confirmationService: ConfirmationService) {
     this.sesion = this.objectModelInitializer.getDataServiceSesion();
     this.msg = this.textProperties.getProperties(this.sesionService.objServiceSesion.idioma);
     this.const = this.objectModelInitializer.getConst();
@@ -287,7 +287,6 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
     });
   }
 
-
   construirNodosHijosArchivo(idUnidadDoc, listaArchivos: Archivo[]) {
     let hijosFile = []
     listaArchivos.forEach(archivo => {
@@ -447,6 +446,20 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
       };
 
       fileReader.readAsDataURL(file.archivo);
+    });
+  }
+
+  confirm(event: Event) {
+    this.confirmationService.confirm({
+      target: event.target,
+      message: '¿Está seguro que desea eliminar el archivo seleccionado?',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+
+      },
+      reject: () => {
+
+      }
     });
   }
 
