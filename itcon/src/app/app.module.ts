@@ -14,6 +14,7 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { TreeModule } from 'primeng/tree';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { FileUploadModule } from 'primeng/fileupload';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 
 // Imports Utilidades
 import { TextProperties } from './config/TextProperties';
@@ -51,7 +52,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { Enumerados } from './config/Enumerados';
 import { ObjectModelInitializer } from './config/ObjectModelInitializer';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { SesionService } from './services/sesionService/sesion.service';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { MUsuarioComponent } from './components/management/usuario/m-usuario.component';
@@ -153,9 +154,10 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ProgressBarModule,
     TreeModule,
     ContextMenuModule,
-    FileUploadModule
+    FileUploadModule,
+    ConfirmPopupModule
   ],
-  providers: [TextProperties, Enumerados, ObjectModelInitializer, Guardian, Util, Functions, MessageService, SesionService, { provide: LocationStrategy, useClass: HashLocationStrategy }],
+  providers: [TextProperties, Enumerados, ObjectModelInitializer, Guardian, Util, Functions, MessageService, ConfirmationService, SesionService, { provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

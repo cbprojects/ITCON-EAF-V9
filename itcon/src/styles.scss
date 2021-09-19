@@ -138,3 +138,53 @@ h3 {
 .p-contextmenu {
     margin-top: -400px !important;
 }
+
+.p-confirm-popup {
+    border: 0;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    border-radius: 6px;
+    color: #333333;
+    background: #fff;
+    padding: 10px;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+}
+
+.p-confirm-popup .p-confirm-popup-content {
+    border-bottom: 1px solid #f1f1f1;
+    margin: 10px 5px;
+}
+
+.p-confirm-popup .p-confirm-popup-footer {
+    text-align: right;
+    margin: 5px;
+}
+
+.p-confirm-popup-reject {
+    color: #1d2225 !important;
+    padding: 0px 5px !important;
+    margin: 0px 5px;
+}
+
+.p-confirm-popup-accept {
+    background: #467fcf;
+    border: 1px solid #467fcf;
+    padding: 0px 5px !important;
+}
+
+.p-confirm-popup-accept:hover {
+    background: #467fcf !important;
+    border: 1px solid #467fcf !important;
+}
+
+.p-confirm-popup-icon {
+    margin-right: 5px;
+}
+
+.btn-confirm-nodisp {
+    position: absolute;
+    top: 35%;
+    background: transparent;
+    left: 35%;
+    border: none;
+}
