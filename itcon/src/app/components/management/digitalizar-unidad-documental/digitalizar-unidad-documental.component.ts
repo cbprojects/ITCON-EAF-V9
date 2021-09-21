@@ -751,7 +751,7 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
 
         Promise.all(readers).then((values) => {
           //file.archivo = e.target.result.split('base64,')[1];
-          //this.cargarArchivo(requestCrearArchivos);
+          this.cargarArchivo(requestCrearArchivos);
           this.messageService.add({ severity: 'info', summary: 'Archivo Cargado', detail: '' });
 
           this.fileUploadPrecargado.clear();
