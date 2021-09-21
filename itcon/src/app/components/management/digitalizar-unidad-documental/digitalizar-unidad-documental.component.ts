@@ -121,7 +121,7 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
   }
 
   limpiarUDYtipoUD() {
-
+    this.files=[];
     this.uniDocuSelect = this.objectModelInitializer.getDataUnidadDocumental();
     this.tipoUniDocuSelect = this.objectModelInitializer.getDataTipoDocumental();
   }
@@ -163,6 +163,7 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
   }
 
   counstarAreaYCaja() {
+    this.files = [];
     this.consultarAreasPorSociedad();
     this.consultarCajaPorSociedad();
   }
@@ -202,7 +203,8 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
   }
 
   consultarUDPorFiltros() {
-
+    this.uniDocuSelect = this.objectModelInitializer.getDataUnidadDocumental();
+    this.files=[];
     this.listaUniDocu = [];
     this.loading = true;
     try {
@@ -279,6 +281,7 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
 
 
   obtenerArchivos() {
+    this.files = [];
     this.limpiarUnidadDocumental();
     this.listaCajas = [];
     this.loading = true;
@@ -286,9 +289,21 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
       this.requestObtenerArchivos = this.objectModelInitializer.getDataRequestObtenerArchivos();
       if (this.sociedadSelect != undefined && this.sociedadSelect != null && this.sociedadSelect.id > 0) {
         this.requestObtenerArchivos.idSociedad = this.sociedadSelect.id;
-        this.requestObtenerArchivos.idCaja = this.cajaSelect.id;
-        this.requestObtenerArchivos.idUnidadDocumental = this.uniDocuSelect.id;
-        this.requestObtenerArchivos.idTipoUD = this.tipoUniDocuSelect.id;
+        if(this.cajaSelect.id===0){
+          this.requestObtenerArchivos.idCaja=null;
+        }else{
+          this.requestObtenerArchivos.idCaja = this.cajaSelect.id;
+        }
+        if(this.uniDocuSelect.idUD===0){
+          this.requestObtenerArchivos.idUnidadDocumental = null;
+        }else{
+          this.requestObtenerArchivos.idUnidadDocumental = this.uniDocuSelect.idUD;
+        }
+        if(this.tipoUniDocuSelect.id===0){
+          this.requestObtenerArchivos.idTipoUD = null;
+        }else{
+          this.requestObtenerArchivos.idTipoUD = this.tipoUniDocuSelect.id;
+        }
         if (this.areaSelect.id === 0) {
           this.requestObtenerArchivos.idArea = null;
         } else {
@@ -458,7 +473,6 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
         "collapsedIcon": "pi pi-folder",
         "children": []
       };
-      debugger;
       let nodoArchivo = this.construirNodosHijosArchivo(unidadDoc.idUd, unidadDoc.documentosUd);
       nodoUD.children = nodoArchivo;
 
@@ -483,7 +497,6 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
 
 
   construirNodosHijosArchivo(idUnidadDoc, listaArchivos) {
-    debugger;
     let hijosFile = []
     listaArchivos.forEach(archivo => {
       let nodoFile = {
