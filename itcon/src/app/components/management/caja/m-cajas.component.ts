@@ -42,9 +42,9 @@ export class MCajaComponent implements OnInit {
   bloqueFiltro: any;
   bodegaFiltro: any;
   sedeFiltro: any;
-  sociedadFiltro: any;
+  clienteFiltro: any;
 
-  listaSociedadesTemp: any[];
+  listaClientesTemp: any[];
   listaSedesTemp: any[];
   listaBodegasTemp: any[];
   listaEntrepanosTemp: any[];
@@ -52,7 +52,7 @@ export class MCajaComponent implements OnInit {
   listaCuerposTemp: any[];
   listaBloquesTemp: any[];
 
-  listaSociedades: any[];
+  listaClientes: any[];
   listaEntrepanos: any[];
   listaEstantes: any[];
   listaCuerpos: any[];
@@ -104,7 +104,7 @@ export class MCajaComponent implements OnInit {
       this.bloqueFiltro = { value: this.objectModelInitializer.getDataBloque(), label: this.msg.lbl_enum_generico_valor_vacio };
       this.bodegaFiltro = { value: this.objectModelInitializer.getDataBodega(), label: this.msg.lbl_enum_generico_valor_vacio };
       this.sedeFiltro = { value: this.objectModelInitializer.getDataSede(), label: this.msg.lbl_enum_generico_valor_vacio };
-      this.sociedadFiltro = { value: this.objectModelInitializer.getDataSociedad(), label: this.msg.lbl_enum_generico_valor_vacio };
+      this.clienteFiltro = { value: this.objectModelInitializer.getDataCliente(), label: this.msg.lbl_enum_generico_valor_vacio };
     }
   }
 
@@ -169,15 +169,15 @@ export class MCajaComponent implements OnInit {
   }
 
   activarCambiosSociedades() {
-    this.listaSociedades = [];
-    this.listaSociedades.push({ value: this.objectModelInitializer.getDataSociedad(), label: this.msg.lbl_enum_generico_valor_vacio });
-    this.listaSociedadesTemp.forEach(sociedad => {
-      this.listaSociedades.push({ value: sociedad, label: sociedad.nombre });
+    this.listaClientes = [];
+    this.listaClientes.push({ value: this.objectModelInitializer.getDataCliente, label: this.msg.lbl_enum_generico_valor_vacio });
+    this.listaClientesTemp.forEach(clientes => {
+      this.listaClientes.push({ value: clientes, label: clientes.nombre });
     });
     if (this.sesionService.objCajaCargado !== undefined && this.sesionService.objCajaCargado !== null && this.sesionService.objCajaCargado.descripcion !== null && this.sesionService.objCajaCargado.descripcion !== '') {
-      this.sociedadFiltro = { value: this.caja.sociedad, label: this.caja.sociedad.nombre };
+      this.clienteFiltro = { value: this.caja.cliente, label: this.caja.cliente.nombre };
     } else {
-      this.sociedadFiltro = this.listaSociedades[0];
+      this.clienteFiltro = this.listaClientes[0];
     }
 
   }
@@ -409,12 +409,12 @@ export class MCajaComponent implements OnInit {
 
   consultarSociedades() {
     try {
-      this.listaSociedades = [];
-      this.restService.getREST(this.const.urlConsultarSociedadActiva)
+      this.listaClientes = [];
+      this.restService.getREST(this.const.urlConsultarClienteActiva)
         .subscribe(resp => {
           let temp: Entrepano[] = JSON.parse(JSON.stringify(resp));
           if (temp !== undefined && temp.length > 0) {
-            this.listaSociedadesTemp = temp;
+            this.listaClientesTemp = temp;
           }
         },
           error => {
@@ -445,7 +445,7 @@ export class MCajaComponent implements OnInit {
       this.caja.entrepano.estante.cuerpo.bloque = this.bloqueFiltro.value;
       this.caja.entrepano.estante.cuerpo.bloque.bodega = this.bodegaFiltro.value;
       this.caja.entrepano.estante.cuerpo.bloque.bodega.sede = this.sedeFiltro.value;
-      this.caja.sociedad = this.sociedadFiltro.value;
+      this.caja.cliente = this.clienteFiltro.value;
       this.caja.estado = this.caja.estado.value;
       this.restService.postREST(this.const.urlCrearCaja, this.caja)
         .subscribe(resp => {
@@ -486,7 +486,7 @@ export class MCajaComponent implements OnInit {
       this.caja.entrepano.estante.cuerpo.bloque = this.bloqueFiltro.value;
       this.caja.entrepano.estante.cuerpo.bloque.bodega = this.bodegaFiltro.value;
       this.caja.entrepano.estante.cuerpo.bloque.bodega.sede = this.sedeFiltro.value;
-      this.caja.sociedad = this.sociedadFiltro.value;
+      this.caja.cliente = this.clienteFiltro.value;
       this.caja.estado = this.caja.estado.value;
       this.restService.putREST(this.const.urlModificarCaja, this.caja)
         .subscribe(resp => {

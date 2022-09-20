@@ -6,6 +6,7 @@ import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
 import { Caja } from 'src/app/model/cajaModel';
+import { Cliente } from 'src/app/model/clienteModel';
 import { ResponseCambiarUnidadDocumentalMasivo } from 'src/app/model/responseCambiarUnidadDocumentalMasivoModel';
 import { ResponseConsultarUnidadDocumentalMasivo } from 'src/app/model/responseConsultarUnidadDocumentalMasivoModel';
 import { Sociedad } from 'src/app/model/sociedadModel';
@@ -24,12 +25,12 @@ export class TrasladoUnidadDocumentalComponent implements OnInit {
   sesion: any;
 
   // Objetos de datos
-  listaSociedades: Sociedad[] = [];
+  listaClientes: Cliente[] = [];
   listaCajas: Caja[] = [];
-  sociedadSelect: any;
+  clienteSelect: any;
   caja1Select: any;
   caja2Select: any;
-  requestConsultaCajasPorSociedad: any;
+  requestConsultaCajasPorCliente: any;
   requestUnidadDocumentalMasivo: any;
   responseUnidadDocumentalMasivo: any;
   requestCambiarUnidadDocumentalMasivo: any;
@@ -51,21 +52,21 @@ export class TrasladoUnidadDocumentalComponent implements OnInit {
   }
 
   inicializar() {
-    this.sociedadSelect = { value: this.objectModelInitializer.getDataSociedad(), label: this.msg.lbl_enum_generico_valor_vacio };
+    this.clienteSelect = { value: this.objectModelInitializer.getDataSociedad(), label: this.msg.lbl_enum_generico_valor_vacio };
     this.caja1Select = { value: this.objectModelInitializer.getDataCaja, label: this.msg.lbl_enum_generico_valor_vacio };
     this.caja2Select = { value: this.objectModelInitializer.getDataCaja, label: this.msg.lbl_enum_generico_valor_vacio };
     this.consultarSociedades();
   }
 
   consultarSociedades() {
-    this.listaSociedades = [];
+    this.listaClientes = [];
     this.loading = true;
     try {
-      this.restService.getREST(this.const.urlConsultarSociedadActiva)
+      this.restService.getREST(this.const.urlConsultarClienteActiva)
         .subscribe(resp => {
-          let temp: Sociedad[] = JSON.parse(JSON.stringify(resp));
+          let temp: Cliente[] = JSON.parse(JSON.stringify(resp));
           if (temp !== undefined && temp.length > 0) {
-            this.listaSociedades = temp;
+            this.listaClientes = temp;
             this.loading = false;
           }
         },
@@ -94,11 +95,11 @@ export class TrasladoUnidadDocumentalComponent implements OnInit {
     this.listaCajas = [];
     this.loading = true;
     try {
-      this.requestConsultaCajasPorSociedad = this.objectModelInitializer.getDataRequestConsultaCajasPorSociedad();
-      if (this.sociedadSelect != null) {
-        this.requestConsultaCajasPorSociedad.id = this.sociedadSelect.id;
+      this.requestConsultaCajasPorCliente = this.objectModelInitializer.getDataRequestConsultaCajasPorSociedad();
+      if (this.clienteSelect != null) {
+        this.requestConsultaCajasPorCliente.id = this.clienteSelect.id;
 
-        this.restService.postREST(this.const.urlConsultarCajasPorSociedad, this.requestConsultaCajasPorSociedad)
+        this.restService.postREST(this.const.urlConsultarCajasPorSociedad, this.requestConsultaCajasPorCliente)
           .subscribe(resp => {
             let temp: Caja[] = JSON.parse(JSON.stringify(resp));
             if (temp !== undefined && temp.length > 0) {

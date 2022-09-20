@@ -1,5 +1,5 @@
+import { Cliente } from "./clienteModel";
 import { Entrepano } from "./entrepanoModel";
-import { Sociedad } from "./sociedadModel";
 
 export interface Caja {
     id;
@@ -8,7 +8,7 @@ export interface Caja {
     codigoBarras;
     qr;
     entrepano: Entrepano;
-    sociedad: Sociedad;
+    cliente: Cliente;
     estado;
     fechaCreacion;
     usuarioCreacion;

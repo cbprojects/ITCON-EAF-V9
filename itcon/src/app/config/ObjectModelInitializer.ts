@@ -94,6 +94,8 @@ export class ObjectModelInitializer {
       urlBuscarAreasActivasPorSociedad: `${HOST}/central/SociedadArea/buscarAreasActivasPorSociedad`,
       // Sociedades      
       urlConsultarSociedadActiva: `${HOST}/central/sociedad/consultarSociedadActiva`,
+      // Clientes      
+      urlConsultarClienteActiva: `${HOST}/central/Cliente/buscarClientesActivos`,
       // Archivos
       urlConsultarArchivos: `${HOST}/central/archivos/descargarArchivos`,
       urlCrearArchivos: `${HOST}/central/archivos/subirImagen`,
@@ -257,7 +259,7 @@ export class ObjectModelInitializer {
       codigoBarras: '',
       qr: '',
       entrepano: this.getDataEntrepano(),
-      sociedad: this.getDataSociedad(),
+      cliente: this.getDataCliente(),
       fechaCreacion: '',
       usuarioCreacion: '',
       fechaActualizacion: '',
@@ -629,6 +631,7 @@ export class ObjectModelInitializer {
 
   getDataRequestConsultarUnidadDocumentalLista() {
     return {
+      idCliente: '',
       idSociedad: '',
       idCaja: '',
       idUnidadDocumental: '',

@@ -20,7 +20,7 @@
                                     <div id="card-caja-1" class="card card-collapsed">
                                         <div class="card-status card-status-left bg-blue"></div>
                                         <div class="card-header">
-                                            <h4 class="card-title">Ubicación Sociedad</h4>
+                                            <h4 class="card-title">Ubicación Cliente</h4>
                                             <div class="card-options">
                                                 <a class="card-options-collapse"
                                                     (click)="util.toggleCollapseByID('card-caja-1')"><i
@@ -30,10 +30,10 @@
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="form-group col-sm-12 col-lg-4">
-                                                    <label class="form-label">Sociedad<span
+                                                    <label class="form-label">Cliente<span
                                                             class="form-required">*</span></label>
                                                     <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
-                                                        [(ngModel)]="sociedadFiltro" [items]="listaSociedades">
+                                                        [(ngModel)]="clienteFiltro" [items]="listaClientes">
                                                     </ng-select>
                                                 </div>
                                             </div>
