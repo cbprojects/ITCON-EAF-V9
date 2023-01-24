@@ -111,6 +111,7 @@ export class RolPerfilComponent implements OnInit {
       let requestCrearRolPerfil: RequestCrearRolPerfil = this.objectModelInitializer.getDataRequestCrearRolPerfil();
       requestCrearRolPerfil.perfil = this.objPerfilCargado;
       requestCrearRolPerfil.lstRoles = this.targetProducts;
+      requestCrearRolPerfil.user=localStorage.getItem('cedula');
       this.restService.postREST(this.const.urlCrearRolPerfil, requestCrearRolPerfil)
         .subscribe(resp => {
           let respuesta: ResponseCrearRolPerfil = JSON.parse(JSON.stringify(resp));

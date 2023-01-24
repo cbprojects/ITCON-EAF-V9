@@ -18,9 +18,9 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group col-sm-12 col-lg-4">
-                                        <label class="form-label">Sociedad<span class="form-required">*</span></label>
+                                        <label class="form-label">Cliente<span class="form-required">*</span></label>
                                         <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
-                                            [(ngModel)]="sociedadSelect" [items]="listaSociedades" bindLabel="nombre"
+                                            [(ngModel)]="clienteSelect" [items]="listaClientes" bindLabel="nombre"
                                             (change)="consultarCajasPorSociedad()">
                                         </ng-select>
                                     </div>

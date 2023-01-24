@@ -44,6 +44,7 @@ export class MUnidadDocumentalComponent implements OnInit {
   listaAreas: any[];
   listaTipoDocumental: any[];
   listaContenedores: any[];
+  creacion: any;
 
   // Utilidades
   msg: any;
@@ -66,11 +67,13 @@ export class MUnidadDocumentalComponent implements OnInit {
   }
 
   inicializar() {
+    this.creacion=localStorage.getItem("cedula");
     this.consultarContenedores();
     this.consultarTiposDocumentales();
     this.consultarSociedades();
     this.enumEstado = this.enums.estado.valores;
     this.unidadDocumental = this.objectModelInitializer.getDataUnidadDocumental();
+    this.unidadDocumental.usuarioCreacion
     this.unidadDocumental.sociedadArea = this.objectModelInitializer.getDataSociedadArea();
     this.unidadDocumental.estado = this.util.getValorEnumerado(this.enumEstado, 1);
     this.esNuevaUnidadDocumental = true;
@@ -277,6 +280,8 @@ export class MUnidadDocumentalComponent implements OnInit {
       this.unidadDocumental.contenedor = this.contenedorFiltro.value;
       this.unidadDocumental.tipoDocumental = this.tipoDocumentalFiltro.value;
       this.unidadDocumental.estado = this.unidadDocumental.estado.value;
+      this.unidadDocumental.usuarioCreacion=this.creacion;
+      this.unidadDocumental.usuarioActualizacion=this.creacion;
       this.restService.postREST(this.const.urlCrearUD, this.unidadDocumental)
         .subscribe(resp => {
           let respuesta: UnidadDocumental = JSON.parse(JSON.stringify(resp));
@@ -316,6 +321,7 @@ export class MUnidadDocumentalComponent implements OnInit {
       this.unidadDocumental.contenedor = this.contenedorFiltro.value;
       this.unidadDocumental.tipoDocumental = this.tipoDocumentalFiltro.value;
       this.unidadDocumental.estado = this.unidadDocumental.estado.value;
+      this.unidadDocumental.usuarioActualizacion=this.creacion;
       this.restService.putREST(this.const.urlModificarUD, this.unidadDocumental)
         .subscribe(resp => {
           let respuesta: UnidadDocumental = JSON.parse(JSON.stringify(resp));

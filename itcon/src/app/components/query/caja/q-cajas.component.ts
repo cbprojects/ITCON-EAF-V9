@@ -46,16 +46,16 @@ export class QCajaComponent implements OnInit {
   bloqueFiltro: any;
   bodegaFiltro: any;
   sedeFiltro: any;
-  sociedadFiltro: any;
-
+  clienteFiltro: any;
+  
   listaSedesTemp: any[];
   listaBodegasTemp: any[];
   listaEntrepanosTemp: any[];
   listaEstantesTemp: any[];
   listaCuerposTemp: any[];
   listaBloquesTemp: any[];
-  listaSociedadesTemp: any[];
-
+  listaClientesTemp: any[];
+  
   listaCajas: Caja[];
   listaEntrepanos: any[];
   listaEstantes: any[];
@@ -63,8 +63,8 @@ export class QCajaComponent implements OnInit {
   listaBloques: any[];
   listaBodegas: any[];
   listaSedes: any[];
-  listaSociedades: any[];
-
+  listaClientes: any[];
+  
   // Utilidades
   msg: any;
   const: any;
@@ -97,7 +97,7 @@ export class QCajaComponent implements OnInit {
     this.bloqueFiltro = { value: this.objectModelInitializer.getDataBloque(), label: this.msg.lbl_enum_generico_valor_vacio };
     this.bodegaFiltro = { value: this.objectModelInitializer.getDataBodega(), label: this.msg.lbl_enum_generico_valor_vacio };
     this.sedeFiltro = { value: this.objectModelInitializer.getDataSede(), label: this.msg.lbl_enum_generico_valor_vacio };
-    this.sociedadFiltro = { value: this.objectModelInitializer.getDataSociedad(), label: this.msg.lbl_enum_generico_valor_vacio };
+    this.clienteFiltro = { value: this.objectModelInitializer.getDataCliente(), label: this.msg.lbl_enum_generico_valor_vacio };
     this.consultarCajas(0);
     this.cargarSedesXUsuario();
     this.consultarSociedades();
@@ -160,24 +160,24 @@ export class QCajaComponent implements OnInit {
   }
 
   activarCambiosSociedades() {
-    this.listaSociedades = [];
-    this.listaSociedades.push({ value: this.objectModelInitializer.getDataSociedad(), label: this.msg.lbl_enum_generico_valor_vacio });
-    this.listaSociedadesTemp.forEach(sociedad => {
-      this.listaSociedades.push({ value: sociedad, label: sociedad.nombre });
+    this.listaClientes = [];
+    this.listaClientes.push({ value: this.objectModelInitializer.getDataCliente(), label: this.msg.lbl_enum_generico_valor_vacio });
+    this.listaClientesTemp.forEach(sociedad => {
+      this.listaClientes.push({ value: sociedad, label: sociedad.nombre });
     });
-    this.sociedadFiltro = this.listaSociedades[0];
+    this.clienteFiltro = this.listaClientes[0];
   }
 
   // Carga ngselects
   
   consultarSociedades() {
     try {
-      this.listaSociedades = [];
-      this.restService.getREST(this.const.urlConsultarSociedadActiva)
+      this.listaClientes = [];
+      this.restService.getREST(this.const.urlConsultarClienteActiva)
         .subscribe(resp => {
           let temp: Entrepano[] = JSON.parse(JSON.stringify(resp));
           if (temp !== undefined && temp.length > 0) {
-            this.listaSociedadesTemp = temp;
+            this.listaClientesTemp = temp;
           }
         },
           error => {
@@ -435,7 +435,7 @@ export class QCajaComponent implements OnInit {
     try {
       let requestCajaFiltro: RequestConsultaCaja = this.objectModelInitializer.getDataRequestConsultarCaja();
       this.cajaFiltro.entrepano = this.entrepanoFiltro.value;
-      this.cajaFiltro.sociedad = this.sociedadFiltro.value;
+      this.cajaFiltro.cliente = this.clienteFiltro.value;
       requestCajaFiltro.caja = this.cajaFiltro;
       requestCajaFiltro.idSede = this.sedeFiltro.id;
       requestCajaFiltro.idBodega = this.bodegaFiltro.id;

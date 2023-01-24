@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 
 //export var HOST = 'http://localhost:9002';
 //export var HOST = 'http://10.176.56.211:9002';
+//qa
+//export var HOST = 'https://143.198.123.29:8443/CentralUsuariosQA';
+//dev
 export var HOST = 'https://143.198.123.29:8443/CentralUsuarios';
 
 //export var SYSTEM = 'http://localhost:4200';
@@ -94,6 +97,8 @@ export class ObjectModelInitializer {
       urlBuscarAreasActivasPorSociedad: `${HOST}/central/SociedadArea/buscarAreasActivasPorSociedad`,
       // Sociedades      
       urlConsultarSociedadActiva: `${HOST}/central/sociedad/consultarSociedadActiva`,
+      // Clientes      
+      urlConsultarClienteActiva: `${HOST}/central/Cliente/buscarClientesActivos`,
       // Archivos
       urlConsultarArchivos: `${HOST}/central/archivos/descargarArchivos`,
       urlCrearArchivos: `${HOST}/central/archivos/subirImagen`,
@@ -257,7 +262,7 @@ export class ObjectModelInitializer {
       codigoBarras: '',
       qr: '',
       entrepano: this.getDataEntrepano(),
-      sociedad: this.getDataSociedad(),
+      cliente: this.getDataCliente(),
       fechaCreacion: '',
       usuarioCreacion: '',
       fechaActualizacion: '',
@@ -495,6 +500,7 @@ export class ObjectModelInitializer {
     return {
       perfil: {},
       lstRoles: [],
+      user: ''
     }
   };
 
@@ -629,6 +635,7 @@ export class ObjectModelInitializer {
 
   getDataRequestConsultarUnidadDocumentalLista() {
     return {
+      idCliente: '',
       idSociedad: '',
       idCaja: '',
       idUnidadDocumental: '',
