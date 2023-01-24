@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 
 //export var HOST = 'http://localhost:9002';
 //export var HOST = 'http://10.176.56.211:9002';
+//qa
+//export var HOST = 'https://143.198.123.29:8443/CentralUsuariosQA';
+//dev
 export var HOST = 'https://143.198.123.29:8443/CentralUsuarios';
 
 //export var SYSTEM = 'http://localhost:4200';
@@ -497,6 +500,7 @@ export class ObjectModelInitializer {
     return {
       perfil: {},
       lstRoles: [],
+      user: ''
     }
   };
 
