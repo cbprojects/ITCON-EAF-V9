@@ -122,6 +122,21 @@
                                 *ngIf="validarRol('ITCDUD')">Digitalizar Unidad Documental</a>
                         </div>
                     </li>
+                    <li class="nav-item dropdown" *ngIf="validarRol('ITCMAD')">
+                        <a id="pagesMenu" href="#" class="nav-link" data-toggle="dropdown" aria-expanded="false"><i
+                                class="fe fe-settings"></i>
+                            Parametrización</a>
+                        <div class="dropdown-menu dropdown-menu-arrow">
+                            <a routerLink="/q-parametrizacion/area" class="dropdown-item "
+                                *ngIf="validarRol('ITCMAR')">Área</a>
+                            <a routerLink="/q-parametrizacion/cliente" class="dropdown-item "
+                                *ngIf="validarRol('ITCMCL')">Cliente</a>
+                            <a routerLink="/q-parametrizacion/contenedor" class="dropdown-item "
+                                *ngIf="validarRol('ITCMCO')">Contenedor</a>
+                            <a routerLink="/q-parametrizacion/tipo-documental" class="dropdown-item "
+                                *ngIf="validarRol('ITCMTU')">Tipo Unidad Documental</a>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>

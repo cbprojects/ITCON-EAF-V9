@@ -74,7 +74,8 @@
                                             {{msg.lbl_info_sin_resultados}}</p>
                                     </div>
                                 </div>
-                                <div class="card-footer" *ngIf="objPerfilCargado !=null ">
+                                <div class="card-footer" *ngIf="objPerfilCargado">
+                                    <h3 class="p-3">{{objPerfilCargado.descripcion}}</h3>
                                     <p-pickList id="asoRolPerfil" [source]="sourceProducts" [target]="targetProducts"
                                         sourceHeader="{{msg.lbl_rol_perfil_disponible}}"
                                         targetHeader="{{msg.lbl_rol_perfil_seleccionado}}" [dragdrop]="true"

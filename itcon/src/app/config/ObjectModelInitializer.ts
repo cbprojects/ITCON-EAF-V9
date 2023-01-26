@@ -104,6 +104,10 @@ export class ObjectModelInitializer {
       urlCrearArchivos: `${HOST}/central/archivos/subirImagen`,
       urlBorrarArchivos: `${HOST}/central/archivos/borrarImagen`,
       urlObtenerArchivos: `${HOST}/central/archivos/obtenerArchivos`,
+      // Parametrizaciones masivas
+      urlConsultarMasivoPorFiltros: `${HOST}/central/Masivo/consultarMasivo`,
+      urlCrearMasivo: `${HOST}/central/Masivo/crearMasivo`,
+      urlModificarMasivo: `${HOST}/central/Masivo/modificarMasivo`,
 
       tokenUsernameAUTH: 'BaeneApp',
       tokenPasswordAUTH: 'Baene2021codex',
@@ -582,12 +586,12 @@ export class ObjectModelInitializer {
 
   getDataRequestObtenerArchivos() {
     return {
-      idSociedad:0,
-      idCaja:'',
-      idUnidadDocumental:'',
-      idTipoUD:'',
-      idArea:'',
-      filtroBusqueda:''
+      idSociedad: 0,
+      idCaja: '',
+      idUnidadDocumental: '',
+      idTipoUD: '',
+      idArea: '',
+      filtroBusqueda: ''
     }
   };
 
@@ -812,6 +816,42 @@ export class ObjectModelInitializer {
     return {
       idUnidadDocumental: 0,
       listaArchivosPorSubir: []
+    }
+  }
+
+  getDataMasivoDTO() {
+    return {
+      idMasivo: 0,
+      nombre1: '',
+      nombre2: '',
+      estado: 0,
+      fechaCreacion: '',
+      usuarioCreacion: '',
+      fechaActualizacion: '',
+      usuarioActualizacion: ''
+    }
+  }
+
+  getDataRequestMasivo() {
+    return {
+      tipoMasivo: 0,
+      masivoDTO: this.getDataMasivoDTO()
+    }
+  }
+
+  getDataRequestConsultaMasivo() {
+    return {
+      tipoMasivo: 0,
+      masivo: this.getDataMasivoDTO(),
+      registroInicial: '',
+      cantidadRegistro: ''
+    }
+  }
+
+  getDataResponseConsultaMasivo() {
+    return {
+      resultado: [],
+      registrosTotales: 0
     }
   }
 }
