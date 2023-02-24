@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Enumerados } from 'src/app/config/Enumerados';
 import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
@@ -49,8 +49,8 @@ export class MUnidadDocumentalComponent implements OnInit {
   // Utilidades
   msg: any;
   const: any;
-  enumEstado: any;
   enums: any;
+  enumEstado: any;
 
   constructor(private router: Router, private route: ActivatedRoute, public restService: RestService, public textProperties: TextProperties, public util: Util, public objectModelInitializer: ObjectModelInitializer, public enumerados: Enumerados, public sesionService: SesionService, private messageService: MessageService) {
     this.sesion = this.objectModelInitializer.getDataServiceSesion();
@@ -67,13 +67,13 @@ export class MUnidadDocumentalComponent implements OnInit {
   }
 
   inicializar() {
-    this.creacion=localStorage.getItem("cedula");
+    this.creacion = localStorage.getItem("cedula");
     this.consultarContenedores();
     this.consultarTiposDocumentales();
     this.consultarSociedades();
     this.enumEstado = this.enums.estado.valores;
     this.unidadDocumental = this.objectModelInitializer.getDataUnidadDocumental();
-    this.unidadDocumental.usuarioCreacion
+    // this.unidadDocumental.usuarioCreacion = this.creacion
     this.unidadDocumental.sociedadArea = this.objectModelInitializer.getDataSociedadArea();
     this.unidadDocumental.estado = this.util.getValorEnumerado(this.enumEstado, 1);
     this.esNuevaUnidadDocumental = true;
@@ -280,8 +280,8 @@ export class MUnidadDocumentalComponent implements OnInit {
       this.unidadDocumental.contenedor = this.contenedorFiltro.value;
       this.unidadDocumental.tipoDocumental = this.tipoDocumentalFiltro.value;
       this.unidadDocumental.estado = this.unidadDocumental.estado.value;
-      this.unidadDocumental.usuarioCreacion=this.creacion;
-      this.unidadDocumental.usuarioActualizacion=this.creacion;
+      this.unidadDocumental.usuarioCreacion = this.creacion;
+      this.unidadDocumental.usuarioActualizacion = this.creacion;
       this.restService.postREST(this.const.urlCrearUD, this.unidadDocumental)
         .subscribe(resp => {
           let respuesta: UnidadDocumental = JSON.parse(JSON.stringify(resp));
@@ -321,7 +321,7 @@ export class MUnidadDocumentalComponent implements OnInit {
       this.unidadDocumental.contenedor = this.contenedorFiltro.value;
       this.unidadDocumental.tipoDocumental = this.tipoDocumentalFiltro.value;
       this.unidadDocumental.estado = this.unidadDocumental.estado.value;
-      this.unidadDocumental.usuarioActualizacion=this.creacion;
+      this.unidadDocumental.usuarioActualizacion = this.creacion;
       this.restService.putREST(this.const.urlModificarUD, this.unidadDocumental)
         .subscribe(resp => {
           let respuesta: UnidadDocumental = JSON.parse(JSON.stringify(resp));

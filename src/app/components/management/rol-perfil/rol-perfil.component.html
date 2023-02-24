@@ -46,12 +46,12 @@
                                                 <th class="pl-0 text-center">{{msg.lbl_perfil_id}}</th>
                                                 <th class="text-center">{{msg.lbl_perfil_codigo}}</th>
                                                 <th class="text-center">{{msg.lbl_perfil_descripcion}}</th>
-                                                <th class="pr-0 text-center">{{msg.lbl_perfil_estado}}</th>
+                                                <th class="text-center">{{msg.lbl_perfil_estado}}</th>
                                             </tr>
                                         </ng-template>
                                         <ng-template pTemplate="body" let-perfil>
                                             <tr (click)="cargarPerfil(perfil)">
-                                                <td class="pl-0 text-center">
+                                                <td class="text-center">
                                                     {{perfil.id}}
                                                 </td>
                                                 <td>
@@ -60,7 +60,7 @@
                                                 <td>
                                                     {{perfil.descripcion}}
                                                 </td>
-                                                <td class="pr-0 text-center">
+                                                <td class="text-center">
                                                     {{perfil.estado === 1 ? msg.lbl_enum_activo :
                                                     msg.lbl_enum_inactivo}}
                                                 </td>

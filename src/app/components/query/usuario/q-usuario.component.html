@@ -71,13 +71,13 @@
                                                 <th class="text-center">Documento</th>
                                                 <th class="text-center">Nombre</th>
                                                 <th class="text-center">Perfil</th>
-                                                <th class="pr-0 text-center">Estado</th>
+                                                <th class="text-center">Estado</th>
                                             </tr>
                                         </ng-template>
 
                                         <ng-template pTemplate="body" let-usuario>
                                             <tr (click)="cargarUsuario(usuario)">
-                                                <td class="pl-0 text-center">
+                                                <td class="text-center">
                                                     {{usuario.id}}
                                                 </td>
                                                 <td>
@@ -92,7 +92,7 @@
                                                 <td>
                                                     {{usuario.perfil.descripcion}}
                                                 </td>
-                                                <td class="pr-0">
+                                                <td class="text-center">
                                                     {{usuario.estado === 1 ? 'Activo' : 'Inactivo'}}
                                                 </td>
                                             </tr>

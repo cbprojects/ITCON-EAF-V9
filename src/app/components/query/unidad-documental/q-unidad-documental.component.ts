@@ -1,6 +1,5 @@
-import { ViewChild } from '@angular/core';
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LazyLoadEvent, MessageService } from 'primeng/api';
 import { Enumerados } from 'src/app/config/Enumerados';
 import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
@@ -10,8 +9,12 @@ import { Area } from 'src/app/model/areaModel';
 import { Contenedor } from 'src/app/model/contenedorModel';
 import { Entrepano } from 'src/app/model/entrepanoModel';
 import { RequestAreasXSociedad } from 'src/app/model/requestAreasXSociedad';
+import { RequestConsultaPrestamo } from 'src/app/model/requestConsultaPrestamoModel';
 import { RequestConsultaUnidadDocumental } from 'src/app/model/requestConsultaUnidadDocumentalModel';
+import { RequestModificarPrestamo } from 'src/app/model/requestModificarPrestamoModel';
 import { ResponseConsultaUnidadDocumental } from 'src/app/model/responseConsultaUnidadDocumentalModel';
+import { ResponseModificarPrestamo } from 'src/app/model/responseModificarPrestamo';
+import { ResponsePrestamo } from 'src/app/model/responsePrestamoModel';
 import { TipoDocumental } from 'src/app/model/tipoDocumentalModel';
 import { UnidadDocumental } from 'src/app/model/unidadDocumentalModel';
 import { RestService } from 'src/app/services/rest.service';
@@ -48,6 +51,10 @@ export class QUnidadDocumentalComponent implements OnInit {
   listaAreas: any[];
   listaTipoDocumental: any[];
   listaContenedores: any[];
+  displayModalPrestamo: boolean;
+  esCrearPrestamo: boolean;
+  prestamoUDSeleccionada: ResponsePrestamo;
+  tienePrestamo: any;
 
   // Utilidades
   msg: any;
@@ -56,11 +63,14 @@ export class QUnidadDocumentalComponent implements OnInit {
   enumRows: any;
   totalRecords: number;
   loading: boolean;
+  enums: any;
+  enumSiNo: any;
 
   constructor(private router: Router, private route: ActivatedRoute, public restService: RestService, public textProperties: TextProperties, public util: Util, public objectModelInitializer: ObjectModelInitializer, public enumerados: Enumerados, public sesionService: SesionService, private messageService: MessageService) {
     this.sesion = this.objectModelInitializer.getDataServiceSesion();
     this.msg = this.textProperties.getProperties(this.sesionService.objServiceSesion.idioma);
     this.const = this.objectModelInitializer.getConst();
+    this.enums = this.enumerados.getEnumerados();
     this.enumRows = [5, 10, 15, 20, 50, 100];
     this.rows = this.enumRows[1];
   }
@@ -73,6 +83,9 @@ export class QUnidadDocumentalComponent implements OnInit {
   }
 
   inicializar() {
+    this.enumSiNo = this.enums.sino.valores;
+    this.displayModalPrestamo = false;
+    this.esCrearPrestamo = false;
     this.sesionService.objUnidadDocumentalCargada = null;
     this.unidadDocumentalFiltro = this.objectModelInitializer.getDataUnidadDocumental();
     this.sociedadFiltro = { value: this.objectModelInitializer.getDataSociedad(), label: this.msg.lbl_enum_generico_valor_vacio };
@@ -303,5 +316,105 @@ export class QUnidadDocumentalComponent implements OnInit {
     setTimeout(() => {
       this.consultarUnidadesDocumentales(event.first);
     }, 100);
+  }
+
+  showDialogPrestamo(unidadDocumental: UnidadDocumental) {
+    this.prestamoUDSeleccionada = this.objectModelInitializer.getDataResponsePrestamo();
+    try {
+      let requestConsultaPrestamo: RequestConsultaPrestamo = this.objectModelInitializer.getDataRequestConsultaPrestamo();
+      requestConsultaPrestamo.idUd = unidadDocumental.id;
+      console.log(requestConsultaPrestamo);
+      this.restService.postREST(this.const.urlConsultarPrestamo, requestConsultaPrestamo)
+        .subscribe(resp => {
+          let temp: ResponsePrestamo = JSON.parse(JSON.stringify(resp));
+          if (temp) {
+            this.prestamoUDSeleccionada = temp;
+            if (temp.tienePrestamo && temp.prestamo !== null) {
+              this.esCrearPrestamo = false;
+            } else {
+              this.prestamoUDSeleccionada.prestamo = this.objectModelInitializer.getDataPrestamo();
+              this.esCrearPrestamo = true;
+            }
+            this.tienePrestamo = this.util.getValorEnumerado(this.enumSiNo, temp.tienePrestamo ? 1 : 0);
+            this.prestamoUDSeleccionada.prestamo.idUd = unidadDocumental.id
+            this.displayModalPrestamo = true;
+          }
+        },
+          error => {
+            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+            let titleError = listaMensajes[0];
+            listaMensajes.splice(0, 1);
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+            this.messageService.clear();
+
+            listaMensajes.forEach(mensaje => {
+              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+            });
+            this.messageService.add(mensajeFinal);
+
+            console.log(error, "error");
+          })
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  prestar(responsePrestamo: ResponsePrestamo) {
+    let requestModificarPrestamo: RequestModificarPrestamo = this.objectModelInitializer.getDataRequestModificarPrestamo();
+    requestModificarPrestamo.esCrear = true;
+    this.modificarPrestamo(requestModificarPrestamo, responsePrestamo);
+  }
+
+  devolver(responsePrestamo: ResponsePrestamo) {
+    let requestModificarPrestamo: RequestModificarPrestamo = this.objectModelInitializer.getDataRequestModificarPrestamo();
+    requestModificarPrestamo.esCrear = false;
+    this.modificarPrestamo(requestModificarPrestamo, responsePrestamo);
+  }
+
+  modificarPrestamo(requestModificarPrestamo: RequestModificarPrestamo, responsePrestamo: ResponsePrestamo) {
+    try {
+      requestModificarPrestamo.idUd = responsePrestamo.prestamo.idUd;
+      requestModificarPrestamo.responsable = responsePrestamo.prestamo.responsable
+      requestModificarPrestamo.observacion = responsePrestamo.prestamo.observacion
+      requestModificarPrestamo.usuarioCreacion = localStorage.getItem("cedula");
+      console.log(requestModificarPrestamo);
+      this.restService.putREST(this.const.urlModificarPrestamo, requestModificarPrestamo)
+        .subscribe(resp => {
+          let temp: ResponseModificarPrestamo = JSON.parse(JSON.stringify(resp));
+          let mensajeFinal;
+          if (temp && temp.codigo === '0') {
+            this.prestamoUDSeleccionada = null;
+            this.displayModalPrestamo = false;
+
+            mensajeFinal = { severity: this.const.severity[1], summary: this.const.lbl_summary_success, detail: temp.mensaje, sticky: true };
+          } else {
+            mensajeFinal = { severity: this.const.severity[2], summary: this.const.lbl_summary_warning, detail: temp.mensaje, sticky: true };
+          }
+
+          this.messageService.clear();
+          this.messageService.add(mensajeFinal);
+        },
+          error => {
+            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+            let titleError = listaMensajes[0];
+            listaMensajes.splice(0, 1);
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+            this.messageService.clear();
+
+            listaMensajes.forEach(mensaje => {
+              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+            });
+            this.messageService.add(mensajeFinal);
+
+            console.log(error, "error");
+          })
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  formatearFecha(fecha: string) {
+    const dateFormatted = new Date(fecha);
+    return dateFormatted.toLocaleString("en-GB");
   }
 }

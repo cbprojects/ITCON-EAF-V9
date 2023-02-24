@@ -31,6 +31,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { NgxUiLoaderConfig, NgxUiLoaderHttpModule, NgxUiLoaderModule, NgxUiLoaderRouterModule } from 'ngx-ui-loader';
+import { DialogModule } from 'primeng/dialog';
+import { TooltipModule } from 'primeng/tooltip';
 import { AppRoutingModule } from './config/Routing';
 
 // Imports Componentes
@@ -46,6 +48,7 @@ import { QUsuarioComponent } from './components/query/usuario/q-usuario.componen
 import { Guardian } from './config/Guardian';
 
 // Imports Componentes Internos
+import { NgSelectModule } from '@ng-select/ng-select';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { FooterComponent } from './components/footer/footer.component';
@@ -63,7 +66,6 @@ import { RestaurarClaveComponent } from './components/restaurar-clave/restaurar-
 import { Enumerados } from './config/Enumerados';
 import { ObjectModelInitializer } from './config/ObjectModelInitializer';
 import { SesionService } from './services/sesionService/sesion.service';
-import { NgSelectModule } from '@ng-select/ng-select';
 
 
 // Constantes
@@ -156,7 +158,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ContextMenuModule,
     FileUploadModule,
     ConfirmPopupModule,
-    NgSelectModule
+    NgSelectModule,
+    TooltipModule,
+    DialogModule
   ],
   providers: [TextProperties, Enumerados, ObjectModelInitializer, Guardian, Util, Functions, MessageService, ConfirmationService, SesionService, { provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]

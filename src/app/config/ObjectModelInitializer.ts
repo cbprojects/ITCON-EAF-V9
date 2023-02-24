@@ -67,7 +67,7 @@ export class ObjectModelInitializer {
       urlCrearPerfil: `${HOST}/central/perfil/crearPerfil`,
       urlModificarPerfil: `${HOST}/central/perfil/modificarPerfil`,
       urlConsultarPerfilesActivos: `${HOST}/central/perfil/consultarPerfilesActivos`,
-      //Usuarios
+      // Usuarios
       urlConsultarUsuariosPorFiltros: `${HOST}/central/usuario/consultarUsuarioFiltros`,
       urlCrearUsuario: `${HOST}/central/usuario/crearUsuario`,
       urlModificarUsuario: `${HOST}/central/usuario/modificarUsuario`,
@@ -108,6 +108,9 @@ export class ObjectModelInitializer {
       urlConsultarMasivoPorFiltros: `${HOST}/central/Masivo/consultarMasivo`,
       urlCrearMasivo: `${HOST}/central/Masivo/crearMasivo`,
       urlModificarMasivo: `${HOST}/central/Masivo/modificarMasivo`,
+      // Prestamo      
+      urlConsultarPrestamo: `${HOST}/central/prestamo/consultarPrestamo`,
+      urlModificarPrestamo: `${HOST}/central/prestamo/editarPrestamo`,
 
       tokenUsernameAUTH: 'BaeneApp',
       tokenPasswordAUTH: 'Baene2021codex',
@@ -855,4 +858,51 @@ export class ObjectModelInitializer {
       registrosTotales: 0
     }
   }
+
+  getDataPrestamo() {
+    return {
+      id: 0,
+      idUd: 0,
+      fechaPrestamo: '',
+      responsable: '',
+      observacion: '',
+      estado: 0,
+      fechaCreacion: '',
+      usuarioCreacion: '',
+      fechaActualizacion: '',
+      usuarioActualizacion: ''
+
+    }
+  };
+
+  getDataResponsePrestamo() {
+    return {
+      tienePrestamo: false,
+      prestamo: this.getDataPrestamo(),
+      listaPrestamo: []
+    }
+  };
+
+  getDataRequestConsultaPrestamo() {
+    return {
+      idUd: 0
+    }
+  };
+
+  getDataRequestModificarPrestamo() {
+    return {
+      esCrear: true,
+      idUd: 0,
+      responsable: '',
+      observacion: '',
+      usuarioCreacion: ''
+    }
+  };
+
+  getDataResponseModificarPrestamo() {
+    return {
+      codigo: '',
+      mensaje: ''
+    }
+  };
 }

@@ -17,14 +17,12 @@
                             </div>
                             <div class="card-body">
                                 <div class="row justify-content-center">
-                                    <div id="card-ud-1" class="card card-collapsed">
+                                    <div id="card-ud-1" class="card card-collapsed cursor-pointer">
                                         <div class="card-status card-status-left bg-blue"></div>
-                                        <div class="card-header">
+                                        <div class="card-header" (click)="util.toggleCollapseByID('card-ud-1')">
                                             <h4 class="card-title">Ubicación</h4>
                                             <div class="card-options">
-                                                <a class="card-options-collapse"
-                                                    (click)="util.toggleCollapseByID('card-ud-1')"><i
-                                                        class="fe fe-chevron-up"></i></a>
+                                                <a class="card-options-collapse"><i class="fe fe-chevron-up"></i></a>
                                             </div>
                                         </div>
                                         <div class="card-body">
@@ -65,14 +63,12 @@
                                 </div>
 
                                 <div class="row justify-content-center">
-                                    <div id="card-ud-2" class="card card-collapsed">
+                                    <div id="card-ud-2" class="card card-collapsed cursor-pointer">
                                         <div class="card-status card-status-left bg-blue"></div>
-                                        <div class="card-header">
+                                        <div class="card-header" (click)="util.toggleCollapseByID('card-ud-2')">
                                             <h4 class="card-title">Especificaciones</h4>
                                             <div class="card-options">
-                                                <a class="card-options-collapse"
-                                                    (click)="util.toggleCollapseByID('card-ud-2')"><i
-                                                        class="fe fe-chevron-up"></i></a>
+                                                <a class="card-options-collapse"><i class="fe fe-chevron-up"></i></a>
                                             </div>
                                         </div>
                                         <div class="card-body">
@@ -144,14 +140,12 @@
                                 </div>
 
                                 <div class="row justify-content-center">
-                                    <div id="card-ud-3" class="card card-collapsed">
+                                    <div id="card-ud-3" class="card card-collapsed cursor-pointer">
                                         <div class="card-status card-status-left bg-blue"></div>
-                                        <div class="card-header">
+                                        <div class="card-header" (click)="util.toggleCollapseByID('card-ud-3')">
                                             <h4 class="card-title">Fechas y Estado</h4>
                                             <div class="card-options">
-                                                <a class="card-options-collapse"
-                                                    (click)="util.toggleCollapseByID('card-ud-3')"><i
-                                                        class="fe fe-chevron-up"></i></a>
+                                                <a class="card-options-collapse"><i class="fe fe-chevron-up"></i></a>
                                             </div>
                                         </div>
                                         <div class="card-body">
@@ -177,11 +171,11 @@
                                                     <div class="form-group">
                                                         <label class="form-label">Fecha Final</label>
                                                         <p-calendar [(ngModel)]="unidadDocumental.fechaFin"
-                                                             [readonlyInput]="true">
+                                                            [readonlyInput]="true">
                                                         </p-calendar>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4 col-lg-3">
+                                                <div class="col-sm-12 col-lg-3">
                                                     <div class="form-group">
                                                         <label class="form-label">Estado<span
                                                                 class="form-required">*</span></label>

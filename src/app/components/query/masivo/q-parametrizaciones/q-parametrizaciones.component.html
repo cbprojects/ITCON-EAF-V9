@@ -55,7 +55,7 @@
 
                                         <ng-template pTemplate="body" let-param>
                                             <tr (click)="cargarParametrizacion(param)">
-                                                <td class="pl-0 text-center">
+                                                <td class="text-center">
                                                     {{param.idMasivo}}
                                                 </td>
                                                 <td>
@@ -64,7 +64,7 @@
                                                 <td *ngIf="tipo === 1 || tipo === 2">
                                                     {{param.nombre2}}
                                                 </td>
-                                                <td class="pr-0">
+                                                <td class="text-center">
                                                     {{param.estado === 1 ? 'Activo' : 'Inactivo'}}
                                                 </td>
                                             </tr>
