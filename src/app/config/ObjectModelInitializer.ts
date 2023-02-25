@@ -60,6 +60,10 @@ export class ObjectModelInitializer {
       urlConsultarRolesPorFiltros: `${HOST}/central/rol/consultarRolFiltros`,
       urlCrearRol: `${HOST}/central/rol/crearRol`,
       urlModificarRol: `${HOST}/central/rol/modificarRol`,
+      // Sociedad
+      urlConsultarSociedadPorFiltros: `${HOST}/central/sociedad/consultarSociedadFiltros`,
+      urlCrearSociedad: `${HOST}/central/sociedad/crearSociedad`,
+      urlModificarSociedad: `${HOST}/central/sociedad/modificarSociedad`,
       // Perfiles
       urlContarPerfiles: `${HOST}/central/perfil/contarPerfiles`,
       urlConsultarPerfilesPorFiltros: `${HOST}/central/perfil/consultarPerfilFiltros`,
@@ -99,6 +103,8 @@ export class ObjectModelInitializer {
       urlConsultarSociedadActiva: `${HOST}/central/sociedad/consultarSociedadActiva`,
       // Clientes      
       urlConsultarClienteActiva: `${HOST}/central/Cliente/buscarClientesActivos`,
+      // Servidor      
+      urlConsultarServidorActiva: `${HOST}/central/Masivo/consultarServidorActivo`,
       // Archivos
       urlConsultarArchivos: `${HOST}/central/archivos/descargarArchivos`,
       urlCrearArchivos: `${HOST}/central/archivos/subirImagen`,
@@ -368,6 +374,23 @@ export class ObjectModelInitializer {
       nombre10: '',
       tax: '',
       cliente: this.getDataCliente(),
+      servidor: this.getDataServidor(),
+      quienFacturar: 0,
+      fechaCreacion: '',
+      usuarioCreacion: '',
+      fechaActualizacion: '',
+      usuarioActualizacion: '',
+      estado: ''
+    }
+  };
+
+  getDataServidor() {
+    return {
+      id: 0,
+      ip: '',
+      puerto: '',
+      usuario: '',
+      clave: '',
       fechaCreacion: '',
       usuarioCreacion: '',
       fechaActualizacion: '',
@@ -476,6 +499,14 @@ export class ObjectModelInitializer {
   getDataRequestConsultarPerfil() {
     return {
       perfil: this.getDataPerfil(),
+      registroInicial: 0,
+      cantidadRegistro: 0
+    }
+  };
+
+  getDataRequestConsultarSociedad() {
+    return {
+      sociedad: this.getDataSociedad(),
       registroInicial: 0,
       cantidadRegistro: 0
     }

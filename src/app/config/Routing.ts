@@ -17,6 +17,7 @@ import { QCajaComponent } from '../components/query/caja/q-cajas.component';
 import { QParametrizacionesComponent } from '../components/query/masivo/q-parametrizaciones/q-parametrizaciones.component';
 import { QPerfilesComponent } from '../components/query/perfil/q-perfiles.component';
 import { QRolesComponent } from '../components/query/rol/q-roles.component';
+import { QSociedadComponent } from '../components/query/sociedad/q-sociedad.component';
 import { QUnidadDocumentalComponent } from '../components/query/unidad-documental/q-unidad-documental.component';
 import { QUsuarioComponent } from '../components/query/usuario/q-usuario.component';
 import { RestaurarClaveComponent } from '../components/restaurar-clave/restaurar-clave.component';
@@ -58,6 +59,8 @@ const routes: Routes = [
   { path: 'm-parametrizacion/cliente', component: MParametrizacionesComponent, canActivate: [Guardian] },
   { path: 'm-parametrizacion/contenedor', component: MParametrizacionesComponent, canActivate: [Guardian] },
   { path: 'm-parametrizacion/tipo-documental', component: MParametrizacionesComponent, canActivate: [Guardian] },
+  { path: 'q-sociedad/sociedad', component: QSociedadComponent, canActivate: [Guardian] },
+
   { path: 'm-parametrizacion/sede', component: MParametrizacionesComponent, canActivate: [Guardian] },
 
   { path: '', redirectTo: '/login', pathMatch: 'full' },

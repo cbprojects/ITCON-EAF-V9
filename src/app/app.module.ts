@@ -66,6 +66,8 @@ import { RestaurarClaveComponent } from './components/restaurar-clave/restaurar-
 import { Enumerados } from './config/Enumerados';
 import { ObjectModelInitializer } from './config/ObjectModelInitializer';
 import { SesionService } from './services/sesionService/sesion.service';
+import { QSociedadComponent } from './components/query/sociedad/q-sociedad/q-sociedad.component';
+import { SociedadComponent } from './components/query/sociedad/sociedad/sociedad.component';
 
 
 // Constantes
@@ -119,7 +121,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     TrasladoUnidadDocumentalComponent,
     DigitalizarUnidadDocumentalComponent,
     MParametrizacionesComponent,
-    QParametrizacionesComponent
+    QParametrizacionesComponent,
+    QSociedadComponent,
+    SociedadComponent
   ],
   imports: [
     AppRoutingModule,

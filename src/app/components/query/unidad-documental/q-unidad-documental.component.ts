@@ -15,6 +15,7 @@ import { RequestModificarPrestamo } from 'src/app/model/requestModificarPrestamo
 import { ResponseConsultaUnidadDocumental } from 'src/app/model/responseConsultaUnidadDocumentalModel';
 import { ResponseModificarPrestamo } from 'src/app/model/responseModificarPrestamo';
 import { ResponsePrestamo } from 'src/app/model/responsePrestamoModel';
+import { Sociedad } from 'src/app/model/sociedadModel';
 import { TipoDocumental } from 'src/app/model/tipoDocumentalModel';
 import { UnidadDocumental } from 'src/app/model/unidadDocumentalModel';
 import { RestService } from 'src/app/services/rest.service';
@@ -144,7 +145,7 @@ export class QUnidadDocumentalComponent implements OnInit {
       this.listaSociedades = [];
       this.restService.getREST(this.const.urlConsultarSociedadActiva)
         .subscribe(resp => {
-          let temp: Entrepano[] = JSON.parse(JSON.stringify(resp));
+          let temp: Sociedad[] = JSON.parse(JSON.stringify(resp));
           if (temp !== undefined && temp.length > 0) {
             this.listaSociedadesTemp = temp;
           }

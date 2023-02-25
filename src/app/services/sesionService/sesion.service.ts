@@ -5,6 +5,7 @@ import { MasivoDTO } from 'src/app/model/dto/masivo-dto';
 import { ServiceSessionDTO } from 'src/app/model/dto/service-session-dto';
 import { Perfil } from 'src/app/model/perfilModel';
 import { Rol } from 'src/app/model/rolModel';
+import { Sociedad } from 'src/app/model/sociedadModel';
 import { UnidadDocumental } from 'src/app/model/unidadDocumentalModel';
 import { Usuario } from 'src/app/model/usuarioModel';
 
@@ -16,6 +17,7 @@ export class SesionService {
   objServiceSesion!: ServiceSessionDTO;
   objRolCargado!: Rol;
   objPerfilCargado!: Perfil;
+  objSociedadCargado!: Sociedad;
   objUsuarioCargado!: Usuario;
   objCajaCargado!: Caja;
   objUnidadDocumentalCargada!: UnidadDocumental;
