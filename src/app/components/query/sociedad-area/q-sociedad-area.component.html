@@ -13,41 +13,34 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Consulta de Sociedades</h3>
+                                <h3 class="card-title">Consulta de Sociedad-Area</h3>
                             </div>
                             <div class="card-body">
                                 <!-- Filtros -->
                                 <div class="row justify-content-center">
-                                    <div class="form-group col-sm-12 col-lg-4">
-                                        <label class="form-label">Nombre</label>
-                                        <input type="text" [(ngModel)]="nombreFiltro" class="form-control">
-                                    </div>
-                                    <div class="form-group col-sm-12 col-lg-4">
-                                        <label class="form-label">Nombre 10</label>
-                                        <input type="text" [(ngModel)]="nombre10Filtro" class="form-control">
-                                    </div>
-                                    <div class="form-group col-sm-12 col-lg-4">
-                                        <label class="form-label">Tax</label>
-                                        <input type="text" [(ngModel)]="taxFiltro" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="row justify-content-center">
                                     <div class="form-group col-sm-12 col-lg-3">
-                                        <label class="form-label">Clientes</label>
+                                        <label class="form-label">Cliente</label>
                                         <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
-                                            [(ngModel)]="clienteFiltro" [items]="listaClientes">
+                                            [(ngModel)]="clienteFiltro" [items]="listaClientes"
+                                            (ngModelChange)="cargarSociedadXClientes($event)">
                                         </ng-select>
                                     </div>
                                     <div class="form-group col-sm-12 col-lg-3">
-                                        <label class="form-label">Servidor</label>
+                                        <label class="form-label">Sociedad</label>
                                         <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
-                                            [(ngModel)]="servidorFiltro" [items]="listaServidor">
+                                            [(ngModel)]="sociedadFiltro" [items]="listaSociedades">
+                                        </ng-select>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-lg-3">
+                                        <label class="form-label">Area</label>
+                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                            [(ngModel)]="areasFiltro" [items]="listaAreas">
                                         </ng-select>
                                     </div>
                                 </div>
                                 <div class="row justify-content-center">
                                     <div class="form-group col-sm-12 col-lg-12 text-center">
-                                        <button type="submit" (click)="consultarSociedades(0)"
+                                        <button type="submit" (click)="consultarSociedadesAreas(0)"
                                             class="btn btn-primary ml-auto">Consultar</button>
                                     </div>
                                 </div>
@@ -55,50 +48,38 @@
                                 <!-- Consulta -->
                                 <hr />
                                 <div class="form-label">Resultados</div>
-                                <div class="table-responsive {{listaSociedades.length > 0 ? '' : 'displayNone'}}">
+                                <div class="table-responsive {{listaSociedadesAreas.length > 0 ? '' : 'displayNone'}}">
                                     <p-table [lazy]="true" (onLazyLoad)="cargarTabla($event)" [paginator]="true"
                                         [totalRecords]="totalRecords" [loading]="loading" styleClass="table mb-0"
-                                        [responsive]="true" [value]="listaSociedades" [rows]="rows">
+                                        [responsive]="true" [value]="listaSociedadesAreas" [rows]="rows">
                                         <ng-template pTemplate="header">
                                             <tr>
                                                 <th class="pl-0 text-center">ID</th>
-                                                <th class="text-center">Nombre</th>
-                                                <th class="text-center">Nombre10</th>
-                                                <th class="text-center">Tax</th>
-                                                <th class="text-center">Cliente</th>
-                                                <th class="text-center">Servidor</th>
+                                                <th class="text-center">Sociedad Nombre</th>
+                                                <th class="text-center">Area Nombre</th>
                                                 <th class="text-center">Estado</th>
                                             </tr>
                                         </ng-template>
 
-                                        <ng-template pTemplate="body" let-sociedad>
-                                            <tr (click)="cargarSociedad(sociedad)">
+                                        <ng-template pTemplate="body" let-sociedadArea>
+                                            <tr (click)="cargarSociedadArea(sociedadArea)">
                                                 <td class="text-center">
-                                                    {{sociedad.id}}
+                                                    {{sociedadArea.id}}
                                                 </td>
                                                 <td>
-                                                    {{sociedad.nombre}}
+                                                    {{sociedadArea.sociedad.nombre}}
                                                 </td>
                                                 <td>
-                                                    {{sociedad.nombre10}}
-                                                </td>
-                                                <td>
-                                                    {{sociedad.tax}}
-                                                </td>
-                                                <td>
-                                                    {{sociedad.cliente.nombre}}
-                                                </td>
-                                                <td>
-                                                    {{sociedad.servidor.ip}}
+                                                    {{sociedadArea.area.nombre}}
                                                 </td>
                                                 <td class="text-center">
-                                                    {{sociedad.estado === 1 ? 'Activo' : 'Inactivo'}}
+                                                    {{sociedadArea.estado === 1 ? 'Activo' : 'Inactivo'}}
                                                 </td>
                                             </tr>
                                         </ng-template>
                                     </p-table>
                                 </div>
-                                <div *ngIf="listaSociedades.length <= 0" class="service-grids">
+                                <div *ngIf="listaSociedadesAreas.length <= 0" class="service-grids">
                                     <div class="col-md-12 ser-grid">
                                         <p class="sinResultados">
                                             {{msg.lbl_info_sin_resultados}}</p>

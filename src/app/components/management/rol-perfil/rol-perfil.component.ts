@@ -66,6 +66,7 @@ export class RolPerfilComponent implements OnInit {
 
   cargarPerfil(perfil: Perfil) {
     this.objPerfilCargado = this.objectModelInitializer.getDataPerfil();
+    debugger
     this.objPerfilCargado = perfil;
     this.sourceProducts = [];
     this.targetProducts = [];
@@ -73,8 +74,10 @@ export class RolPerfilComponent implements OnInit {
       let requestPerfil: Perfil = this.objPerfilCargado;
       this.restService.postREST(this.const.urlConsultarRolPerfil, requestPerfil)
         .subscribe(resp => {
+          debugger
           let temp: ResponseConsultaRolPerfil = JSON.parse(JSON.stringify(resp));
           if (temp !== undefined) {
+            console.log(temp);
             if (temp.rolesAsociados.length > 0) {
               temp.rolesAsociados.forEach(rol => {
                 this.targetProducts.push(rol);
@@ -85,7 +88,10 @@ export class RolPerfilComponent implements OnInit {
                 this.sourceProducts.push(rol);
               });
             }
+            console.log(this.targetProducts);
+            console.log(this.sourceProducts);
             $($($($($('#asoRolPerfil')[0]).children()[0]).children()[0]).children()[0]).click();
+            
           }
         },
           error => {

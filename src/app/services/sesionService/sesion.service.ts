@@ -5,9 +5,11 @@ import { MasivoDTO } from 'src/app/model/dto/masivo-dto';
 import { ServiceSessionDTO } from 'src/app/model/dto/service-session-dto';
 import { Perfil } from 'src/app/model/perfilModel';
 import { Rol } from 'src/app/model/rolModel';
+import { SociedadArea } from 'src/app/model/sociedadAreaModel';
 import { Sociedad } from 'src/app/model/sociedadModel';
 import { UnidadDocumental } from 'src/app/model/unidadDocumentalModel';
 import { Usuario } from 'src/app/model/usuarioModel';
+import { UsuarioSede } from 'src/app/model/usuarioSedeModel';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +20,8 @@ export class SesionService {
   objRolCargado!: Rol;
   objPerfilCargado!: Perfil;
   objSociedadCargado!: Sociedad;
+  objSociedadAreaCargado!: SociedadArea;
+  objUsuarioSedeCargado!: UsuarioSede;
   objUsuarioCargado!: Usuario;
   objCajaCargado!: Caja;
   objUnidadDocumentalCargada!: UnidadDocumental;

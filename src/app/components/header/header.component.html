@@ -136,8 +136,13 @@
                                 *ngIf="validarRol('ITCMTU')">Tipo Unidad Documental</a>
                             <a routerLink="/q-parametrizacion/sede" class="dropdown-item "
                                 *ngIf="validarRol('ITCSED')">Sede</a>
-                            <a routerLink="q-sociedad/sociedad" class="dropdown-item "
+                            <a routerLink="/q-sociedad" class="dropdown-item "
                                 *ngIf="validarRol('ITCSOC')">Sociedad</a>
+                            <a routerLink="/q-usuario-sede" class="dropdown-item "
+                                *ngIf="validarRol('ITCUXS')">Usuario-Sede</a>
+                            <a routerLink="/q-sociedad-area" class="dropdown-item "
+                                *ngIf="validarRol('ITCSXA')">Sociedad-Área</a>
+                            
                         </div>
                     </li>
                 </ul>

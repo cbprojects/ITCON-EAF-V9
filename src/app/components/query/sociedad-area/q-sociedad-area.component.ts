@@ -5,38 +5,40 @@ import { Enumerados } from 'src/app/config/Enumerados';
 import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
+import { Area } from 'src/app/model/areaModel';
 import { Cliente } from 'src/app/model/clienteModel';
-import { RequestConsultaSociedad } from 'src/app/model/requestConsultaSociedadModel';
-import { ResponseConsultaSociedad } from 'src/app/model/responseConsultaSociedadModel';
-import { Servidor } from 'src/app/model/servidorModel';
+import { RequestConsultaSociedadArea } from 'src/app/model/requestConsultaSociedadAreaModel';
+import { RequestSociedadXCliente } from 'src/app/model/requestSociedadXCliente';
+import { ResponseConsultaSociedadArea } from 'src/app/model/responseConsultaSociedadAreaModel';
+import { SociedadArea } from 'src/app/model/sociedadAreaModel';
 import { Sociedad } from 'src/app/model/sociedadModel';
 import { RestService } from 'src/app/services/rest.service';
 import { SesionService } from 'src/app/services/sesionService/sesion.service';
 
 @Component({
-  selector: 'app-q-sociedad',
-  templateUrl: './q-sociedad.component.html',
-  styleUrls: ['./q-sociedad.component.scss'],
+  selector: 'app-q-sociedad-area',
+  templateUrl: './q-sociedad-area.component.html',
+  styleUrls: ['./q-sociedad-area.component.scss'],
   providers: [RestService, MessageService]
 })
-export class QSociedadComponent implements OnInit {
+export class QSociedadAreaComponent implements OnInit {
   @ViewChild('sc') sc;
   // Objetos de Sesion
   sesion: any;
 
   // Objetos de datos
-  nombreFiltro: any = "";
-  nombre10Filtro: any = "";
-  taxFiltro: any = "";
   clienteFiltro: any;
-  servidorFiltro: any;
-  listaSociedades: Sociedad[];
+  sociedadFiltro: any;
+  areasFiltro: any;
+  listaSociedadesAreas: SociedadArea[];
 
   listaClientesTemp: any[];
-  listaServidorTemp: any[];
+  listaSociedadesTemp: any[];
+  listaAreasTemp: any[];
 
   listaClientes: any[];
-  listaServidor: any[];
+  listaSociedades: any[];
+  listaAreas: any[];
 
   // Utilidades
   msg: any;
@@ -64,39 +66,41 @@ export class QSociedadComponent implements OnInit {
   inicializar() {
     this.sesionService.objSociedadCargado = null;
     this.clienteFiltro = { value: this.objectModelInitializer.getDataCliente(), label: this.msg.lbl_enum_generico_valor_vacio };
-    this.servidorFiltro = { value: this.objectModelInitializer.getDataServidor(), label: this.msg.lbl_enum_generico_valor_vacio };
-    this.consultarSociedades(0);
+    this.sociedadFiltro = { value: this.objectModelInitializer.getDataSociedad(), label: this.msg.lbl_enum_generico_valor_vacio };
+    this.areasFiltro = { value: this.objectModelInitializer.getDataArea(), label: this.msg.lbl_enum_generico_valor_vacio };
+    this.consultarSociedadesAreas(0);
     this.consultarClientes();
-    this.consultarServidores();
+    this.consultarAreas();
 
   }
 
-  cargarSociedad(sociedad: Sociedad) {
-    this.sesionService.objSociedadCargado = this.objectModelInitializer.getDataSociedad();
-    this.sesionService.objSociedadCargado = sociedad;
+  cargarSociedadArea(sociedadArea: SociedadArea) {
+    this.sesionService.objSociedadAreaCargado = this.objectModelInitializer.getDataSociedadArea();
+    this.sesionService.objSociedadAreaCargado = sociedadArea;
     //this.router.navigate(['/m-perfil']);
   }
 
-  consultarSociedades(primerItem) {
-    this.listaSociedades = [];
+  consultarSociedadesAreas(primerItem) {
+    this.listaSociedadesAreas = [];
     this.loading = true;
     try {
-      let requestSociedadFiltro: RequestConsultaSociedad = this.objectModelInitializer.getDataRequestConsultarSociedad();
+      let requestSociedadFiltro: RequestConsultaSociedadArea = this.objectModelInitializer.getDataRequestConsultarSociedadArea();
+      let areaFiltro= this.objectModelInitializer.getDataArea();
       let sociedadFiltro = this.objectModelInitializer.getDataSociedad();
-      sociedadFiltro.nombre = this.nombreFiltro;
-      sociedadFiltro.nombre10 = this.nombre10Filtro;
-      sociedadFiltro.tax= this.taxFiltro;
-      sociedadFiltro.cliente= this.clienteFiltro.value;
-      sociedadFiltro.servidor= this.servidorFiltro.value;
-      requestSociedadFiltro.sociedad = this.objectModelInitializer.getDataSociedad();
-      requestSociedadFiltro.sociedad = sociedadFiltro;
+      let sociedadAreFiltro = this.objectModelInitializer.getDataSociedadArea();
+      areaFiltro=this.areasFiltro.value;
+      sociedadFiltro= this.sociedadFiltro.value;
+      sociedadAreFiltro.area=areaFiltro;
+      sociedadAreFiltro.sociedad=sociedadFiltro;
+      requestSociedadFiltro.sociedadArea = this.objectModelInitializer.getDataSociedadArea()
+      requestSociedadFiltro.sociedadArea = sociedadAreFiltro;
       requestSociedadFiltro.registroInicial = primerItem;
       requestSociedadFiltro.cantidadRegistro = this.rows;
-      this.restService.postREST(this.const.urlConsultarSociedadPorFiltros, requestSociedadFiltro)
+      this.restService.postREST(this.const.urlConsultarSociedadAreasPorFiltro, requestSociedadFiltro)
         .subscribe(resp => {
-          let temp: ResponseConsultaSociedad = JSON.parse(JSON.stringify(resp));
+          let temp: ResponseConsultaSociedadArea = JSON.parse(JSON.stringify(resp));
           if (temp !== undefined && temp.resultado.length > 0) {
-            this.listaSociedades = temp.resultado;
+            this.listaSociedadesAreas = temp.resultado;
             this.totalRecords = temp.registrosTotales;
             this.loading = false;
           }
@@ -122,7 +126,7 @@ export class QSociedadComponent implements OnInit {
 
   cargarTabla(event: LazyLoadEvent) {
     setTimeout(() => {
-      this.consultarSociedades(event.first);
+      this.consultarSociedadesAreas(event.first);
     }, 100);
   }
 
@@ -165,14 +169,14 @@ export class QSociedadComponent implements OnInit {
     this.clienteFiltro = this.listaClientes[0];
   }
 
-  consultarServidores() {
+  consultarAreas() {
     try {
-      this.listaServidor = [];
-      this.restService.getREST(this.const.urlConsultarServidorActiva)
+      this.listaAreas = [];
+      this.restService.getREST(this.const.urlConsultarAreasActivas)
         .subscribe(resp => {
-          let temp: Servidor[] = JSON.parse(JSON.stringify(resp));
+          let temp: Area[] = JSON.parse(JSON.stringify(resp));
           if (temp !== undefined && temp.length > 0) {
-            this.listaServidorTemp= temp;
+            this.listaAreasTemp= temp;
           }
         },
           error => {
@@ -192,15 +196,58 @@ export class QSociedadComponent implements OnInit {
     } catch (e) {
       console.log(e);
     }
-    setTimeout(() => this.activarCambiosServidores(), 1000);
+    setTimeout(() => this.activarCambiosAreas(), 1000);
   }
 
-  activarCambiosServidores() {
-    this.listaServidor = [];
-    this.listaServidor.push({ value: this.objectModelInitializer.getDataServidor(), label: this.msg.lbl_enum_generico_valor_vacio });
-    this.listaServidorTemp.forEach(servidor => {
-      this.listaServidor.push({ value: servidor, label: servidor.ip });
+  activarCambiosAreas() {
+    this.listaAreas = [];
+    this.listaAreas.push({ value: this.objectModelInitializer.getDataArea(), label: this.msg.lbl_enum_generico_valor_vacio });
+    this.listaAreasTemp.forEach(area => {
+      this.listaAreas.push({ value: area, label: area.nombre });
     });
-    this.clienteFiltro = this.listaServidor[0];
+    this.areasFiltro = this.listaAreas[0];
   }
+
+  cargarSociedadXClientes(event) {
+    this.listaSociedades = [];
+    this.listaSociedadesTemp = [];
+    this.clienteFiltro.id = event.value.id;
+    try {
+      let request: RequestSociedadXCliente = this.objectModelInitializer.getDataRequestSociedadXCliente();
+      request.idCliente = this.clienteFiltro.id;
+      this.restService.postREST(this.const.urlConsultarSociedadXClienteActiva, request)
+        .subscribe(resp => {
+          let temp: Sociedad[] = JSON.parse(JSON.stringify(resp));
+          if (temp !== undefined && temp.length > 0) {
+            this.listaSociedadesTemp = temp;
+          }
+        },
+          error => {
+            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+            let titleError = listaMensajes[0];
+            listaMensajes.splice(0, 1);
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+            this.messageService.clear();
+
+            listaMensajes.forEach(mensaje => {
+              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+            });
+            this.messageService.add(mensajeFinal);
+
+            console.log(error, "error");
+          })
+    } catch (e) {
+      console.log(e);
+    }
+    setTimeout(() => this.activarCambiosSociedad(), 1000);
+  }
+  activarCambiosSociedad() {
+    this.listaSociedades = [];
+    this.listaSociedades.push({ value: this.objectModelInitializer.getDataSociedad(), label: this.msg.lbl_enum_generico_valor_vacio });
+    this.listaSociedadesTemp.forEach(sociedad => {
+      this.listaSociedades.push({ value: sociedad, label: sociedad.nombre });
+    });
+    this.sociedadFiltro = this.listaSociedades[0];
+  }
+
 }

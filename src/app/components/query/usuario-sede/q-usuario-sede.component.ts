@@ -5,38 +5,36 @@ import { Enumerados } from 'src/app/config/Enumerados';
 import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
-import { Cliente } from 'src/app/model/clienteModel';
-import { RequestConsultaSociedad } from 'src/app/model/requestConsultaSociedadModel';
-import { ResponseConsultaSociedad } from 'src/app/model/responseConsultaSociedadModel';
-import { Servidor } from 'src/app/model/servidorModel';
-import { Sociedad } from 'src/app/model/sociedadModel';
+import { RequestConsultaUsuarioSede } from 'src/app/model/requestConsultaUsuarioSedeModel';
+import { ResponseConsultaUsuarioSede } from 'src/app/model/responseConsultaUsuarioSedeModel';
+import { Sede } from 'src/app/model/sedeModel';
+import { Usuario } from 'src/app/model/usuarioModel';
+import { UsuarioSede } from 'src/app/model/usuarioSedeModel';
 import { RestService } from 'src/app/services/rest.service';
 import { SesionService } from 'src/app/services/sesionService/sesion.service';
 
 @Component({
-  selector: 'app-q-sociedad',
-  templateUrl: './q-sociedad.component.html',
-  styleUrls: ['./q-sociedad.component.scss'],
+  selector: 'app-q-usuario-sede',
+  templateUrl: './q-usuario-sede.component.html',
+  styleUrls: ['./q-usuario-sede.component.scss'],
   providers: [RestService, MessageService]
 })
-export class QSociedadComponent implements OnInit {
+export class QUsuarioSedeComponent implements OnInit {
   @ViewChild('sc') sc;
   // Objetos de Sesion
   sesion: any;
 
   // Objetos de datos
-  nombreFiltro: any = "";
-  nombre10Filtro: any = "";
-  taxFiltro: any = "";
-  clienteFiltro: any;
-  servidorFiltro: any;
-  listaSociedades: Sociedad[];
+  
+  usuarioFiltro: any;
+  sedeFiltro: any;
+  listaUsuariosSedes: UsuarioSede[];
 
-  listaClientesTemp: any[];
-  listaServidorTemp: any[];
+  listaUsuariosTemp: any[];
+  listaSedesTemp: any[];
 
-  listaClientes: any[];
-  listaServidor: any[];
+  listaUsuarios: any[];
+  listaSedes: any[];
 
   // Utilidades
   msg: any;
@@ -63,40 +61,41 @@ export class QSociedadComponent implements OnInit {
 
   inicializar() {
     this.sesionService.objSociedadCargado = null;
-    this.clienteFiltro = { value: this.objectModelInitializer.getDataCliente(), label: this.msg.lbl_enum_generico_valor_vacio };
-    this.servidorFiltro = { value: this.objectModelInitializer.getDataServidor(), label: this.msg.lbl_enum_generico_valor_vacio };
-    this.consultarSociedades(0);
-    this.consultarClientes();
-    this.consultarServidores();
+    this.usuarioFiltro = { value: this.objectModelInitializer.getDataUsuario(), label: this.msg.lbl_enum_generico_valor_vacio };
+    this.sedeFiltro = { value: this.objectModelInitializer.getDataSede(), label: this.msg.lbl_enum_generico_valor_vacio };
+    this.consultarUsuarioSede(0);
+    this.consultarUsuarios();
+    this.consultarSedes();
 
   }
 
-  cargarSociedad(sociedad: Sociedad) {
-    this.sesionService.objSociedadCargado = this.objectModelInitializer.getDataSociedad();
-    this.sesionService.objSociedadCargado = sociedad;
+  cargarUsuarioSede(usuarioSede: UsuarioSede) {
+    this.sesionService.objUsuarioSedeCargado = this.objectModelInitializer.getUsuarioSede();
+    this.sesionService.objUsuarioSedeCargado = usuarioSede;
     //this.router.navigate(['/m-perfil']);
   }
 
-  consultarSociedades(primerItem) {
-    this.listaSociedades = [];
+  consultarUsuarioSede(primerItem) {
+    this.listaUsuariosSedes = [];
     this.loading = true;
     try {
-      let requestSociedadFiltro: RequestConsultaSociedad = this.objectModelInitializer.getDataRequestConsultarSociedad();
-      let sociedadFiltro = this.objectModelInitializer.getDataSociedad();
-      sociedadFiltro.nombre = this.nombreFiltro;
-      sociedadFiltro.nombre10 = this.nombre10Filtro;
-      sociedadFiltro.tax= this.taxFiltro;
-      sociedadFiltro.cliente= this.clienteFiltro.value;
-      sociedadFiltro.servidor= this.servidorFiltro.value;
-      requestSociedadFiltro.sociedad = this.objectModelInitializer.getDataSociedad();
-      requestSociedadFiltro.sociedad = sociedadFiltro;
-      requestSociedadFiltro.registroInicial = primerItem;
-      requestSociedadFiltro.cantidadRegistro = this.rows;
-      this.restService.postREST(this.const.urlConsultarSociedadPorFiltros, requestSociedadFiltro)
+      let requestUsuarioSedeFiltro: RequestConsultaUsuarioSede = this.objectModelInitializer.getDataRequestConsultarUsuarioSede();
+      let usuFiltro= this.objectModelInitializer.getDataUsuario();
+      let sedFiltro = this.objectModelInitializer.getDataSede();
+      let usuSedFiltro = this.objectModelInitializer.getUsuarioSede();
+      usuFiltro=this.usuarioFiltro.value;
+      sedFiltro= this.sedeFiltro.value;
+      usuSedFiltro.usuario=usuFiltro;
+      usuSedFiltro.sede=sedFiltro;
+      requestUsuarioSedeFiltro.usuarioSede = this.objectModelInitializer.getUsuarioSede();
+      requestUsuarioSedeFiltro.usuarioSede = usuSedFiltro;
+      requestUsuarioSedeFiltro.registroInicial = primerItem;
+      requestUsuarioSedeFiltro.cantidadRegistro = this.rows;
+      this.restService.postREST(this.const.urlConsultarUsuarioSedePorFiltros, requestUsuarioSedeFiltro)
         .subscribe(resp => {
-          let temp: ResponseConsultaSociedad = JSON.parse(JSON.stringify(resp));
+          let temp: ResponseConsultaUsuarioSede = JSON.parse(JSON.stringify(resp));
           if (temp !== undefined && temp.resultado.length > 0) {
-            this.listaSociedades = temp.resultado;
+            this.listaUsuariosSedes = temp.resultado;
             this.totalRecords = temp.registrosTotales;
             this.loading = false;
           }
@@ -122,18 +121,18 @@ export class QSociedadComponent implements OnInit {
 
   cargarTabla(event: LazyLoadEvent) {
     setTimeout(() => {
-      this.consultarSociedades(event.first);
+      this.consultarUsuarioSede(event.first);
     }, 100);
   }
 
-  consultarClientes() {
+  consultarUsuarios() {
     try {
-      this.listaClientes = [];
-      this.restService.getREST(this.const.urlConsultarClienteActiva)
+      this.listaUsuarios = [];
+      this.restService.getREST(this.const.urlConsultarUsuariosActivos)
         .subscribe(resp => {
-          let temp: Cliente[] = JSON.parse(JSON.stringify(resp));
+          let temp: Usuario[] = JSON.parse(JSON.stringify(resp));
           if (temp !== undefined && temp.length > 0) {
-            this.listaClientesTemp = temp;
+            this.listaUsuariosTemp = temp;
           }
         },
           error => {
@@ -153,26 +152,26 @@ export class QSociedadComponent implements OnInit {
     } catch (e) {
       console.log(e);
     }
-    setTimeout(() => this.activarCambiosClientes(), 1000);
+    setTimeout(() => this.activarCambiosUsuarios(), 1000);
   }
 
-  activarCambiosClientes() {
-    this.listaClientes = [];
-    this.listaClientes.push({ value: this.objectModelInitializer.getDataCliente(), label: this.msg.lbl_enum_generico_valor_vacio });
-    this.listaClientesTemp.forEach(cliente => {
-      this.listaClientes.push({ value: cliente, label: cliente.nombre });
+  activarCambiosUsuarios() {
+    this.listaUsuarios = [];
+    this.listaUsuarios.push({ value: this.objectModelInitializer.getDataUsuario(), label: this.msg.lbl_enum_generico_valor_vacio });
+    this.listaUsuariosTemp.forEach(usuario => {
+      this.listaUsuarios.push({ value: usuario, label: usuario.nombre });
     });
-    this.clienteFiltro = this.listaClientes[0];
+    this.usuarioFiltro = this.listaUsuarios[0];
   }
 
-  consultarServidores() {
+  consultarSedes() {
     try {
-      this.listaServidor = [];
-      this.restService.getREST(this.const.urlConsultarServidorActiva)
+      this.listaSedes = [];
+      this.restService.getREST(this.const.urlConsultarSedeActivos)
         .subscribe(resp => {
-          let temp: Servidor[] = JSON.parse(JSON.stringify(resp));
+          let temp: Sede[] = JSON.parse(JSON.stringify(resp));
           if (temp !== undefined && temp.length > 0) {
-            this.listaServidorTemp= temp;
+            this.listaSedesTemp= temp;
           }
         },
           error => {
@@ -192,15 +191,17 @@ export class QSociedadComponent implements OnInit {
     } catch (e) {
       console.log(e);
     }
-    setTimeout(() => this.activarCambiosServidores(), 1000);
+    setTimeout(() => this.activarCambiosSedes(), 1000);
   }
 
-  activarCambiosServidores() {
-    this.listaServidor = [];
-    this.listaServidor.push({ value: this.objectModelInitializer.getDataServidor(), label: this.msg.lbl_enum_generico_valor_vacio });
-    this.listaServidorTemp.forEach(servidor => {
-      this.listaServidor.push({ value: servidor, label: servidor.ip });
+  activarCambiosSedes() {
+    this.listaSedes = [];
+    this.listaSedes.push({ value: this.objectModelInitializer.getDataSede(), label: this.msg.lbl_enum_generico_valor_vacio });
+    this.listaSedesTemp.forEach(sede => {
+      this.listaSedes.push({ value: sede, label: sede.nombre });
     });
-    this.clienteFiltro = this.listaServidor[0];
+    this.sedeFiltro = this.listaSedes[0];
   }
+
+  
 }
