@@ -25,6 +25,8 @@ import { QUsuarioSedeComponent } from '../components/query/usuario-sede/q-usuari
 import { QUsuarioComponent } from '../components/query/usuario/q-usuario.component';
 import { RestaurarClaveComponent } from '../components/restaurar-clave/restaurar-clave.component';
 import { Guardian } from './Guardian';
+import { MSociedadAreaComponent } from '../components/management/sociedad-area/m-sociedad-area.component';
+import { MUsuarioSedeComponent } from '../components/management/usuario-sede/m-usuario-sede.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -65,7 +67,9 @@ const routes: Routes = [
   { path: 'q-sociedad', component: QSociedadComponent, canActivate: [Guardian] },
   { path: 'm-sociedad', component: MSociedadComponent, canActivate: [Guardian] },
   { path: 'q-sociedad-area', component: QSociedadAreaComponent, canActivate: [Guardian] },
+  { path: 'm-sociedad-area', component: MSociedadAreaComponent, canActivate: [Guardian] },
   { path: 'q-usuario-sede', component: QUsuarioSedeComponent, canActivate: [Guardian] },
+  { path: 'm-usuario-sede', component: MUsuarioSedeComponent, canActivate: [Guardian] },
 
   { path: 'm-parametrizacion/sede', component: MParametrizacionesComponent, canActivate: [Guardian] },
 

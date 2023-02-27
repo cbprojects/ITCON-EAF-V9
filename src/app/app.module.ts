@@ -70,6 +70,8 @@ import { QSociedadComponent } from './components/query/sociedad/q-sociedad.compo
 import { QSociedadAreaComponent } from './components/query/sociedad-area/q-sociedad-area.component';
 import { QUsuarioSedeComponent } from './components/query/usuario-sede/q-usuario-sede.component';
 import { MSociedadComponent } from './components/management/sociedad/m-sociedad.component';
+import { MSociedadAreaComponent } from './components/management/sociedad-area/m-sociedad-area.component';
+import { MUsuarioSedeComponent } from './components/management/usuario-sede/m-usuario-sede.component';
 
 
 // Constantes
@@ -127,7 +129,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     QSociedadComponent,
     QSociedadAreaComponent,
     QUsuarioSedeComponent,
-    MSociedadComponent
+    MSociedadComponent,
+    MSociedadAreaComponent,
+    MUsuarioSedeComponent
   ],
   imports: [
     AppRoutingModule,

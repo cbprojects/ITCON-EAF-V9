@@ -274,7 +274,7 @@ export class QUnidadDocumentalComponent implements OnInit {
     this.loading = true;
     try {
       let requestUnidadDocumentalFiltro: RequestConsultaUnidadDocumental = this.objectModelInitializer.getDataRequestUnidadDocumental();
-      this.unidadDocumentalFiltro.caja = null;
+      this.unidadDocumentalFiltro.caja = this.objectModelInitializer.getDataCaja();
       this.unidadDocumentalFiltro.sociedadArea = this.objectModelInitializer.getDataSociedadArea();
       this.unidadDocumentalFiltro.sociedadArea.sociedad = this.sociedadFiltro.value;
       this.unidadDocumentalFiltro.sociedadArea.area = this.areaFiltro.value;
@@ -285,7 +285,7 @@ export class QUnidadDocumentalComponent implements OnInit {
       requestUnidadDocumentalFiltro.cantidadRegistro = this.rows;
       // Formato fecha AAAA-MM-DD
       console.log(requestUnidadDocumentalFiltro);
-      this.restService.postREST(this.const.urlConsultarUDPorFiltros, requestUnidadDocumentalFiltro)
+      this.restService.putREST(this.const.urlConsultarUDPorFiltros, requestUnidadDocumentalFiltro)
         .subscribe(resp => {
           let temp: ResponseConsultaUnidadDocumental = JSON.parse(JSON.stringify(resp));
           if (temp !== undefined && temp.resultado.length > 0) {

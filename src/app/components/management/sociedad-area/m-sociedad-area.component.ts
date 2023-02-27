@@ -1,59 +1,57 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { LazyLoadEvent, MessageService } from 'primeng/api';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { Enumerados } from 'src/app/config/Enumerados';
 import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
 import { Area } from 'src/app/model/areaModel';
 import { Cliente } from 'src/app/model/clienteModel';
-import { RequestConsultaSociedadArea } from 'src/app/model/requestConsultaSociedadAreaModel';
 import { RequestSociedadXCliente } from 'src/app/model/requestSociedadXCliente';
-import { ResponseConsultaSociedadArea } from 'src/app/model/responseConsultaSociedadAreaModel';
 import { SociedadArea } from 'src/app/model/sociedadAreaModel';
 import { Sociedad } from 'src/app/model/sociedadModel';
 import { RestService } from 'src/app/services/rest.service';
 import { SesionService } from 'src/app/services/sesionService/sesion.service';
 
+declare var $: any;
+
 @Component({
-  selector: 'app-q-sociedad-area',
-  templateUrl: './q-sociedad-area.component.html',
-  styleUrls: ['./q-sociedad-area.component.scss'],
+  selector: 'app-m-sociedad-area',
+  templateUrl: './m-sociedad-area.component.html',
+  styleUrls: ['./m-sociedad-area.component.scss'],
   providers: [RestService, MessageService]
 })
-export class QSociedadAreaComponent implements OnInit {
-  @ViewChild('sc') sc;
+export class MSociedadAreaComponent implements OnInit {
+
   // Objetos de Sesion
   sesion: any;
+  clienteFiltro: any;
+  areasFiltro: any;
+  sociedadFiltro: any;
 
   // Objetos de datos
-  clienteFiltro: any;
-  sociedadFiltro: any;
-  areasFiltro: any;
-  listaSociedadesAreas: SociedadArea[];
+  sociedadArea: SociedadArea;
+  esNuevoSociedadArea: boolean;
 
   listaClientesTemp: any[];
-  listaSociedadesTemp: any[];
   listaAreasTemp: any[];
+  listaSociedadesTemp: any[];
 
   listaClientes: any[];
-  listaSociedades: any[];
   listaAreas: any[];
+  listaSociedades: any[];
 
   // Utilidades
   msg: any;
   const: any;
-  rows: any;
-  enumRows: any;
-  totalRecords: number;
-  loading: boolean;
+  enumEstado: any;
+  enums: any;
 
   constructor(private router: Router, private route: ActivatedRoute, public restService: RestService, public textProperties: TextProperties, public util: Util, public objectModelInitializer: ObjectModelInitializer, public enumerados: Enumerados, public sesionService: SesionService, private messageService: MessageService) {
     this.sesion = this.objectModelInitializer.getDataServiceSesion();
     this.msg = this.textProperties.getProperties(this.sesionService.objServiceSesion.idioma);
     this.const = this.objectModelInitializer.getConst();
-    this.enumRows = [5, 10, 15, 20, 50, 100];
-    this.rows = this.enumRows[1];
+    this.enums = this.enumerados.getEnumerados();
   }
 
   ngOnInit() {
@@ -64,45 +62,43 @@ export class QSociedadAreaComponent implements OnInit {
   }
 
   inicializar() {
-    this.sesionService.objSociedadAreaCargado = null;
-    this.clienteFiltro = { value: this.objectModelInitializer.getDataCliente(), label: this.msg.lbl_enum_generico_valor_vacio };
-    this.sociedadFiltro = { value: this.objectModelInitializer.getDataSociedad(), label: this.msg.lbl_enum_generico_valor_vacio };
-    this.areasFiltro = { value: this.objectModelInitializer.getDataArea(), label: this.msg.lbl_enum_generico_valor_vacio };
-    this.consultarSociedadesAreas(0);
     this.consultarClientes();
     this.consultarAreas();
-
+    this.enumEstado = this.enums.estado.valores;
+    this.sociedadArea = this.objectModelInitializer.getDataSociedadArea();
+    this.sociedadArea.estado = this.util.getValorEnumerado(this.enumEstado, 1);
+    this.esNuevoSociedadArea = true;
+    if (this.sesionService.objSociedadAreaCargado !== undefined && this.sesionService.objSociedadAreaCargado !== null && this.sesionService.objSociedadAreaCargado.id > 0) {
+      this.sociedadArea = this.sesionService.objSociedadAreaCargado;
+      this.sociedadArea.estado = this.util.getValorEnumerado(this.enumEstado, this.sociedadArea.estado);
+      this.esNuevoSociedadArea = false;
+      this.clienteFiltro = { value: this.sociedadArea.sociedad.cliente, label: this.sociedadArea.sociedad.cliente.nombre};
+      this.areasFiltro = { value: this.sociedadArea.area, label: this.sociedadArea.area.nombre};
+      this.cargarSociedadXClientes(this.clienteFiltro.value.id);
+      this.sociedadFiltro = { value: this.sociedadArea.sociedad, label: this.sociedadArea.sociedad.nombre};
+    }else{
+      this.clienteFiltro = { value: this.objectModelInitializer.getDataCliente(), label: this.msg.lbl_enum_generico_valor_vacio };
+      this.areasFiltro = { value: this.objectModelInitializer.getDataArea(), label: this.msg.lbl_enum_generico_valor_vacio };
+      
+    }
   }
 
-  cargarSociedadArea(sociedadArea: SociedadArea) {
-    this.sesionService.objSociedadAreaCargado = this.objectModelInitializer.getDataSociedadArea();
-    this.sesionService.objSociedadAreaCargado = sociedadArea;
-    this.router.navigate(['/m-sociedad-area']);
-  }
-
-  consultarSociedadesAreas(primerItem) {
-    this.listaSociedadesAreas = [];
-    this.loading = true;
+  crearSociedadArea() {
     try {
-      let requestSociedadFiltro: RequestConsultaSociedadArea = this.objectModelInitializer.getDataRequestConsultarSociedadArea();
-      let areaFiltro= this.objectModelInitializer.getDataArea();
-      let sociedadFiltro = this.objectModelInitializer.getDataSociedad();
-      let sociedadAreFiltro = this.objectModelInitializer.getDataSociedadArea();
-      areaFiltro=this.areasFiltro.value;
-      sociedadFiltro= this.sociedadFiltro.value;
-      sociedadAreFiltro.area=areaFiltro;
-      sociedadAreFiltro.sociedad=sociedadFiltro;
-      requestSociedadFiltro.sociedadArea = this.objectModelInitializer.getDataSociedadArea()
-      requestSociedadFiltro.sociedadArea = sociedadAreFiltro;
-      requestSociedadFiltro.registroInicial = primerItem;
-      requestSociedadFiltro.cantidadRegistro = this.rows;
-      this.restService.postREST(this.const.urlConsultarSociedadAreasPorFiltro, requestSociedadFiltro)
+      this.sociedadArea.sociedad=this.sociedadFiltro.value;
+      this.sociedadArea.area=this.areasFiltro.value;
+      this.sociedadArea.estado = this.sociedadArea.estado.value;
+      this.sociedadArea.usuarioCreacion=localStorage.getItem("cedula");
+      this.sociedadArea.usuarioActualizacion=localStorage.getItem("cedula");
+      this.restService.postREST(this.const.urlCrearSociedadArea, this.sociedadArea)
         .subscribe(resp => {
-          let temp: ResponseConsultaSociedadArea = JSON.parse(JSON.stringify(resp));
-          if (temp !== undefined && temp.resultado.length > 0) {
-            this.listaSociedadesAreas = temp.resultado;
-            this.totalRecords = temp.registrosTotales;
-            this.loading = false;
+          let respuesta: Sociedad = JSON.parse(JSON.stringify(resp));
+          if (respuesta !== null) {
+            // Mostrar mensaje exitoso y consultar de nuevo
+            this.messageService.clear();
+            this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo, sticky: true });
+
+            this.volverConsulta();
           }
         },
           error => {
@@ -116,6 +112,7 @@ export class QSociedadAreaComponent implements OnInit {
               mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
             });
             this.messageService.add(mensajeFinal);
+            this.sociedadArea.estado = this.util.getValorEnumerado(this.enumEstado, this.sociedadArea.estado);
 
             console.log(error, "error");
           })
@@ -124,10 +121,53 @@ export class QSociedadAreaComponent implements OnInit {
     }
   }
 
-  cargarTabla(event: LazyLoadEvent) {
-    setTimeout(() => {
-      this.consultarSociedadesAreas(event.first);
-    }, 100);
+  modificarSociedadArea() {
+    try {
+      this.sociedadArea.sociedad=this.sociedadFiltro.value;
+      this.sociedadArea.area=this.areasFiltro.value;
+      this.sociedadArea.estado = this.sociedadArea.estado.value;
+      this.sociedadArea.usuarioActualizacion=localStorage.getItem("cedula");
+      this.restService.putREST(this.const.urlModificarSociedadArea, this.sociedadArea)
+        .subscribe(resp => {
+          let respuesta: Sociedad = JSON.parse(JSON.stringify(resp));
+          if (respuesta !== null) {
+            // Mostrar mensaje exitoso y consultar de nuevo
+            this.messageService.clear();
+            this.messageService.add({ severity: this.const.severity[1], summary: this.msg.lbl_summary_succes, detail: this.msg.lbl_info_proceso_completo, sticky: true });
+
+            this.volverConsulta();
+          }
+        },
+          error => {
+            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+            let titleError = listaMensajes[0];
+            listaMensajes.splice(0, 1);
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+            this.messageService.clear();
+
+            listaMensajes.forEach(mensaje => {
+              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+            });
+            this.messageService.add(mensajeFinal);
+            this.sociedadArea.estado = this.util.getValorEnumerado(this.enumEstado, this.sociedadArea.estado);
+            if (this.sociedadArea.estado === 0) {
+              this.sociedadArea.estado = 1;
+            }
+
+            console.log(error, "error");
+          })
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  eliminarSociedadArea() {
+    this.sociedadArea.estado = 0;
+    this.modificarSociedadArea();
+  }
+
+  volverConsulta() {
+    this.router.navigate(['/q-sociedad-area']);
   }
 
   consultarClientes() {
@@ -166,7 +206,7 @@ export class QSociedadAreaComponent implements OnInit {
     this.listaClientesTemp.forEach(cliente => {
       this.listaClientes.push({ value: cliente, label: cliente.nombre });
     });
-    this.clienteFiltro = this.listaClientes[0];
+    
   }
 
   consultarAreas() {
@@ -205,13 +245,14 @@ export class QSociedadAreaComponent implements OnInit {
     this.listaAreasTemp.forEach(area => {
       this.listaAreas.push({ value: area, label: area.nombre });
     });
-    this.areasFiltro = this.listaAreas[0];
+    
   }
 
-  cargarSociedadXClientes(event) {
+  cargarSociedadXClientes(id:Number) {
+    this.sociedadFiltro = { value: this.objectModelInitializer.getDataSociedad(), label: this.msg.lbl_enum_generico_valor_vacio };
     this.listaSociedades = [];
     this.listaSociedadesTemp = [];
-    this.clienteFiltro.id = event.value.id;
+    this.clienteFiltro.id = id;
     try {
       let request: RequestSociedadXCliente = this.objectModelInitializer.getDataRequestSociedadXCliente();
       request.idCliente = this.clienteFiltro.id;
@@ -247,7 +288,9 @@ export class QSociedadAreaComponent implements OnInit {
     this.listaSociedadesTemp.forEach(sociedad => {
       this.listaSociedades.push({ value: sociedad, label: sociedad.nombre });
     });
-    this.sociedadFiltro = this.listaSociedades[0];
+    if(this.esNuevoSociedadArea){
+      this.sociedadFiltro = this.listaSociedades[0];
+    }
   }
 
 }

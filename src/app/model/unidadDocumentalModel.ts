@@ -20,6 +20,7 @@ export interface UnidadDocumental {
     fechaIni: any;
     fechaFin: any;
     fechaRecibe: any;
+    cajaRecibido: any;
     fechaCreacion: any;
     usuarioCreacion: any;
     fechaActualizacion: any;

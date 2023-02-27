@@ -6,7 +6,6 @@ import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
 import { Cliente } from 'src/app/model/clienteModel';
-import { Perfil } from 'src/app/model/perfilModel';
 import { RequestSociedadXCliente } from 'src/app/model/requestSociedadXCliente';
 import { Servidor } from 'src/app/model/servidorModel';
 import { Sociedad } from 'src/app/model/sociedadModel';
@@ -72,7 +71,6 @@ export class MSociedadComponent implements OnInit {
       this.sociedad = this.sesionService.objSociedadCargado;
       this.sociedad.estado = this.util.getValorEnumerado(this.enumEstado, this.sociedad.estado);
       this.esNuevoSociedad = false;
-      console.log(this.sociedad.cliente);
       this.clienteFiltro = { value: this.sociedad.cliente, label: this.sociedad.cliente.nombre};
       this.servidorFiltro = { value: this.sociedad.servidor, label: this.sociedad.servidor.ip};
       this.cargarSociedadXClientes(this.clienteFiltro.value.id);

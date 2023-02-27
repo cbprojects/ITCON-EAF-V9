@@ -64,6 +64,12 @@ export class ObjectModelInitializer {
       urlConsultarSociedadPorFiltros: `${HOST}/central/sociedad/consultarSociedadFiltros`,
       urlCrearSociedad: `${HOST}/central/sociedad/crearSociedad`,
       urlModificarSociedad: `${HOST}/central/sociedad/modificarSociedad`,
+      // Area
+      urlConsultarAreasActivas: `${HOST}/central/Masivo/consultarAreasActiva`,
+      // Sociedad-Area
+      urlConsultarSociedadAreasPorFiltro: `${HOST}/central/SociedadArea/consultarSociedadAreaFiltros`,
+      urlCrearSociedadArea: `${HOST}/central/SociedadArea/crearSociedadArea`,
+      urlModificarSociedadArea: `${HOST}/central/SociedadArea/modificarSociedadArea`,
       // Perfiles
       urlContarPerfiles: `${HOST}/central/perfil/contarPerfiles`,
       urlConsultarPerfilesPorFiltros: `${HOST}/central/perfil/consultarPerfilFiltros`,
@@ -76,7 +82,11 @@ export class ObjectModelInitializer {
       urlCrearUsuario: `${HOST}/central/usuario/crearUsuario`,
       urlModificarUsuario: `${HOST}/central/usuario/modificarUsuario`,
       urlLoginUsuario: `${HOST}/central/usuario/loginUsuario`,
+      urlConsultarUsuariosActivos: `${HOST}/central/usuario/consultarUsuarioActivo`,
+      // UsuariosSede
       urlBuscarSedesActivasPorUsuario: `${HOST}/central/UsuarioSede/buscarSedesActivasPorUsuario`,
+      urlCrearUsuarioSede: `${HOST}/central/UsuarioSede/crearUsuarioSede`,
+      urlModificarUsuarioSede: `${HOST}/central/UsuarioSede/modificarUsuarioSede`,
       // Cajas
       urlConsultarCajasPorFiltros: `${HOST}/central/caja/consultarCajaFiltros`,
       urlCrearCaja: `${HOST}/central/caja/crearCaja`,
@@ -94,6 +104,10 @@ export class ObjectModelInitializer {
       urlConsultarUnidadDocumentalPorCajaMasiva: `${HOST}/central/unidadDocumental/consultarUnidadDocumentalPorCajaMasiva`,
       urlCambiarCajaUnidadDocumentalMasiva: `${HOST}/central/unidadDocumental/cambiarCajaUnidadDocumentalMasiva`,
       urlConsultarUnidadDocumentalLista: `${HOST}/central/unidadDocumental/consultarUnidadDocumentalLista`,
+      // Sede
+      urlConsultarSedeActivos: `${HOST}/central/Masivo/consultarSedeActiva`,
+      // Usuario-Sede
+      urlConsultarUsuarioSedePorFiltros: `${HOST}/central/UsuarioSede/consultarUsuarioSedeFiltros`,
       // Tipo Unidad Documental
       urlBuscarTipoUDActivos: `${HOST}/central/TipoUD/buscarTipoUDActivos`,
       // Contenedores
@@ -101,6 +115,7 @@ export class ObjectModelInitializer {
       urlBuscarAreasActivasPorSociedad: `${HOST}/central/SociedadArea/buscarAreasActivasPorSociedad`,
       // Sociedades      
       urlConsultarSociedadActiva: `${HOST}/central/sociedad/consultarSociedadActiva`,
+      urlConsultarSociedadXClienteActiva: `${HOST}/central/sociedad/consultarSociedadActivaPorCliente`,
       // Clientes      
       urlConsultarClienteActiva: `${HOST}/central/Cliente/buscarClientesActivos`,
       // Servidor      
@@ -323,6 +338,19 @@ export class ObjectModelInitializer {
     }
   };
 
+  getUsuarioSede() {
+    return {
+      id: 0,
+      usuario: this.getDataUsuario(),
+      sede: this.getDataSede(),
+      fechaCreacion: '',
+      usuarioCreacion: '',
+      fechaActualizacion: '',
+      usuarioActualizacion: '',
+      estado: ''
+    }
+  };
+
   getDataBloque() {
     return {
       id: 0,
@@ -480,6 +508,7 @@ export class ObjectModelInitializer {
       fechaIni: '',
       fechaFin: '',
       fechaRecibe: '',
+      cajaRecibido: '',
       estado: 1,
       fechaCreacion: '',
       usuarioCreacion: '',
@@ -507,6 +536,22 @@ export class ObjectModelInitializer {
   getDataRequestConsultarSociedad() {
     return {
       sociedad: this.getDataSociedad(),
+      registroInicial: 0,
+      cantidadRegistro: 0
+    }
+  };
+
+  getDataRequestConsultarSociedadArea() {
+    return {
+      sociedadArea: this.getDataSociedadArea(),
+      registroInicial: 0,
+      cantidadRegistro: 0
+    }
+  };
+
+  getDataRequestConsultarUsuarioSede() {
+    return {
+      usuarioSede: this.getUsuarioSede(),
       registroInicial: 0,
       cantidadRegistro: 0
     }
@@ -632,6 +677,12 @@ export class ObjectModelInitializer {
   getDataRequestAreasXSociedad() {
     return {
       id: ''
+    }
+  }
+
+  getDataRequestSociedadXCliente() {
+    return {
+      idCliente: ''
     }
   }
 
