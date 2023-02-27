@@ -6,6 +6,7 @@ import { HomeComponent } from '../components/home/home.component';
 import { LoginComponent } from '../components/login/login.component';
 import { MCajaComponent } from '../components/management/caja/m-cajas.component';
 import { DigitalizarUnidadDocumentalComponent } from '../components/management/digitalizar-unidad-documental/digitalizar-unidad-documental.component';
+import { MSociedadComponent } from '../components/management/sociedad/m-sociedad.component';
 import { MParametrizacionesComponent } from '../components/management/masivo/m-parametrizaciones/m-parametrizaciones.component';
 import { MPerfilesComponent } from '../components/management/perfil/m-perfiles.component';
 import { RolPerfilComponent } from '../components/management/rol-perfil/rol-perfil.component';
@@ -62,6 +63,7 @@ const routes: Routes = [
   { path: 'm-parametrizacion/contenedor', component: MParametrizacionesComponent, canActivate: [Guardian] },
   { path: 'm-parametrizacion/tipo-documental', component: MParametrizacionesComponent, canActivate: [Guardian] },
   { path: 'q-sociedad', component: QSociedadComponent, canActivate: [Guardian] },
+  { path: 'm-sociedad', component: MSociedadComponent, canActivate: [Guardian] },
   { path: 'q-sociedad-area', component: QSociedadAreaComponent, canActivate: [Guardian] },
   { path: 'q-usuario-sede', component: QUsuarioSedeComponent, canActivate: [Guardian] },
 

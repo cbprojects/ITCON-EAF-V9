@@ -69,6 +69,7 @@ import { SesionService } from './services/sesionService/sesion.service';
 import { QSociedadComponent } from './components/query/sociedad/q-sociedad.component';
 import { QSociedadAreaComponent } from './components/query/sociedad-area/q-sociedad-area.component';
 import { QUsuarioSedeComponent } from './components/query/usuario-sede/q-usuario-sede.component';
+import { MSociedadComponent } from './components/management/sociedad/m-sociedad.component';
 
 
 // Constantes
@@ -125,7 +126,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     QParametrizacionesComponent,
     QSociedadComponent,
     QSociedadAreaComponent,
-    QUsuarioSedeComponent
+    QUsuarioSedeComponent,
+    MSociedadComponent
   ],
   imports: [
     AppRoutingModule,

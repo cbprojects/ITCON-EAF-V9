@@ -74,7 +74,7 @@ export class QSociedadComponent implements OnInit {
   cargarSociedad(sociedad: Sociedad) {
     this.sesionService.objSociedadCargado = this.objectModelInitializer.getDataSociedad();
     this.sesionService.objSociedadCargado = sociedad;
-    //this.router.navigate(['/m-perfil']);
+    this.router.navigate(['/m-sociedad']);
   }
 
   consultarSociedades(primerItem) {
