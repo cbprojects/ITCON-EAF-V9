@@ -27,21 +27,24 @@
                                     <div class="col-md-4 col-lg-3">
                                         <div class="form-group">
                                             <label class="form-label">Nombre<span class="form-required">*</span></label>
-                                            <input type="text" [(ngModel)]="masivo.nombre1" class="form-control">
+                                            <input type="text" maxlength="50" [(ngModel)]="masivo.nombre1"
+                                                class="form-control">
                                         </div>
                                     </div>
                                     <div *ngIf="tipo === 1 || tipo === 2 || tipo === 5" class="col-md-4 col-lg-3">
                                         <div class="form-group">
                                             <label class="form-label">{{tipo === 2 ? "Tax": "Nombre 2"}}<span
                                                     class="form-required">*</span></label>
-                                            <input type="text" [(ngModel)]="masivo.nombre2" class="form-control">
+                                            <input type="text" maxlength="10" [(ngModel)]="masivo.nombre2"
+                                                class="form-control">
                                         </div>
                                     </div>
                                     <div *ngIf="tipo === 5" class="col-md-4 col-lg-3">
                                         <div class="form-group">
                                             <label class="form-label">Dirección<span
                                                     class="form-required">*</span></label>
-                                            <input type="text" [(ngModel)]="masivo.nombre3" class="form-control">
+                                            <input type="text" maxlength="250" [(ngModel)]="masivo.nombre3"
+                                                class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-lg-3">
