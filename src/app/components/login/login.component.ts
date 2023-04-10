@@ -64,6 +64,7 @@ export class LoginComponent implements OnInit {
               this.sesionService.objServiceSesion.usuarioSesion.esAdmin = true;
               localStorage.setItem('usuarioSesion', JSON.stringify(this.sesionService.objServiceSesion.usuarioSesion));
               localStorage.setItem('cedula', respuesta.usuario.documento);
+              localStorage.setItem('idUser', JSON.stringify(respuesta.usuario.id));
               this.router.navigate(['/home']);  
             }
           },

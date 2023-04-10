@@ -7,9 +7,9 @@ export var HOST = 'http://localhost:9002';
 //dev
 //export var HOST = 'https://143.198.123.29:8443/CentralUsuarios';
 
-//export var SYSTEM = 'http://localhost:4200';
+export var SYSTEM = 'http://localhost:4200';
 //export var SYSTEM = 'http://10.176.56.211:7001';
-export var SYSTEM = 'https://www.itcon.cbaeneprojects.com';
+//export var SYSTEM = 'https://www.itcon.cbaeneprojects.com';
 
 @Injectable()
 export class ObjectModelInitializer {
@@ -60,6 +60,11 @@ export class ObjectModelInitializer {
       urlConsultarRolesPorFiltros: `${HOST}/central/rol/consultarRolFiltros`,
       urlCrearRol: `${HOST}/central/rol/crearRol`,
       urlModificarRol: `${HOST}/central/rol/modificarRol`,
+      // Recepcion
+      urlConsultarUnidadDocumentalRecepcion: `${HOST}/central/unidadDocumental/consultarUnidadDocumentalRecepcion`,
+      urlAprobacionRecepcion: `${HOST}/central/unidadDocumental/aprobacionRecepcion`,
+      urlGenerarPdf: `${HOST}/central/unidadDocumental/generarPdf`,
+      urlEnviarPdf: `${HOST}/central/unidadDocumental/enviarPdf`,
       // Sociedad
       urlConsultarSociedadPorFiltros: `${HOST}/central/sociedad/consultarSociedadFiltros`,
       urlCrearSociedad: `${HOST}/central/sociedad/crearSociedad`,
@@ -509,6 +514,7 @@ export class ObjectModelInitializer {
       fechaFin: '',
       fechaRecibe: '',
       cajaRecibido: '',
+      recepcionAprobada: false,
       estado: 1,
       fechaCreacion: '',
       usuarioCreacion: '',
@@ -552,6 +558,15 @@ export class ObjectModelInitializer {
   getDataRequestConsultarUsuarioSede() {
     return {
       usuarioSede: this.getUsuarioSede(),
+      registroInicial: 0,
+      cantidadRegistro: 0
+    }
+  };
+
+  getDataRequestRecepcion() {
+    return {
+      cliente: this.getDataCliente(),
+      idUser: 0,
       registroInicial: 0,
       cantidadRegistro: 0
     }
@@ -985,6 +1000,13 @@ export class ObjectModelInitializer {
     return {
       codigo: '',
       mensaje: ''
+    }
+  };
+
+  getDataRequestRecepcionAprobada() {
+    return {
+      idUD: 0,
+      aprobacion: false
     }
   };
 }
