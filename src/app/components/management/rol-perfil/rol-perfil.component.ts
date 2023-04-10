@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LazyLoadEvent, MessageService } from 'primeng/api';
 import { Enumerados } from 'src/app/config/Enumerados';
 import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
@@ -66,7 +66,6 @@ export class RolPerfilComponent implements OnInit {
 
   cargarPerfil(perfil: Perfil) {
     this.objPerfilCargado = this.objectModelInitializer.getDataPerfil();
-    debugger
     this.objPerfilCargado = perfil;
     this.sourceProducts = [];
     this.targetProducts = [];
@@ -74,24 +73,14 @@ export class RolPerfilComponent implements OnInit {
       let requestPerfil: Perfil = this.objPerfilCargado;
       this.restService.postREST(this.const.urlConsultarRolPerfil, requestPerfil)
         .subscribe(resp => {
-          debugger
           let temp: ResponseConsultaRolPerfil = JSON.parse(JSON.stringify(resp));
-          if (temp !== undefined) {
-            console.log(temp);
-            if (temp.rolesAsociados.length > 0) {
-              temp.rolesAsociados.forEach(rol => {
-                this.targetProducts.push(rol);
-              });
-            }
-            if (temp.rolesNoAsociados.length > 0) {
-              temp.rolesNoAsociados.forEach(rol => {
-                this.sourceProducts.push(rol);
-              });
-            }
+          if (temp) {
+            this.targetProducts = temp.rolesAsociados;
+            this.sourceProducts = temp.rolesNoAsociados;
             console.log(this.targetProducts);
             console.log(this.sourceProducts);
             $($($($($('#asoRolPerfil')[0]).children()[0]).children()[0]).children()[0]).click();
-            
+
           }
         },
           error => {
@@ -117,7 +106,7 @@ export class RolPerfilComponent implements OnInit {
       let requestCrearRolPerfil: RequestCrearRolPerfil = this.objectModelInitializer.getDataRequestCrearRolPerfil();
       requestCrearRolPerfil.perfil = this.objPerfilCargado;
       requestCrearRolPerfil.lstRoles = this.targetProducts;
-      requestCrearRolPerfil.user=localStorage.getItem('cedula');
+      requestCrearRolPerfil.user = localStorage.getItem('cedula');
       this.restService.postREST(this.const.urlCrearRolPerfil, requestCrearRolPerfil)
         .subscribe(resp => {
           let respuesta: ResponseCrearRolPerfil = JSON.parse(JSON.stringify(resp));
