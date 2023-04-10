@@ -65,6 +65,9 @@ export class ObjectModelInitializer {
       urlAprobacionRecepcion: `${HOST}/central/unidadDocumental/aprobacionRecepcion`,
       urlGenerarPdf: `${HOST}/central/unidadDocumental/generarPdf`,
       urlEnviarPdf: `${HOST}/central/unidadDocumental/enviarPdf`,
+      // Acta
+      urlConsultarActaFiltros: `${HOST}/central/acta/consultarActaFiltros`,
+      urlAprobacionActa: `${HOST}/central/acta/aprobacionActa`,
       // Sociedad
       urlConsultarSociedadPorFiltros: `${HOST}/central/sociedad/consultarSociedadFiltros`,
       urlCrearSociedad: `${HOST}/central/sociedad/crearSociedad`,
@@ -1007,6 +1010,16 @@ export class ObjectModelInitializer {
     return {
       idUD: 0,
       aprobacion: false
+    }
+  };
+
+  getRequestConsultarActa() {
+    return {
+      idUsuario: 0,
+      tipoAprobado: 0,
+      esAdmin: false,
+      registroInicial: 0,
+      cantidadRegistro: 0
     }
   };
 }

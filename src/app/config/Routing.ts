@@ -28,6 +28,7 @@ import { Guardian } from './Guardian';
 import { MSociedadAreaComponent } from '../components/management/sociedad-area/m-sociedad-area.component';
 import { MUsuarioSedeComponent } from '../components/management/usuario-sede/m-usuario-sede.component';
 import { RecepcionComponent } from '../components/management/recepcion/recepcion.component';
+import { ActaComponent } from '../components/management/acta/acta.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -56,6 +57,7 @@ const routes: Routes = [
   { path: 'traslado-unidad-documental', component: TrasladoUnidadDocumentalComponent, canActivate: [Guardian] },
   { path: 'digitalizar-unidad-documental', component: DigitalizarUnidadDocumentalComponent, canActivate: [Guardian] },
   { path: 'recepcion-unidad-documental', component: RecepcionComponent, canActivate: [Guardian] },
+  { path: 'acta', component: ActaComponent, canActivate: [Guardian] },
 
   { path: 'q-parametrizacion/area', component: QParametrizacionesComponent, canActivate: [Guardian] },
   { path: 'q-parametrizacion/cliente', component: QParametrizacionesComponent, canActivate: [Guardian] },

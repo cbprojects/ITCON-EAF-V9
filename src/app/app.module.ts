@@ -73,6 +73,7 @@ import { MSociedadComponent } from './components/management/sociedad/m-sociedad.
 import { MSociedadAreaComponent } from './components/management/sociedad-area/m-sociedad-area.component';
 import { MUsuarioSedeComponent } from './components/management/usuario-sede/m-usuario-sede.component';
 import { RecepcionComponent } from './components/management/recepcion/recepcion.component';
+import { ActaComponent } from './components/management/acta/acta.component';
 
 
 // Constantes
@@ -133,7 +134,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MSociedadComponent,
     MSociedadAreaComponent,
     MUsuarioSedeComponent,
-    RecepcionComponent
+    RecepcionComponent,
+    ActaComponent
   ],
   imports: [
     AppRoutingModule,

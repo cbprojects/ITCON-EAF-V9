@@ -269,6 +269,7 @@ export class RecepcionComponent implements OnInit {
           if (temp && temp.codigo === '0') {
             
             mensajeFinal = { severity: this.const.severity[1], summary: this.const.lbl_summary_success, detail: temp.mensaje, sticky: true };
+            this.consultarRecepcion(0);
           } else {
             mensajeFinal = { severity: this.const.severity[2], summary: this.const.lbl_summary_warning, detail: temp.mensaje, sticky: true };
           }

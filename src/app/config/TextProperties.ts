@@ -255,6 +255,10 @@ export class TextProperties {
       lbl_enum_activo: idioma === constant.idiomaEs ? 'Activo' : 'Active',
       lbl_enum_inactivo: idioma === constant.idiomaEs ? 'Inactivo' : 'Inactive',
 
+      lbl_enum_todos: idioma === constant.idiomaEs ? 'Todos' : 'All',
+      lbl_enum_aprobado: idioma === constant.idiomaEs ? 'Aprobado' : 'approved',
+      lbl_enum_noAprobado: idioma === constant.idiomaEs ? 'No Aprobado' : 'Not approved',
+
       lbl_enum_sexo_valor_masculino: idioma === constant.idiomaEs ? 'Masculino' : 'Man',
       lbl_enum_sexo_valor_femenino: idioma === constant.idiomaEs ? 'Femenino' : 'Femenino',
       lbl_enum_sexo_valor_ambos: idioma === constant.idiomaEs ? 'Ambos' : 'Ambos',

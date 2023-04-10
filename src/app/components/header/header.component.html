@@ -121,6 +121,8 @@
                                 *ngIf="validarRol('ITCDUD')">Digitalizar Unidad Documental</a>
                             <a routerLink="/recepcion-unidad-documental" class="dropdown-item "
                                 *ngIf="validarRol('ITCREC')">Recepción Unidad Documental</a>
+                            <a routerLink="/acta" class="dropdown-item "
+                                *ngIf="validarRol('ITCACT')">Acta</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown" *ngIf="validarRol('ITCMAD')">

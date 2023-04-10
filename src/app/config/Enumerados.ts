@@ -56,6 +56,13 @@ export class Enumerados {
           { value: 1, label: properties.lbl_enum_activo }
         ]
       },
+      actas: {
+        cod: 7, valores: [
+          { value: 0, label: properties.lbl_enum_todos },
+          { value: 1, label: properties.lbl_enum_aprobado },
+          { value: 2, label: properties.lbl_enum_noAprobado }
+        ]
+      },
       //valorIva: {cod: 25},
     }
   };
