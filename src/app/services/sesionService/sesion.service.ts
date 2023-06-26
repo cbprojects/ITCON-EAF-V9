@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
+import { Bodega } from 'src/app/model/bodegaModel';
+import { BodegaPermisos } from 'src/app/model/bodegaPermisosModel';
 import { Caja } from 'src/app/model/cajaModel';
 import { MasivoDTO } from 'src/app/model/dto/masivo-dto';
 import { ServiceSessionDTO } from 'src/app/model/dto/service-session-dto';
 import { Perfil } from 'src/app/model/perfilModel';
+import { Proyecto } from 'src/app/model/proyectoModel';
 import { Rol } from 'src/app/model/rolModel';
 import { SociedadArea } from 'src/app/model/sociedadAreaModel';
 import { Sociedad } from 'src/app/model/sociedadModel';
 import { UnidadDocumental } from 'src/app/model/unidadDocumentalModel';
+import { UsuarioCliente } from 'src/app/model/usuarioClienteModel';
 import { Usuario } from 'src/app/model/usuarioModel';
 import { UsuarioSede } from 'src/app/model/usuarioSedeModel';
 
@@ -26,6 +30,10 @@ export class SesionService {
   objCajaCargado!: Caja;
   objUnidadDocumentalCargada!: UnidadDocumental;
   objParamMasivoCargado!: MasivoDTO;
+  objBodegaCargado!: Bodega;
+  objBodegaPermisos!: BodegaPermisos;
+  objProyectoCargado!: Proyecto;
+  objUsuarioClienteCargado!: UsuarioCliente;
 
   constructor(public objectModelInitializer: ObjectModelInitializer) {
     this.inicializar();

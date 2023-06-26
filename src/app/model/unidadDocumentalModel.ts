@@ -1,5 +1,6 @@
 import { Caja } from "./cajaModel";
 import { Contenedor } from "./contenedorModel";
+import { Proyecto } from "./proyectoModel";
 import { SociedadArea } from "./sociedadAreaModel";
 import { TipoDocumental } from "./tipoDocumentalModel";
 
@@ -15,6 +16,7 @@ export interface UnidadDocumental {
     rutaArchivo: any;
     tipoDocumental: TipoDocumental;
     contenedor: Contenedor;
+    proyecto: Proyecto;
     consecutivoIni: any;
     consecutivoFin: any;
     fechaIni: any;

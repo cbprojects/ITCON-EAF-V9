@@ -74,6 +74,16 @@ import { MSociedadAreaComponent } from './components/management/sociedad-area/m-
 import { MUsuarioSedeComponent } from './components/management/usuario-sede/m-usuario-sede.component';
 import { RecepcionComponent } from './components/management/recepcion/recepcion.component';
 import { ActaComponent } from './components/management/acta/acta.component';
+import { QBodegaComponent } from './components/query/bodega/q-bodega.component';
+import { MBodegaComponent } from './components/management/bodega/m-bodega.component';
+import { QBodegaPermisosComponent } from './components/query/bodega-permisos/q-bodega-permisos.component';
+import { MBodegaPermisosComponent } from './components/management/bodega-permisos/m-bodega-permisos.component';
+import { QProyectoComponent } from './components/query/proyecto/q-proyecto.component';
+import { MProyectoComponent } from './components/management/proyecto/m-proyecto.component';
+import { QUsuarioClienteComponent } from './components/query/usuario-cliente/q-usuario-cliente.component';
+import { MUsuarioClienteComponent } from './components/management/usuario-cliente/m-usuario-cliente.component';
+import { QUnidadDocumentalAdmComponent } from './components/query/unidad-documental-adm/q-unidad-documental-adm.component';
+import { MUnidadDocumentalAdmComponent } from './components/management/unidad-documental-adm/m-unidad-documental-adm.component';
 
 
 // Constantes
@@ -135,7 +145,17 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MSociedadAreaComponent,
     MUsuarioSedeComponent,
     RecepcionComponent,
-    ActaComponent
+    ActaComponent,
+    QBodegaComponent,
+    MBodegaComponent,
+    QBodegaPermisosComponent,
+    MBodegaPermisosComponent,
+    QProyectoComponent,
+    MProyectoComponent,
+    QUsuarioClienteComponent,
+    MUsuarioClienteComponent,
+    QUnidadDocumentalAdmComponent,
+    MUnidadDocumentalAdmComponent
   ],
   imports: [
     AppRoutingModule,

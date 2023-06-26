@@ -6,9 +6,11 @@ import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
 import { Area } from 'src/app/model/areaModel';
+import { BodegaPermisos } from 'src/app/model/bodegaPermisosModel';
 import { Cliente } from 'src/app/model/clienteModel';
 import { Contenedor } from 'src/app/model/contenedorModel';
 import { RequestAreasXSociedad } from 'src/app/model/requestAreasXSociedad';
+import { RequestConsultaPermisosBodega } from 'src/app/model/requestConsultaPermisosBodegaModel';
 import { RequestConsultaPrestamo } from 'src/app/model/requestConsultaPrestamoModel';
 import { RequestConsultaUnidadDocumental } from 'src/app/model/requestConsultaUnidadDocumentalModel';
 import { RequestModificarPrestamo } from 'src/app/model/requestModificarPrestamoModel';
@@ -22,15 +24,14 @@ import { UnidadDocumental } from 'src/app/model/unidadDocumentalModel';
 import { RestService } from 'src/app/services/rest.service';
 import { SesionService } from 'src/app/services/sesionService/sesion.service';
 
-declare var $: any;
-
 @Component({
-  selector: 'app-q-unidad-documental',
-  templateUrl: './q-unidad-documental.component.html',
-  styleUrls: ['./q-unidad-documental.component.scss'],
+  selector: 'app-q-unidad-documental-adm',
+  templateUrl: './q-unidad-documental-adm.component.html',
+  styleUrls: ['./q-unidad-documental-adm.component.scss'],
   providers: [RestService, MessageService]
 })
-export class QUnidadDocumentalComponent implements OnInit {
+export class QUnidadDocumentalAdmComponent implements OnInit {
+
   @ViewChild('sc') sc;
 
   // Objetos de Sesion
@@ -44,6 +45,7 @@ export class QUnidadDocumentalComponent implements OnInit {
   tipoDocumentalFiltro: any;
   contenedorFiltro: any;
 
+  listaBodegasPermisos: any[];
   listaClientesTemp: any[];
   listaSociedadesTemp: any[];
   listaAreasTemp: any[];
@@ -60,6 +62,7 @@ export class QUnidadDocumentalComponent implements OnInit {
   esCrearPrestamo: boolean;
   prestamoUDSeleccionada: ResponsePrestamo;
   tienePrestamo: any;
+  puedeConsultar : boolean=false;
 
   // Utilidades
   msg: any;
@@ -274,10 +277,58 @@ export class QUnidadDocumentalComponent implements OnInit {
     setTimeout(() => this.activarCambiosAreas(), 1000);
   }
 
+  
+
   cargarUnidadDocumental(unidadDocumental: UnidadDocumental) {
-    this.sesionService.objUnidadDocumentalCargada = this.objectModelInitializer.getDataUnidadDocumental();
-    this.sesionService.objUnidadDocumentalCargada = unidadDocumental;
-    this.router.navigate(['/m-unidad-documental']);
+    try {
+      this.listaBodegasPermisos=[];
+      let request: RequestConsultaPermisosBodega = this.objectModelInitializer.getRequestConsultaPermisosBodega();
+      request.idUsuario = +localStorage.getItem("idUser");
+      request.idBodega= unidadDocumental.caja.entrepano.estante.cuerpo.bloque.bodega.id;
+      this.restService.putREST(this.const.urlConsultarPermisosUsuarioBodega, request)
+        .subscribe(resp => {
+          let temp: BodegaPermisos[] = JSON.parse(JSON.stringify(resp));
+          if (temp !== undefined && temp.length > 0) {
+            this.listaBodegasPermisos = temp;
+          }
+          if (this.listaBodegasPermisos.length > 0) {
+            let bodegaPer:BodegaPermisos=this.objectModelInitializer.getDataBodegaPermisos();
+            bodegaPer=this.listaBodegasPermisos[0];
+            console.log(bodegaPer.editar);
+            if(bodegaPer.editar){
+              this.sesionService.objUnidadDocumentalCargada = this.objectModelInitializer.getDataUnidadDocumental();
+              this.sesionService.objUnidadDocumentalCargada = unidadDocumental;
+              this.router.navigate(['/m-unidad-documental-adm']);
+            }else{
+              this.messageService.clear();
+              this.messageService.add({ severity: this.const.severity[3], summary: this.msg.lbl_summary_danger,
+                detail:"Sin permisos de edición sobre la bodega:"+unidadDocumental.caja.entrepano.estante.cuerpo.bloque.bodega.nombre , sticky: true });
+            }
+          }else{
+            this.messageService.clear();
+              this.messageService.add({ severity: this.const.severity[3], summary: this.msg.lbl_summary_danger,
+                detail:"Sin permisos de edición sobre la bodega:"+unidadDocumental.caja.entrepano.estante.cuerpo.bloque.bodega.nombre , sticky: true });
+          }
+        },
+          error => {
+            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+            let titleError = listaMensajes[0];
+            listaMensajes.splice(0, 1);
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+            this.messageService.clear();
+
+            listaMensajes.forEach(mensaje => {
+              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+            });
+            this.messageService.add(mensajeFinal);
+
+            console.log(error, "error");
+            
+          })
+    } catch (e) {
+      console.log(e);
+      
+    }
   }
 
   consultarUnidadesDocumentales(primerItem) {
@@ -298,7 +349,7 @@ export class QUnidadDocumentalComponent implements OnInit {
       requestUnidadDocumentalFiltro.registroInicial = primerItem;
       requestUnidadDocumentalFiltro.cantidadRegistro = this.rows;
       // Formato fecha AAAA-MM-DD
-      this.restService.putREST(this.const.urlConsultarUnidadDocumentalFiltrosRecep, requestUnidadDocumentalFiltro)
+      this.restService.putREST(this.const.urlConsultarUDPorFiltros, requestUnidadDocumentalFiltro)
         .subscribe(resp => {
           let temp: ResponseConsultaUnidadDocumental = JSON.parse(JSON.stringify(resp));
           if (temp !== undefined && temp.resultado.length > 0) {
@@ -478,4 +529,5 @@ export class QUnidadDocumentalComponent implements OnInit {
       this.clienteFiltro = this.listaClientes[0];
     }
   }
+
 }

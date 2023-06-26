@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 
-export var HOST = 'http://localhost:9002';
+//export var HOST = 'http://localhost:9002';
 //export var HOST = 'http://10.176.56.211:9002';
 //qa
-//export var HOST = 'https://143.198.123.29:8443/CentralUsuariosQA';
+export var HOST = 'https://143.198.123.29:8443/CentralUsuariosQA';
 //dev
 //export var HOST = 'https://143.198.123.29:8443/CentralUsuarios';
 
-export var SYSTEM = 'http://localhost:4200';
+//export var SYSTEM = 'http://localhost:4200';
 //export var SYSTEM = 'http://10.176.56.211:7001';
 //export var SYSTEM = 'https://www.itcon.cbaeneprojects.com';
+export var SYSTEM = 'https://www.itconqa.cbaeneprojects.com';
 
 @Injectable()
 export class ObjectModelInitializer {
@@ -91,10 +92,29 @@ export class ObjectModelInitializer {
       urlModificarUsuario: `${HOST}/central/usuario/modificarUsuario`,
       urlLoginUsuario: `${HOST}/central/usuario/loginUsuario`,
       urlConsultarUsuariosActivos: `${HOST}/central/usuario/consultarUsuarioActivo`,
+      // Bodega
+      urlConsultarBodegaFiltros: `${HOST}/central/Bodega/consultarBodegaFiltros`,
+      urlCrearBodega: `${HOST}/central/Bodega/crearBodega`,
+      urlModificarBodega: `${HOST}/central/Bodega/modificarBodega`,
+      // Bodega-Permisos
+      urlCrearPermisosBodega: `${HOST}/central/permisosBodega/crearPermisosBodega`,
+      urlModificarPermisosBodega: `${HOST}/central/permisosBodega/modificarPermisosBodega`,
+      urlConsultarPermisosBodegaFiltros: `${HOST}/central/permisosBodega/consultarPermisosBodegaFiltros`,
+      urlConsultarPermisosUsuarioBodega: `${HOST}/central/permisosBodega/consultarPermisosUsuarioBodega`,
+      // Proyecto
+      urlCrearProyecto: `${HOST}/central/proyecto/crearProyecto`,
+      urlModificarProyecto: `${HOST}/central/proyecto/modificarProyecto`,
+      urlConsultarProyectoFiltros: `${HOST}/central/proyecto/consultarProyectoFiltros`,
+      urlConsultarProyectosPorSociedad: `${HOST}/central/proyecto/consultarProyectosPorSociedad`,
       // UsuariosSede
       urlBuscarSedesActivasPorUsuario: `${HOST}/central/UsuarioSede/buscarSedesActivasPorUsuario`,
       urlCrearUsuarioSede: `${HOST}/central/UsuarioSede/crearUsuarioSede`,
       urlModificarUsuarioSede: `${HOST}/central/UsuarioSede/modificarUsuarioSede`,
+      // UsuariosCliente
+      urlCrearUsuarioCliente: `${HOST}/central/UsuarioCliente/crearUsuarioCliente`,
+      urlModificarUsuarioCliente: `${HOST}/central/UsuarioCliente/modificarUsuarioCliente`,
+      urlConsultarUsuarioClienteFiltros: `${HOST}/central/UsuarioCliente/consultarUsuarioClienteFiltros`,
+      urlBuscarClientesActivosPorUsuario: `${HOST}/central/UsuarioCliente/buscarClientesActivosPorUsuario`,
       // Cajas
       urlConsultarCajasPorFiltros: `${HOST}/central/caja/consultarCajaFiltros`,
       urlCrearCaja: `${HOST}/central/caja/crearCaja`,
@@ -112,6 +132,7 @@ export class ObjectModelInitializer {
       urlConsultarUnidadDocumentalPorCajaMasiva: `${HOST}/central/unidadDocumental/consultarUnidadDocumentalPorCajaMasiva`,
       urlCambiarCajaUnidadDocumentalMasiva: `${HOST}/central/unidadDocumental/cambiarCajaUnidadDocumentalMasiva`,
       urlConsultarUnidadDocumentalLista: `${HOST}/central/unidadDocumental/consultarUnidadDocumentalLista`,
+      urlConsultarUnidadDocumentalFiltrosRecep: `${HOST}/central/unidadDocumental/consultarUnidadDocumentalFiltrosRecep`,
       // Sede
       urlConsultarSedeActivos: `${HOST}/central/Masivo/consultarSedeActiva`,
       // Usuario-Sede
@@ -511,6 +532,7 @@ export class ObjectModelInitializer {
       rutaArchivo: '',
       tipoDocumental: this.getDataTipoDocumental(),
       contenedor: this.getDataContenedor(),
+      proyecto: this.getDataProyecto(),
       consecutivoIni: 0,
       consecutivoFin: 0,
       fechaIni: '',
@@ -1020,6 +1042,105 @@ export class ObjectModelInitializer {
       esAdmin: false,
       registroInicial: 0,
       cantidadRegistro: 0
+    }
+  };
+
+  getRequestConsultaBodega(){
+    return {
+      codigo: '',
+      nombre: '',
+      nombre10: '',
+      idSede: 0,
+      registroInicial: 0,
+      cantidadRegistro: 0
+    }
+  };
+  getRequestCrearBodega(){
+    return {
+      sedeId: 0,
+      nombreBodega: '',
+      nombre10Bodega: '',
+      cantidadBloques: 0,
+      cantidadCuerposXBloque: 0,
+      cantidadEstantesXCuerpo: 0,
+      cantidadEntrepanoXEstante: 0,
+      usuarioCreacion: '',
+      codigoBodega: '',
+      ownerNameBodega: ''
+      
+    }
+  };
+  getDataBodegaPermisos() {
+    return {
+      id: 0,
+      bodega: this.getDataBodega(),
+      usuario: this.getDataUsuario(),
+      crear: false,
+      editar: false,
+      consultar: false,
+      eliminar: false,
+      estado: 0,
+      fechaCreacion: '',
+      usuarioCreacion: '',
+      fechaActualizacion: '',
+      usuarioActualizacion: ''
+
+    }
+  };
+
+  getRequestConsultaBodegaPermisos() {
+    return {
+      permisosBodega: this.getDataBodegaPermisos(),
+      registroInicial: 0,
+      cantidadRegistro: 0
+    }
+  };
+
+  getDataProyecto() {
+    return {
+      id: 0,
+      sociedad: this.getDataSociedad(),
+      nombre: '',
+      estado: 0,
+      fechaCreacion: '',
+      usuarioCreacion: '',
+      fechaActualizacion: '',
+      usuarioActualizacion: ''
+
+    }
+  };
+  getDataUsuarioCliente() {
+    return {
+      id: 0,
+      usuario: this.getDataUsuario(),
+      cliente: this.getDataCliente(),
+      estado: 0,
+      fechaCreacion: '',
+      usuarioCreacion: '',
+      fechaActualizacion: '',
+      usuarioActualizacion: ''
+
+    }
+  };
+
+  getRequestConsultaProyecto() {
+    return {
+      proyecto: this.getDataProyecto(),
+      registroInicial: 0,
+      cantidadRegistro: 0
+    }
+  };
+  getRequestConsultaUsuarioCliente() {
+    return {
+      usuarioCliente: this.getDataUsuarioCliente(),
+      registroInicial: 0,
+      cantidadRegistro: 0
+    }
+  };
+  getRequestConsultaPermisosBodega() {
+    return {
+      idBodega: 0,
+      idUsuario: 0
     }
   };
 }

@@ -5,36 +5,34 @@ import { Enumerados } from 'src/app/config/Enumerados';
 import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
-import { Sede } from 'src/app/model/sedeModel';
+import { Cliente } from 'src/app/model/clienteModel';
 import { Usuario } from 'src/app/model/usuarioModel';
-import { UsuarioSede } from 'src/app/model/usuarioSedeModel';
+import { UsuarioCliente } from 'src/app/model/usuarioClienteModel';
 import { RestService } from 'src/app/services/rest.service';
 import { SesionService } from 'src/app/services/sesionService/sesion.service';
 
-declare var $: any;
-
 @Component({
-  selector: 'app-m-usuario-sede',
-  templateUrl: './m-usuario-sede.component.html',
-  styleUrls: ['./m-usuario-sede.component.scss'],
+  selector: 'app-m-usuario-cliente',
+  templateUrl: './m-usuario-cliente.component.html',
+  styleUrls: ['./m-usuario-cliente.component.scss'],
   providers: [RestService, MessageService]
 })
-export class MUsuarioSedeComponent implements OnInit {
+export class MUsuarioClienteComponent implements OnInit {
 
   // Objetos de Sesion
   sesion: any;
   usuarioFiltro: any;
-  sedeFiltro: any;
+  clienteFiltro: any;
   
   // Objetos de datos
-  usuarioSede: UsuarioSede;
-  esNuevoUsuarioSede: boolean;
+  usuarioCliente: UsuarioCliente;
+  esNuevoUsuarioCliente: boolean;
 
   listaUsuariosTemp: any[];
-  listaSedesTemp: any[];
+  listaClienteTemp: any[];
   
   listaUsuarios: any[];
-  listaSedes: any[];
+  listaCliente: any[];
   
   // Utilidades
   msg: any;
@@ -58,33 +56,33 @@ export class MUsuarioSedeComponent implements OnInit {
 
   inicializar() {
     this.consultarUsuarios();
-    this.consultarSedes();
+    this.consultarClientes();
     this.enumEstado = this.enums.estado.valores;
-    this.usuarioSede = this.objectModelInitializer.getUsuarioSede();
-    this.usuarioSede.estado = this.util.getValorEnumerado(this.enumEstado, 1);
-    this.esNuevoUsuarioSede = true;
-    if (this.sesionService.objUsuarioSedeCargado !== undefined && this.sesionService.objUsuarioSedeCargado !== null && this.sesionService.objUsuarioSedeCargado.id > 0) {
-      this.usuarioSede = this.sesionService.objUsuarioSedeCargado;
-      this.usuarioSede.estado = this.util.getValorEnumerado(this.enumEstado, this.usuarioSede.estado);
-      this.esNuevoUsuarioSede = false;
-      this.usuarioFiltro = { value: this.usuarioSede.usuario, label: this.usuarioSede.usuario.nombre};
-      this.sedeFiltro = { value: this.usuarioSede.sede, label: this.usuarioSede.sede.nombre};
+    this.usuarioCliente = this.objectModelInitializer.getDataUsuarioCliente();
+    this.usuarioCliente.estado = this.util.getValorEnumerado(this.enumEstado, 1);
+    this.esNuevoUsuarioCliente = true;
+    if (this.sesionService.objUsuarioClienteCargado !== undefined && this.sesionService.objUsuarioClienteCargado !== null && this.sesionService.objUsuarioClienteCargado.id > 0) {
+      this.usuarioCliente = this.sesionService.objUsuarioClienteCargado;
+      this.usuarioCliente.estado = this.util.getValorEnumerado(this.enumEstado, this.usuarioCliente.estado);
+      this.esNuevoUsuarioCliente = false;
+      this.usuarioFiltro = { value: this.usuarioCliente.usuario, label: this.usuarioCliente.usuario.nombre};
+      this.clienteFiltro = { value: this.usuarioCliente.cliente, label: this.usuarioCliente.cliente.nombre};
     }else{
       this.usuarioFiltro = { value: this.objectModelInitializer.getDataUsuario(), label: this.msg.lbl_enum_generico_valor_vacio };
-      this.sedeFiltro = { value: this.objectModelInitializer.getDataSede(), label: this.msg.lbl_enum_generico_valor_vacio };
+      this.clienteFiltro = { value: this.objectModelInitializer.getDataCliente(), label: this.msg.lbl_enum_generico_valor_vacio };
     }
   }
 
-  crearUsuarioSede() {
+  crearUsuarioCliente() {
     try {
-      this.usuarioSede.usuario=this.usuarioFiltro.value;
-      this.usuarioSede.sede=this.sedeFiltro.value;
-      this.usuarioSede.estado = this.usuarioSede.estado.value;
-      this.usuarioSede.usuarioCreacion=localStorage.getItem("cedula");
-      this.usuarioSede.usuarioActualizacion=localStorage.getItem("cedula");
-      this.restService.postREST(this.const.urlCrearUsuarioSede, this.usuarioSede)
+      this.usuarioCliente.usuario=this.usuarioFiltro.value;
+      this.usuarioCliente.cliente=this.clienteFiltro.value;
+      this.usuarioCliente.estado = this.usuarioCliente.estado.value;
+      this.usuarioCliente.usuarioCreacion=localStorage.getItem("cedula");
+      this.usuarioCliente.usuarioActualizacion=localStorage.getItem("cedula");
+      this.restService.postREST(this.const.urlCrearUsuarioCliente, this.usuarioCliente)
         .subscribe(resp => {
-          let respuesta: UsuarioSede = JSON.parse(JSON.stringify(resp));
+          let respuesta: UsuarioCliente = JSON.parse(JSON.stringify(resp));
           if (respuesta !== null) {
             // Mostrar mensaje exitoso y consultar de nuevo
             this.messageService.clear();
@@ -104,7 +102,7 @@ export class MUsuarioSedeComponent implements OnInit {
               mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
             });
             this.messageService.add(mensajeFinal);
-            this.usuarioSede.estado = this.util.getValorEnumerado(this.enumEstado, this.usuarioSede.estado);
+            this.usuarioCliente.estado = this.util.getValorEnumerado(this.enumEstado, this.usuarioCliente.estado);
 
             console.log(error, "error");
           })
@@ -113,15 +111,15 @@ export class MUsuarioSedeComponent implements OnInit {
     }
   }
 
-  modificarUsuarioSede() {
+  modificarUsuarioCliente() {
     try {
-      this.usuarioSede.usuario=this.usuarioFiltro.value;
-      this.usuarioSede.sede=this.sedeFiltro.value;
-      this.usuarioSede.estado = this.usuarioSede.estado.value;
-      this.usuarioSede.usuarioActualizacion=localStorage.getItem("cedula");
-      this.restService.putREST(this.const.urlModificarUsuarioSede, this.usuarioSede)
+      this.usuarioCliente.usuario=this.usuarioFiltro.value;
+      this.usuarioCliente.cliente=this.clienteFiltro.value;
+      this.usuarioCliente.estado = this.usuarioCliente.estado.value;
+      this.usuarioCliente.usuarioActualizacion=localStorage.getItem("cedula");
+      this.restService.putREST(this.const.urlModificarUsuarioCliente, this.usuarioCliente)
         .subscribe(resp => {
-          let respuesta: UsuarioSede = JSON.parse(JSON.stringify(resp));
+          let respuesta: UsuarioCliente = JSON.parse(JSON.stringify(resp));
           if (respuesta !== null) {
             // Mostrar mensaje exitoso y consultar de nuevo
             this.messageService.clear();
@@ -141,9 +139,9 @@ export class MUsuarioSedeComponent implements OnInit {
               mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
             });
             this.messageService.add(mensajeFinal);
-            this.usuarioSede.estado = this.util.getValorEnumerado(this.enumEstado, this.usuarioSede.estado);
-            if (this.usuarioSede.estado === 0) {
-              this.usuarioSede.estado = 1;
+            this.usuarioCliente.estado = this.util.getValorEnumerado(this.enumEstado, this.usuarioCliente.estado);
+            if (this.usuarioCliente.estado === 0) {
+              this.usuarioCliente.estado = 1;
             }
 
             console.log(error, "error");
@@ -153,13 +151,13 @@ export class MUsuarioSedeComponent implements OnInit {
     }
   }
 
-  eliminarUsuarioSede() {
-    this.usuarioSede.estado = 0;
-    this.modificarUsuarioSede();
+  eliminarUsuarioCliente() {
+    this.usuarioCliente.estado = 0;
+    this.modificarUsuarioCliente();
   }
 
   volverConsulta() {
-    this.router.navigate(['/q-usuario-sede']);
+    this.router.navigate(['/q-usuario-cliente']);
   }
 
   consultarUsuarios() {
@@ -201,14 +199,14 @@ export class MUsuarioSedeComponent implements OnInit {
     
   }
 
-  consultarSedes() {
+  consultarClientes() {
     try {
-      this.listaSedes = [];
-      this.restService.getREST(this.const.urlConsultarSedeActivos)
+      this.listaCliente = [];
+      this.restService.getREST(this.const.urlConsultarClienteActiva)
         .subscribe(resp => {
-          let temp: Sede[] = JSON.parse(JSON.stringify(resp));
+          let temp: Cliente[] = JSON.parse(JSON.stringify(resp));
           if (temp !== undefined && temp.length > 0) {
-            this.listaSedesTemp= temp;
+            this.listaClienteTemp= temp;
           }
         },
           error => {
@@ -228,15 +226,16 @@ export class MUsuarioSedeComponent implements OnInit {
     } catch (e) {
       console.log(e);
     }
-    setTimeout(() => this.activarCambiosSedes(), 1000);
+    setTimeout(() => this.activarCambiosClientes(), 1000);
   }
 
-  activarCambiosSedes() {
-    this.listaSedes = [];
-    this.listaSedes.push({ value: this.objectModelInitializer.getDataSede(), label: this.msg.lbl_enum_generico_valor_vacio });
-    this.listaSedesTemp.forEach(sede => {
-      this.listaSedes.push({ value: sede, label: sede.nombre });
+  activarCambiosClientes() {
+    this.listaCliente = [];
+    this.listaCliente.push({ value: this.objectModelInitializer.getDataCliente(), label: this.msg.lbl_enum_generico_valor_vacio });
+    this.listaClienteTemp.forEach(cliente => {
+      this.listaCliente.push({ value: cliente, label: cliente.nombre });
     });
     
   }
+
 }

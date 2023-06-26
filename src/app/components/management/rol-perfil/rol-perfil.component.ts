@@ -77,8 +77,7 @@ export class RolPerfilComponent implements OnInit {
           if (temp) {
             this.targetProducts = temp.rolesAsociados;
             this.sourceProducts = temp.rolesNoAsociados;
-            console.log(this.targetProducts);
-            console.log(this.sourceProducts);
+            
             $($($($($('#asoRolPerfil')[0]).children()[0]).children()[0]).children()[0]).click();
 
           }

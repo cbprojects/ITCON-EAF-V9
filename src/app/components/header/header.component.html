@@ -115,6 +115,8 @@
                             <a routerLink="/q-caja" class="dropdown-item " *ngIf="validarRol('ITCCAJ')">Caja</a>
                             <a routerLink="/q-unidad-documental" class="dropdown-item "
                                 *ngIf="validarRol('ITCUDO')">Unidad Documental</a>
+                            <a routerLink="/q-unidad-documental-adm" class="dropdown-item "
+                                *ngIf="validarRol('ITCUDA')">Unidad Documental ADM</a>
                             <a routerLink="/traslado-unidad-documental" class="dropdown-item "
                                 *ngIf="validarRol('ITCTUD')">Traslado Unidad Documental</a>
                             <a routerLink="/digitalizar-unidad-documental" class="dropdown-item "
@@ -146,6 +148,14 @@
                                 *ngIf="validarRol('ITCSED')">Sede</a>
                             <a routerLink="/q-usuario-sede" class="dropdown-item "
                                 *ngIf="validarRol('ITCUXS')">Usuario-Sede</a>
+                            <a routerLink="/q-usuario-cliente" class="dropdown-item "
+                                *ngIf="validarRol('ITCUXC')">Usuario-Cliente</a>
+                            <a routerLink="/q-bodega" class="dropdown-item "
+                                *ngIf="validarRol('ITCBOD')">Bodega</a>
+                            <a routerLink="/q-bodega-permisos" class="dropdown-item "
+                                *ngIf="validarRol('ITCBOP')">Bodega-Permisos</a>
+                            <a routerLink="/q-proyecto" class="dropdown-item "
+                                *ngIf="validarRol('ITCPRO')">Proyecto</a>
                         </div>
                     </li>
                 </ul>
