@@ -1,0 +1,64 @@
+<p-toast></p-toast>
+
+<div class="page ">
+    <div class="flex-fill">
+        <!-- HEADER -->
+        <app-header></app-header>
+        <!-- HEADER -->
+
+        <!-- CONTENT -->
+        <div class="my-3 my-md-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Gestión de Usuarios-Clientes</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 col-lg-3">
+                                        <label class="form-label">Usuario<span
+                                                class="form-required">*</span></label>
+                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                            [(ngModel)]="usuarioFiltro" [items]="listaUsuarios">
+                                        </ng-select>
+                                    </div>
+                                    <div class="col-md-4 col-lg-3">
+                                        <label class="form-label">Cliente<span
+                                                class="form-required">*</span></label>
+                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                            [(ngModel)]="clienteFiltro" [items]="listaCliente">
+                                        </ng-select>
+                                    </div>
+                                    <div class="col-md-4 col-lg-3">
+                                        <div class="form-group">
+                                            <label class="form-label">Estado<span class="form-required">*</span></label>
+                                            <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                                [(ngModel)]="usuarioCliente.estado" [items]="enumEstado">
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-right">
+                                <div class="d-flex">
+                                    <a class="btn btn-link" routerLink="/q-usuario-cliente">Atrás</a>
+                                    <button *ngIf="esNuevoUsuarioCliente" (click)="crearUsuarioCliente()" type="submit"
+                                        class="btn btn-primary ml-auto">Crear</button>
+                                    <button *ngIf="!esNuevoUsuarioCliente" (click)="modificarUsuarioCliente()" type="submit"
+                                        class="btn btn-primary ml-auto">Modificar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- CONTENT -->
+    </div>
+</div>
+
+<!-- FOOTER -->
+<app-footer></app-footer>
+<!-- FOOTER -->

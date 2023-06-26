@@ -1,0 +1,80 @@
+<p-toast></p-toast>
+
+<div class="page ">
+    <div class="flex-fill">
+        <!-- HEADER -->
+        <app-header></app-header>
+        <!-- HEADER -->
+
+        <!-- CONTENT -->
+        <div class="my-3 my-md-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Gestión de Parametrizaciones - {{title}}</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 col-lg-3">
+                                        <div class="form-group">
+                                            <label class="form-label">Id</label>
+                                            <input type="text" [(ngModel)]="masivo.idMasivo" class="form-control"
+                                                disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-lg-3">
+                                        <div class="form-group">
+                                            <label class="form-label">Nombre<span class="form-required">*</span></label>
+                                            <input type="text" maxlength="50" [(ngModel)]="masivo.nombre1"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                    <div *ngIf="tipo === 1 || tipo === 2 || tipo === 5" class="col-md-4 col-lg-3">
+                                        <div class="form-group">
+                                            <label class="form-label">{{tipo === 2 ? "Tax": "Nombre 2"}}<span
+                                                    class="form-required">*</span></label>
+                                            <input type="text" maxlength="10" [(ngModel)]="masivo.nombre2"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                    <div *ngIf="tipo === 5" class="col-md-4 col-lg-3">
+                                        <div class="form-group">
+                                            <label class="form-label">Dirección<span
+                                                    class="form-required">*</span></label>
+                                            <input type="text" maxlength="250" [(ngModel)]="masivo.nombre3"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-lg-3">
+                                        <div class="form-group">
+                                            <label class="form-label">Estado<span class="form-required">*</span></label>
+                                            <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                                [(ngModel)]="masivo.estado" [items]="enumEstado">
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-right">
+                                <div class="d-flex">
+                                    <a class="btn btn-link" routerLink="/q-parametrizacion/{{pathSplit}}">Atrás</a>
+                                    <button *ngIf="esNuevoMasivo" (click)="crearMasivo()" type="submit"
+                                        class="btn btn-primary ml-auto">Crear</button>
+                                    <button *ngIf="!esNuevoMasivo" (click)="modificarMasivo()" type="submit"
+                                        class="btn btn-primary ml-auto">Modificar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- CONTENT -->
+    </div>
+</div>
+
+<!-- FOOTER -->
+<app-footer></app-footer>
+<!-- FOOTER -->

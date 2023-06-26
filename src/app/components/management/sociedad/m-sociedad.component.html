@@ -1,0 +1,100 @@
+<p-toast></p-toast>
+
+<div class="page ">
+    <div class="flex-fill">
+        <!-- HEADER -->
+        <app-header></app-header>
+        <!-- HEADER -->
+
+        <!-- CONTENT -->
+        <div class="my-3 my-md-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Gestión de Sociedades</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 col-lg-3">
+                                        <div class="form-group">
+                                            <label class="form-label">Id</label>
+                                            <input type="text" [(ngModel)]="sociedad.id" class="form-control" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-lg-3">
+                                        <div class="form-group">
+                                            <label class="form-label">Nombre<span class="form-required">*</span></label>
+                                            <input type="text" [(ngModel)]="sociedad.nombre" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-lg-3">
+                                        <div class="form-group">
+                                            <label class="form-label">Nombre 10<span
+                                                    class="form-required">*</span></label>
+                                            <input type="text" [(ngModel)]="sociedad.nombre10" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-lg-3">
+                                        <div class="form-group">
+                                            <label class="form-label">Tax<span
+                                                    class="form-required">*</span></label>
+                                            <input type="text" [(ngModel)]="sociedad.tax" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 col-lg-3">
+                                        <label class="form-label">Cliente<span
+                                                class="form-required">*</span></label>
+                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                            [(ngModel)]="clienteFiltro" [items]="listaClientes">
+                                        </ng-select>
+                                    </div>
+                                    
+                                    <div class="col-md-4 col-lg-3">
+                                        <label class="form-label">Servidor<span
+                                                class="form-required">*</span></label>
+                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                            [(ngModel)]="servidorFiltro" [items]="listaServidor">
+                                        </ng-select>
+                                    </div>
+                                    <div *ngIf="!esNuevoSociedad"  class="col-md-4 col-lg-3">
+                                        <label class="form-label">Quien Factura<span
+                                                class="form-required">*</span></label>
+                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                            [(ngModel)]="sociedadFiltro" [items]="listaSociedades">
+                                        </ng-select>
+                                    </div>
+                                    <div class="col-md-4 col-lg-3">
+                                        <div class="form-group">
+                                            <label class="form-label">Estado<span class="form-required">*</span></label>
+                                            <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                                [(ngModel)]="sociedad.estado" [items]="enumEstado">
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-right">
+                                <div class="d-flex">
+                                    <a class="btn btn-link" routerLink="/q-sociedad">Atrás</a>
+                                    <button *ngIf="esNuevoSociedad" (click)="crearSociedad()" type="submit"
+                                        class="btn btn-primary ml-auto">Crear</button>
+                                    <button *ngIf="!esNuevoSociedad" (click)="modificarSociedad()" type="submit"
+                                        class="btn btn-primary ml-auto">Modificar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- CONTENT -->
+    </div>
+</div>
+
+<!-- FOOTER -->
+<app-footer></app-footer>
+<!-- FOOTER -->

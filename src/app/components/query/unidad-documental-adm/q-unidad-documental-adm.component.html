@@ -1,0 +1,289 @@
+<p-toast></p-toast>
+
+<div class="page ">
+    <div class="flex-fill">
+        <!-- HEADER -->
+        <app-header></app-header>
+        <!-- HEADER -->
+
+        <!-- CONTENT -->
+        <div class="my-3 my-md-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Consulta de Unidades Documentales ADM</h3>
+                            </div>
+                            <div class="card-body">
+                                <!-- Filtros -->
+                                <div class="row justify-content-center">
+                                    <div class="form-group col-sm-12 col-lg-2">
+                                        <label class="form-label">Cliente</label>
+                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                            [(ngModel)]="clienteFiltro" [items]="listaClientes"
+                                            (ngModelChange)="consultarSociedades()">
+                                        </ng-select>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-lg-2">
+                                        <label class="form-label">Sociedad</label>
+                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                            [(ngModel)]="sociedadFiltro" [items]="listaSociedades"
+                                            (ngModelChange)="cargarAreasXSociedad($event)">
+                                        </ng-select>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-lg-2">
+                                        <label class="form-label">Área</label>
+                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                            [(ngModel)]="areaFiltro" [items]="listaAreas">
+                                        </ng-select>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-lg-2">
+                                        <label class="form-label">Contenedor</label>
+                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                            [(ngModel)]="contenedorFiltro" [items]="listaContenedores">
+                                        </ng-select>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-lg-2">
+                                        <label class="form-label">Tipo Documental</label>
+                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                            [(ngModel)]="tipoDocumentalFiltro" [items]="listaTipoDocumental">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="form-group col-sm-12 col-lg-2">
+                                        <div class="form-group">
+                                            <label class="form-label">Código</label>
+                                            <input type="text" [(ngModel)]="unidadDocumentalFiltro.codigo"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-lg-2">
+                                        <div class="form-group">
+                                            <label class="form-label">Nombre</label>
+                                            <input type="text" [(ngModel)]="unidadDocumentalFiltro.nombre"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-lg-2">
+                                        <div class="form-group">
+                                            <label class="form-label">Código Barras</label>
+                                            <input type="text" [(ngModel)]="unidadDocumentalFiltro.codigoBarra"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-lg-2">
+                                        <div class="form-group">
+                                            <label class="form-label">Fecha Recibe</label>
+                                            <p-calendar [(ngModel)]="unidadDocumentalFiltro.fechaRecibe"
+                                                [readonlyInput]="true"></p-calendar>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="form-group col-sm-12 col-lg-12 text-center">
+                                        <button type="submit" (click)="consultarUnidadesDocumentales(0)"
+                                            class="btn btn-primary ml-auto" >Consultar</button>
+                                    </div>
+                                </div>
+
+                                <!-- Consulta -->
+                                <hr />
+                                <div class="form-label">Resultados</div>
+                                <div
+                                    class="table-responsive {{listaUnidadesDocumentales.length > 0 ? '' : 'displayNone'}}">
+                                    <p-table [lazy]="true" (onLazyLoad)="cargarTabla($event)" [paginator]="true"
+                                        [totalRecords]="totalRecords" [loading]="loading" styleClass="table mb-0"
+                                        [responsive]="true" [value]="listaUnidadesDocumentales" [rows]="rows">
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th class="text-center">ID</th>
+                                                <th class="text-center">Código</th>
+                                                <th class="text-center">Código Barras</th>
+                                                <th class="text-center">Nombre</th>
+                                                <th class="text-center">Estado</th>
+                                                <th class="text-center"></th>
+                                            </tr>
+                                        </ng-template>
+
+                                        <ng-template pTemplate="body" let-unidadDocumental>
+                                            <tr>
+                                                <td class="text-center"
+                                                    (click)="cargarUnidadDocumental(unidadDocumental)">
+                                                    {{unidadDocumental.id}}
+                                                </td>
+                                                <td (click)="cargarUnidadDocumental(unidadDocumental)">
+                                                    {{unidadDocumental.codigo}}
+                                                </td>
+                                                <td (click)="cargarUnidadDocumental(unidadDocumental)">
+                                                    {{unidadDocumental.codigoBarra}}
+                                                </td>
+                                                <td (click)="cargarUnidadDocumental(unidadDocumental)">
+                                                    {{unidadDocumental.nombre}}
+                                                </td>
+                                                <td class="text-center"
+                                                    (click)="cargarUnidadDocumental(unidadDocumental)">
+                                                    {{unidadDocumental.estado === 1 ? 'Activo' : 'Inactivo'}}
+                                                </td>
+                                                <td class="text-center">
+                                                    <button type="button" (click)="showDialogPrestamo(unidadDocumental)"
+                                                        pTooltip="{{msg.lbl_tip_ir_prestamos}}" tooltipPosition="bottom"
+                                                        class="btn btn-icon btn-primary btn-sm"><i
+                                                            class="fe fe-eye"></i></button>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+
+                                    <!-- DIALOG PRESTAMO -->
+                                    <p-dialog header="Unidad Documental - Préstamos" [(visible)]="displayModalPrestamo"
+                                        [modal]="true" [style]="{width: '80vw'}" [draggable]="false"
+                                        [resizable]="false">
+
+                                        <!-- CONTENT DIALOG -->
+                                        <div class="my-3 my-md-5">
+                                            <div class="container">
+                                                <div class="row"
+                                                    *ngIf="prestamoUDSeleccionada && prestamoUDSeleccionada.prestamo">
+                                                    <div class="col-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="row justify-content-center">
+                                                                    <div class="col-sm-12 col-lg-3">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label">Prestado<span
+                                                                                    class="form-required">*</span></label>
+                                                                            <ng-select
+                                                                                notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                                                                [(ngModel)]="tienePrestamo"
+                                                                                [readonly]="true" [items]="enumSiNo">
+                                                                            </ng-select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group col-sm-12 col-lg-3">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label">Responsable<span
+                                                                                    class="form-required">*</span></label>
+                                                                            <input type="text"
+                                                                                [(ngModel)]="prestamoUDSeleccionada.prestamo.responsable"
+                                                                                class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group col-sm-12 col-lg-6">
+                                                                        <div class="form-group">
+                                                                            <label
+                                                                                class="form-label">Observación</label>
+                                                                            <input type="text"
+                                                                                [(ngModel)]="prestamoUDSeleccionada.prestamo.observacion"
+                                                                                class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row justify-content-center">
+                                                                    <div
+                                                                        class="form-group col-sm-12 col-lg-12 text-center">
+                                                                        <button type="submit"
+                                                                            *ngIf="prestamoUDSeleccionada.tienePrestamo"
+                                                                            (click)="devolver(prestamoUDSeleccionada)"
+                                                                            pTooltip="{{msg.lbl_tip_devolver}}"
+                                                                            tooltipPosition="bottom"
+                                                                            class="btn btn-primary ml-auto">Devolver</button>
+                                                                        <button type="submit"
+                                                                            *ngIf="!prestamoUDSeleccionada.tienePrestamo"
+                                                                            (click)="prestar(prestamoUDSeleccionada)"
+                                                                            pTooltip="{{msg.lbl_tip_prestar}}"
+                                                                            tooltipPosition="bottom"
+                                                                            class="btn btn-primary ml-auto">Prestar</button>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div *ngIf="prestamoUDSeleccionada && prestamoUDSeleccionada.listaPrestamo"
+                                                                    class="row justify-content-center">
+                                                                    <div class="form-group col-sm-12 col-lg-12">
+                                                                        <!-- Histórico Préstamos -->
+                                                                        <hr />
+                                                                        <div class="form-label">Histórico</div>
+                                                                        <div
+                                                                            class="table-responsive {{prestamoUDSeleccionada.listaPrestamo.length > 0 ? '' : 'displayNone'}}">
+                                                                            <p-table [paginator]="true"
+                                                                                styleClass="table mb-0"
+                                                                                [responsive]="true"
+                                                                                [value]="prestamoUDSeleccionada.listaPrestamo"
+                                                                                [rows]="5">
+                                                                                <ng-template pTemplate="header">
+                                                                                    <tr>
+                                                                                        <th class="text-center">ID</th>
+                                                                                        <th class="text-center">
+                                                                                            Responsable
+                                                                                        </th>
+                                                                                        <th class="text-center">
+                                                                                            Observación</th>
+                                                                                        <th class="text-center">Fecha
+                                                                                            Préstamo
+                                                                                        </th>
+                                                                                    </tr>
+                                                                                </ng-template>
+
+                                                                                <ng-template pTemplate="body"
+                                                                                    let-prestamo>
+                                                                                    <tr>
+                                                                                        <td class="text-center">
+                                                                                            {{prestamo.id}}
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            {{prestamo.responsable}}
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            {{prestamo.observacion}}
+                                                                                        </td>
+                                                                                        <td class="text-center">
+                                                                                            {{formatearFecha(prestamo.fechaPrestamo)}}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </ng-template>
+                                                                            </p-table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- CONTENT DIALOG -->
+
+                                        <ng-template pTemplate="footer">
+                                            <p-button icon="pi pi-check" pTooltip="{{msg.lbl_tip_anterior}}"
+                                                tooltipPosition="bottom" (click)="displayModalPrestamo=false"
+                                                label="Volver" styleClass="p-button-text"></p-button>
+                                        </ng-template>
+                                    </p-dialog>
+                                </div>
+                                <div *ngIf="listaUnidadesDocumentales.length <= 0" class="service-grids">
+                                    <div class="col-md-12 ser-grid">
+                                        <p class="sinResultados">
+                                            {{msg.lbl_info_sin_resultados}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-right">
+                                <div class="d-flex">
+                                    <a class="btn btn-link" routerLink="/home">Home</a>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- CONTENT -->
+    </div>
+</div>
+
+<!-- FOOTER -->
+<app-footer></app-footer>
+<!-- FOOTER -->

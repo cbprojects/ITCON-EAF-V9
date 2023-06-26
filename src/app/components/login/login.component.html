@@ -1,0 +1,76 @@
+<p-toast></p-toast>
+
+<div class="page">
+    <div class="page-single">
+        <div *ngIf="verLogin" class="container">
+            <div class="row">
+                <div class="col col-login mx-auto">
+                    <div class="text-center mb-6">
+                        <img src="assets/images/logo-bodega.png" alt="">
+                    </div>
+                    <div class="card">
+                        <div class="card-body p-6">
+                            <div class="card-title">{{msg.lbl_login_welcome}}</div>
+                            <div class="form-group">
+                                <label class="form-label">{{msg.lbl_header_correo}}</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" placeholder="{{msg.lbl_header_correo}}"
+                                    [(ngModel)]="usuarioLogin.email">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">
+                                    {{msg.lbl_header_password}}
+                                    <a (click)="mostrarRegister()"
+                                        class="float-right small linkBtn">{{msg.lbl_btn_olvidaste_tu_clave}}</a>
+                                </label>
+                                <input type="password" class="form-control" id="exampleInputPassword1"
+                                    placeholder="{{msg.lbl_header_password}}" [(ngModel)]="usuarioLogin.contrasena">
+
+                            </div>
+                            <div class="form-group">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" />
+                                    <span class="custom-control-label">{{msg.lbl_recuerdame}}</span>
+                                </label>
+                            </div>
+                            <div class="form-footer">
+                                <button type="submit" (click)="login()"
+                                    class="btn btn-primary btn-block">{{msg.lbl_btn_ingresar}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="!verLogin" class="container">
+            <div class="row">
+                <div class="col col-login mx-auto">
+                    <div class="text-center mb-6">
+                        <img src="assets/images/logo-bodega.png" alt="">
+                    </div>
+                    <div class="card">
+                        <div class="card-body p-6">
+                            <div class="card-title">{{msg.lbl_btn_olvidaste_tu_clave}}</div>
+                            <p class="text-muted">{{msg.lbl_btn_reset_pass}}</p>
+                            <div class="form-group">
+                                <label class="form-label" for="exampleInputEmail1">{{msg.lbl_header_correo}}</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" placeholder="{{msg.lbl_header_correo}}"
+                                    [(ngModel)]="usuarioReset.email">
+                            </div>
+                            <div class="form-footer">
+                                <button type="submit" (click)="recordarClave()"
+                                    class="btn btn-primary btn-block">{{msg.lbl_envia_nueva_clave}}</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center text-muted">
+                        {{msg.lbl_olvidalo}}<a (click)="mostrarLogin()" class="linkBtn">{{msg.lbl_enviame_atras}}</a>
+                        {{msg.lbl_a_pantalla_ingreso}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

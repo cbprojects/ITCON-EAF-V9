@@ -1,0 +1,114 @@
+<p-toast></p-toast>
+
+<div class="page ">
+    <div class="flex-fill">
+        <!-- HEADER -->
+        <app-header></app-header>
+        <!-- HEADER -->
+
+        <!-- CONTENT -->
+        <div class="my-3 my-md-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Consulta de Bodegas</h3>
+                            </div>
+                            <div class="card-body">
+                                <!-- Filtros -->
+                                <div class="row justify-content-center">
+                                    <div class="form-group col-sm-12 col-lg-3">
+                                        <label class="form-label">Sede</label>
+                                        <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                            [(ngModel)]="sedeFiltro" [items]="listaSedes">
+                                        </ng-select>
+                                    </div>
+                                    <div class="form-group col-sm-12 col-lg-3">
+                                        <label class="form-label">Código</label>
+                                        <input type="text" [(ngModel)]="codigo" class="form-control">
+                                    </div>
+                                    <div class="form-group col-sm-12 col-lg-3">
+                                        <label class="form-label">Nombre</label>
+                                        <input type="text" [(ngModel)]="nombre" class="form-control">
+                                    </div>
+                                    <div class="form-group col-sm-12 col-lg-3">
+                                        <label class="form-label">Nombre 10</label>
+                                        <input type="text" [(ngModel)]="nombre10" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="form-group col-sm-12 col-lg-12 text-center">
+                                        <button type="submit" (click)="consultarBodega(0)"
+                                            class="btn btn-primary ml-auto">Consultar</button>
+                                    </div>
+                                </div>
+
+                                <!-- Consulta -->
+                                <hr />
+                                <div class="form-label">Resultados</div>
+                                <div class="table-responsive {{listaBodegas.length > 0 ? '' : 'displayNone'}}">
+                                    <p-table [lazy]="true" (onLazyLoad)="cargarTabla($event)" [paginator]="true"
+                                        [totalRecords]="totalRecords" [loading]="loading" styleClass="table mb-0"
+                                        [responsive]="true" [value]="listaBodegas" [rows]="rows">
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th class="pl-0 text-center">ID</th>
+                                                <th class="text-center">Bodega Código</th>
+                                                <th class="text-center">Bodega Nombre</th>
+                                                <th class="text-center">Bodega Nombre10</th>
+                                                <th class="text-center">Sede Nombre</th>
+                                                <th class="text-center">Estado</th>
+                                            </tr>
+                                        </ng-template>
+
+                                        <ng-template pTemplate="body" let-bodega>
+                                            <tr (click)="cargarBodega(bodega)">
+                                                <td class="text-center">
+                                                    {{bodega.id}}
+                                                </td>
+                                                <td>
+                                                    {{bodega.codigo}}
+                                                </td>
+                                                <td>
+                                                    {{bodega.nombre}}
+                                                </td>
+                                                <td>
+                                                    {{bodega.nombre10}}
+                                                </td>
+                                                <td>
+                                                    {{bodega.sede.nombre}}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{bodega.estado === 1 ? 'Activo' : 'Inactivo'}}
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                                <div *ngIf="listaBodegas.length <= 0" class="service-grids">
+                                    <div class="col-md-12 ser-grid">
+                                        <p class="sinResultados">
+                                            {{msg.lbl_info_sin_resultados}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-right">
+                                <div class="d-flex">
+                                    <a class="btn btn-link" routerLink="/home">Home</a>
+                                    <button type="submit" routerLink="/m-bodega"
+                                        class="btn btn-primary ml-auto">Crear</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- CONTENT -->
+    </div>
+</div>
+
+<!-- FOOTER -->
+<app-footer></app-footer>
+<!-- FOOTER -->
