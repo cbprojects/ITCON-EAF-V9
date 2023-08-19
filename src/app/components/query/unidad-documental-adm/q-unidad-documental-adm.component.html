@@ -100,7 +100,7 @@
                                             <tr>
                                                 <th class="text-center">ID</th>
                                                 <th class="text-center">Código</th>
-                                                <th class="text-center">Código Barras</th>
+                                                <th class="text-center">Caja</th>
                                                 <th class="text-center">Nombre</th>
                                                 <th class="text-center">Estado</th>
                                                 <th class="text-center"></th>
@@ -117,7 +117,7 @@
                                                     {{unidadDocumental.codigo}}
                                                 </td>
                                                 <td (click)="cargarUnidadDocumental(unidadDocumental)">
-                                                    {{unidadDocumental.codigoBarra}}
+                                                    {{unidadDocumental.caja.codigoAlterno}}
                                                 </td>
                                                 <td (click)="cargarUnidadDocumental(unidadDocumental)">
                                                     {{unidadDocumental.nombre}}

@@ -7,10 +7,10 @@ export var HOST = 'https://143.198.123.29:8443/CentralUsuariosQA';
 //dev
 //export var HOST = 'https://143.198.123.29:8443/CentralUsuarios';
 
-//export var SYSTEM = 'http://localhost:4200';
+export var SYSTEM = 'http://localhost:4200';
 //export var SYSTEM = 'http://10.176.56.211:7001';
 //export var SYSTEM = 'https://www.itcon.cbaeneprojects.com';
-export var SYSTEM = 'https://www.itconqa.cbaeneprojects.com';
+//export var SYSTEM = 'https://www.itconqa.cbaeneprojects.com';
 
 @Injectable()
 export class ObjectModelInitializer {
@@ -533,8 +533,8 @@ export class ObjectModelInitializer {
       tipoDocumental: this.getDataTipoDocumental(),
       contenedor: this.getDataContenedor(),
       proyecto: this.getDataProyecto(),
-      consecutivoIni: 0,
-      consecutivoFin: 0,
+      consecutivoIni: '',
+      consecutivoFin: '',
       fechaIni: '',
       fechaFin: '',
       fechaRecibe: '',

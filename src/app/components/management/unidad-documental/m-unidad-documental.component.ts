@@ -87,10 +87,17 @@ export class MUnidadDocumentalComponent implements OnInit {
     this.esNuevaUnidadDocumental = true;
     if (this.sesionService.objUnidadDocumentalCargada !== undefined && this.sesionService.objUnidadDocumentalCargada !== null && this.sesionService.objUnidadDocumentalCargada.nombre !== null && this.sesionService.objUnidadDocumentalCargada.nombre !== '') {
       this.unidadDocumental = this.sesionService.objUnidadDocumentalCargada;
+      console.log(this.unidadDocumental.fechaIni);
       this.unidadDocumental.estado = this.util.getValorEnumerado(this.enumEstado, this.unidadDocumental.estado);
-      this.unidadDocumental.fechaRecibe = this.unidadDocumental.fechaRecibe !== undefined && this.unidadDocumental.fechaRecibe !== null && this.unidadDocumental.fechaRecibe !== '' ? new Date(this.unidadDocumental.fechaRecibe) : '';
-      this.unidadDocumental.fechaIni = this.unidadDocumental.fechaIni !== undefined && this.unidadDocumental.fechaIni !== null && this.unidadDocumental.fechaIni !== '' ? new Date(this.unidadDocumental.fechaIni) : '';
-      this.unidadDocumental.fechaFin = this.unidadDocumental.fechaFin !== undefined && this.unidadDocumental.fechaFin !== null && this.unidadDocumental.fechaFin !== '' ? new Date(this.unidadDocumental.fechaFin) : '';
+      let fechaR:Date =  new Date(this.unidadDocumental.fechaRecibe);
+      fechaR.setDate(fechaR.getDate()+1);
+      this.unidadDocumental.fechaRecibe=fechaR;
+      let fechaI:Date= new Date(this.unidadDocumental.fechaIni);
+      fechaI.setDate(fechaI.getDate()+1);
+      this.unidadDocumental.fechaIni =fechaI;
+      let fechaF:Date =  new Date(this.unidadDocumental.fechaFin);
+      fechaF.setDate(fechaF.getDate()+1);
+      this.unidadDocumental.fechaFin=fechaF;
       this.esNuevaUnidadDocumental = false;
       // Cargando datos
       this.clienteFiltro = { value: this.unidadDocumental.sociedadArea.sociedad.cliente, label: this.unidadDocumental.sociedadArea.sociedad.cliente.nombre };
@@ -100,6 +107,7 @@ export class MUnidadDocumentalComponent implements OnInit {
       this.tipoDocumentalFiltro = { value: this.unidadDocumental.tipoDocumental, label: this.unidadDocumental.tipoDocumental.nombre };
       this.cargarProyectosXSociedad(this.unidadDocumental.sociedadArea.sociedad.id);
       this.proyectoFiltro = { value: this.unidadDocumental.proyecto, label: this.unidadDocumental.proyecto.nombre };
+      console.log(this.unidadDocumental.fechaIni);
     } else {
       this.sociedadFiltro = { value: this.objectModelInitializer.getDataSociedad(), label: this.msg.lbl_enum_generico_valor_vacio };
       this.areaFiltro = { value: this.objectModelInitializer.getDataArea(), label: this.msg.lbl_enum_generico_valor_vacio };

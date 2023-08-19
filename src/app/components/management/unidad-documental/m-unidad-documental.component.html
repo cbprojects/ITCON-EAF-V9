@@ -136,16 +136,14 @@
                                                 <div class="form-group col-sm-12 col-lg-3">
                                                     <div class="form-group">
                                                         <label class="form-label">Consecutivo Inicial</label>
-                                                        <input type="text" (keydown)="util.soloNumeros($event)"
-                                                            [(ngModel)]="unidadDocumental.consecutivoIni"
+                                                        <input type="text" [(ngModel)]="unidadDocumental.consecutivoIni"
                                                             class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-sm-12 col-lg-3">
                                                     <div class="form-group">
                                                         <label class="form-label">Consecutivo Final</label>
-                                                        <input type="text" (keydown)="util.soloNumeros($event)"
-                                                            [(ngModel)]="unidadDocumental.consecutivoFin"
+                                                        <input type="text" [(ngModel)]="unidadDocumental.consecutivoFin"
                                                             class="form-control">
                                                     </div>
                                                 </div>
@@ -170,7 +168,7 @@
                                                         <label class="form-label">Fecha Recibe<span
                                                                 class="form-required">*</span></label>
                                                         <p-calendar [(ngModel)]="unidadDocumental.fechaRecibe"
-                                                            [readonlyInput]="true">
+                                                            [readonlyInput]="false" dateFormat="dd-mm-yy">
                                                         </p-calendar>
                                                     </div>
                                                 </div>
@@ -178,7 +176,7 @@
                                                     <div class="form-group">
                                                         <label class="form-label">Fecha Inicial</label>
                                                         <p-calendar [(ngModel)]="unidadDocumental.fechaIni"
-                                                            [readonlyInput]="true">
+                                                            [readonlyInput]="false" dateFormat="dd-mm-yy">
                                                         </p-calendar>
                                                     </div>
                                                 </div>
@@ -186,7 +184,7 @@
                                                     <div class="form-group">
                                                         <label class="form-label">Fecha Final</label>
                                                         <p-calendar [(ngModel)]="unidadDocumental.fechaFin"
-                                                            [readonlyInput]="true">
+                                                            [readonlyInput]="false" dateFormat="dd-mm-yy">
                                                         </p-calendar>
                                                     </div>
                                                 </div>

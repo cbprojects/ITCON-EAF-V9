@@ -29,12 +29,12 @@
                                             [(ngModel)]="areaSelect" [items]="listaAreas" bindLabel="nombre" (change)="limpiarUDYtipoUD()">
                                         </ng-select>
                                     </div>
-                                    <div class="form-group col-sm-12 col-lg-4">
+                                    <!--<div class="form-group col-sm-12 col-lg-4">
                                         <label class="form-label">Caja<span class="form-required"></span></label>
                                         <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
                                             [(ngModel)]="cajaSelect" [items]="listaCajasFiltro" bindLabel="codigoAlterno" (change)="limpiarUDYtipoUD()">
                                         </ng-select>
-                                    </div>
+                                    </div>-->
                                 </div>
                                 <div class="row justify-content-center">
                                     <div class="form-group col-sm-12 col-lg-4">
@@ -43,12 +43,12 @@
                                             [(ngModel)]="tipoUniDocuSelect" [items]="listaTipoUniDocu" bindLabel="nombre" (change)="consultarUDPorFiltros()">
                                         </ng-select>
                                     </div>
-                                    <div class="form-group col-sm-12 col-lg-4">
+                                    <!--<div class="form-group col-sm-12 col-lg-4">
                                         <label class="form-label">Unidad Documental</label>
                                         <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
                                             [(ngModel)]="uniDocuSelect" [items]="listaUniDocu" bindLabel="codigoUD">
                                         </ng-select>
-                                    </div>
+                                    </div>-->
                                     <div class="form-group col-sm-12 col-lg-4">
                                         <label class="form-label">Nombre Archivo</label>
                                         <input type="text" [(ngModel)]="archivoFiltro" class="form-control">
@@ -88,7 +88,7 @@
                                     <div class="col-md-12 ser-grid">
                                         <h5>Nodo Seleccionado: {{selectedFiles.label}}</h5>
                                         <p-fileUpload #fileUpload name="demo[]" multiple="multiple"
-                                            (uploadHandler)="onBasicUpload($event, fileUpload)" maxFileSize="5000000"
+                                            (uploadHandler)="onBasicUpload($event, fileUpload)" maxFileSize="10000000"
                                             customUpload="true" chooseLabel="Cargar Archivo" uploadLabel="Subir"
                                             cancelLabel="Cancelar">
                                         </p-fileUpload>

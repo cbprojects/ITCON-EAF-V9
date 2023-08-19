@@ -277,6 +277,7 @@ export class QUnidadDocumentalComponent implements OnInit {
   cargarUnidadDocumental(unidadDocumental: UnidadDocumental) {
     this.sesionService.objUnidadDocumentalCargada = this.objectModelInitializer.getDataUnidadDocumental();
     this.sesionService.objUnidadDocumentalCargada = unidadDocumental;
+    console.log(unidadDocumental.fechaIni);
     this.router.navigate(['/m-unidad-documental']);
   }
 

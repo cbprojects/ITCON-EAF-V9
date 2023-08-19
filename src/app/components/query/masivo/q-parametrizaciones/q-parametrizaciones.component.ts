@@ -52,9 +52,11 @@ export class QParametrizacionesComponent implements OnInit {
   }
 
   inicializar() {
+    debugger
     let url = window.location.href;
     let urlSplit = url.split("/");
     this.pathSplit = urlSplit[urlSplit.length - 1];
+    console.log(this.pathSplit);
     this.cargarTipoCrud();
     this.sesionService.objParamMasivoCargado = null;
     this.masivoFiltro = this.objectModelInitializer.getDataMasivoDTO();
@@ -62,6 +64,7 @@ export class QParametrizacionesComponent implements OnInit {
   }
 
   cargarTipoCrud() {
+    console.log('Entro');
     switch (this.pathSplit) {
       case "area":
         this.tipo = 1;
@@ -76,9 +79,12 @@ export class QParametrizacionesComponent implements OnInit {
         this.title = "Contenedor";
         break;
       case "tipo-documental":
+        console.log('Ingreso');
         this.tipo = 4;
         this.title = "Tipo Documental";
+        break;
       case "sede":
+        console.log('Ingreso sede');
         this.tipo = 5;
         this.title = "Sede";
         break;
@@ -99,6 +105,7 @@ export class QParametrizacionesComponent implements OnInit {
       requestMasivoFiltro.masivo = this.masivoFiltro;
       requestMasivoFiltro.registroInicial = primerItem;
       requestMasivoFiltro.cantidadRegistro = this.rows;
+      console.log(requestMasivoFiltro);
       this.restService.postREST(this.const.urlConsultarMasivoPorFiltros, requestMasivoFiltro)
         .subscribe(resp => {
           let temp: ResponseConsultaMasivo = JSON.parse(JSON.stringify(resp));
