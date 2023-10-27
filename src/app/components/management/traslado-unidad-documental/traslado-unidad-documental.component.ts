@@ -99,7 +99,7 @@ export class TrasladoUnidadDocumentalComponent implements OnInit {
       if (this.clienteSelect != null) {
         this.requestConsultaCajasPorCliente.id = this.clienteSelect.id;
 
-        this.restService.postREST(this.const.urlConsultarCajasPorSociedad, this.requestConsultaCajasPorCliente)
+        this.restService.postREST(this.const.urlConsultarCajasPorCliente, this.requestConsultaCajasPorCliente)
           .subscribe(resp => {
             let temp: Caja[] = JSON.parse(JSON.stringify(resp));
             if (temp !== undefined && temp.length > 0) {

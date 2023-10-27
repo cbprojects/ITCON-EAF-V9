@@ -87,7 +87,7 @@ export class MCajaComponent implements OnInit {
     this.caja = this.objectModelInitializer.getDataCaja();
     this.caja.estado = this.util.getValorEnumerado(this.enumEstado, 1);
     this.esNuevaCaja = true;
-    if (this.sesionService.objCajaCargado !== undefined && this.sesionService.objCajaCargado !== null && this.sesionService.objCajaCargado.descripcion !== null && this.sesionService.objCajaCargado.descripcion !== '') {
+    if (this.sesionService.objCajaCargado !== undefined && this.sesionService.objCajaCargado !== null && this.sesionService.objCajaCargado.codigoAlterno !== null && this.sesionService.objCajaCargado.codigoAlterno !== '') {
       this.caja = this.sesionService.objCajaCargado;
       this.caja.estado = this.util.getValorEnumerado(this.enumEstado, this.caja.estado);
       this.esNuevaCaja = false;

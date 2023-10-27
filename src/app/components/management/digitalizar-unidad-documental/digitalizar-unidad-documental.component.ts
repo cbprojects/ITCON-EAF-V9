@@ -172,7 +172,7 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
     try {
       var requestCajaPorSociedad = this.objectModelInitializer.getDataRequestConsultaCajasPorSociedad();
       requestCajaPorSociedad.id = this.sociedadSelect.id;
-      this.restService.postREST(this.const.urlConsultarCajasPorSociedad, requestCajaPorSociedad)
+      this.restService.postREST(this.const.urlConsultarCajasPorCliente, requestCajaPorSociedad)
         .subscribe(resp => {
           let temp: Caja[] = JSON.parse(JSON.stringify(resp));
           if (temp !== undefined && temp.length > 0) {

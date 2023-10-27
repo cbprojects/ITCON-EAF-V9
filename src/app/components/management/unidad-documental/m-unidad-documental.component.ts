@@ -11,6 +11,8 @@ import { Contenedor } from 'src/app/model/contenedorModel';
 import { Entrepano } from 'src/app/model/entrepanoModel';
 import { Proyecto } from 'src/app/model/proyectoModel';
 import { RequestAreasXSociedad } from 'src/app/model/requestAreasXSociedad';
+import { RequestSociedadXCliente } from 'src/app/model/requestSociedadXCliente';
+import { Sociedad } from 'src/app/model/sociedadModel';
 import { TipoDocumental } from 'src/app/model/tipoDocumentalModel';
 import { UnidadDocumental } from 'src/app/model/unidadDocumentalModel';
 import { RestService } from 'src/app/services/rest.service';
@@ -87,10 +89,17 @@ export class MUnidadDocumentalComponent implements OnInit {
     this.esNuevaUnidadDocumental = true;
     if (this.sesionService.objUnidadDocumentalCargada !== undefined && this.sesionService.objUnidadDocumentalCargada !== null && this.sesionService.objUnidadDocumentalCargada.nombre !== null && this.sesionService.objUnidadDocumentalCargada.nombre !== '') {
       this.unidadDocumental = this.sesionService.objUnidadDocumentalCargada;
+      console.log(this.unidadDocumental.fechaIni);
       this.unidadDocumental.estado = this.util.getValorEnumerado(this.enumEstado, this.unidadDocumental.estado);
-      this.unidadDocumental.fechaRecibe = this.unidadDocumental.fechaRecibe !== undefined && this.unidadDocumental.fechaRecibe !== null && this.unidadDocumental.fechaRecibe !== '' ? new Date(this.unidadDocumental.fechaRecibe) : '';
-      this.unidadDocumental.fechaIni = this.unidadDocumental.fechaIni !== undefined && this.unidadDocumental.fechaIni !== null && this.unidadDocumental.fechaIni !== '' ? new Date(this.unidadDocumental.fechaIni) : '';
-      this.unidadDocumental.fechaFin = this.unidadDocumental.fechaFin !== undefined && this.unidadDocumental.fechaFin !== null && this.unidadDocumental.fechaFin !== '' ? new Date(this.unidadDocumental.fechaFin) : '';
+      let fechaR:Date =  new Date(this.unidadDocumental.fechaRecibe);
+      fechaR.setDate(fechaR.getDate()+1);
+      this.unidadDocumental.fechaRecibe=fechaR;
+      let fechaI:Date= new Date(this.unidadDocumental.fechaIni);
+      fechaI.setDate(fechaI.getDate()+1);
+      this.unidadDocumental.fechaIni =fechaI;
+      let fechaF:Date =  new Date(this.unidadDocumental.fechaFin);
+      fechaF.setDate(fechaF.getDate()+1);
+      this.unidadDocumental.fechaFin=fechaF;
       this.esNuevaUnidadDocumental = false;
       // Cargando datos
       this.clienteFiltro = { value: this.unidadDocumental.sociedadArea.sociedad.cliente, label: this.unidadDocumental.sociedadArea.sociedad.cliente.nombre };
@@ -100,6 +109,7 @@ export class MUnidadDocumentalComponent implements OnInit {
       this.tipoDocumentalFiltro = { value: this.unidadDocumental.tipoDocumental, label: this.unidadDocumental.tipoDocumental.nombre };
       this.cargarProyectosXSociedad(this.unidadDocumental.sociedadArea.sociedad.id);
       this.proyectoFiltro = { value: this.unidadDocumental.proyecto, label: this.unidadDocumental.proyecto.nombre };
+      console.log(this.unidadDocumental.fechaIni);
     } else {
       this.sociedadFiltro = { value: this.objectModelInitializer.getDataSociedad(), label: this.msg.lbl_enum_generico_valor_vacio };
       this.areaFiltro = { value: this.objectModelInitializer.getDataArea(), label: this.msg.lbl_enum_generico_valor_vacio };
@@ -159,10 +169,12 @@ export class MUnidadDocumentalComponent implements OnInit {
 
   consultarSociedades() {
     try {
+      let requestSociedadXCliente:RequestSociedadXCliente=this.objectModelInitializer.getDataRequestSociedadXCliente();
+      requestSociedadXCliente.idCliente=this.clienteFiltro.value.id;
       this.listaSociedades = [];
-      this.restService.getREST(this.const.urlConsultarSociedadActiva)
+      this.restService.putREST(this.const.urlConsultarSociedadXClienteActiva,requestSociedadXCliente)
         .subscribe(resp => {
-          let temp: Entrepano[] = JSON.parse(JSON.stringify(resp));
+          let temp: Sociedad[] = JSON.parse(JSON.stringify(resp));
           if (temp !== undefined && temp.length > 0) {
             this.listaSociedadesTemp = temp;
             this.activarCambiosSociedades();
@@ -468,9 +480,7 @@ export class MUnidadDocumentalComponent implements OnInit {
     this.listaClientesTemp.forEach(cliente => {
       this.listaClientes.push({ value: cliente, label: cliente.nombre });
     });
-    if (this.listaClientes.length > 1) {
-      this.clienteFiltro = this.listaClientes[1];
-    } else {
+    if(this.esNuevaUnidadDocumental){
       this.clienteFiltro = this.listaClientes[0];
     }
   }
