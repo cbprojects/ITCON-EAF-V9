@@ -7,10 +7,10 @@ export var HOST = 'https://143.198.123.29:8443/CentralUsuariosQA';
 //dev
 //export var HOST = 'https://143.198.123.29:8443/CentralUsuarios';
 
-export var SYSTEM = 'http://localhost:4200';
+//export var SYSTEM = 'http://localhost:4200';
 //export var SYSTEM = 'http://10.176.56.211:7001';
 //export var SYSTEM = 'https://www.itcon.cbaeneprojects.com';
-//export var SYSTEM = 'https://www.itconqa.cbaeneprojects.com';
+export var SYSTEM = 'https://www.itconqa.cbaeneprojects.com';
 
 @Injectable()
 export class ObjectModelInitializer {
@@ -124,10 +124,11 @@ export class ObjectModelInitializer {
       urlBuscarCuerposActivosPorBloque: `${HOST}/central/Cuerpo/buscarCuerposActivosPorBloque`,
       urlBuscarBloquesActivosPorBodega: `${HOST}/central/Bloque/buscarBloquesActivosPorBodega`,
       urlBuscarBodegasActivasPorSede: `${HOST}/central/Bodega/buscarBodegasActivasPorSede`,
-      urlConsultarCajasPorSociedad: `${HOST}/central/caja/consultarCajasPorSociedad`,
+      urlConsultarCajasPorCliente: `${HOST}/central/caja/consultarCajasPorCliente`,
       // Unidad Documental
       urlConsultarUDPorFiltros: `${HOST}/central/unidadDocumental/consultarUnidadDocumentalFiltros`,
       urlCrearUD: `${HOST}/central/unidadDocumental/crearUnidadDocumental`,
+      urlCrearUDCaja: `${HOST}/central/unidadDocumental/crearUnidadDocumentalCaja`,
       urlModificarUD: `${HOST}/central/unidadDocumental/modificarUnidadDocumental`,
       urlConsultarUnidadDocumentalPorCajaMasiva: `${HOST}/central/unidadDocumental/consultarUnidadDocumentalPorCajaMasiva`,
       urlCambiarCajaUnidadDocumentalMasiva: `${HOST}/central/unidadDocumental/cambiarCajaUnidadDocumentalMasiva`,

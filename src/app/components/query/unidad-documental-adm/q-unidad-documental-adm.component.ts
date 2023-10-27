@@ -338,7 +338,9 @@ export class QUnidadDocumentalAdmComponent implements OnInit {
       let requestUnidadDocumentalFiltro: RequestConsultaUnidadDocumental = this.objectModelInitializer.getDataRequestUnidadDocumental();
       this.unidadDocumentalFiltro.caja = this.objectModelInitializer.getDataCaja();
       this.unidadDocumentalFiltro.sociedadArea = this.objectModelInitializer.getDataSociedadArea();
-      this.unidadDocumentalFiltro.sociedadArea.sociedad.cliente=this.clienteFiltro.value
+      this.unidadDocumentalFiltro.sociedadArea.sociedad=this.objectModelInitializer.getDataSociedad();
+      this.unidadDocumentalFiltro.sociedadArea.sociedad.cliente=this.objectModelInitializer.getDataCliente();
+      this.unidadDocumentalFiltro.sociedadArea.sociedad.cliente=this.clienteFiltro.value;
       if(this.sociedadFiltro.value.id !== 0){
         this.unidadDocumentalFiltro.sociedadArea.sociedad = this.sociedadFiltro.value;
       }
@@ -349,6 +351,7 @@ export class QUnidadDocumentalAdmComponent implements OnInit {
       requestUnidadDocumentalFiltro.registroInicial = primerItem;
       requestUnidadDocumentalFiltro.cantidadRegistro = this.rows;
       // Formato fecha AAAA-MM-DD
+      if(this.clienteFiltro.value.id !== 0){
       this.restService.putREST(this.const.urlConsultarUDPorFiltros, requestUnidadDocumentalFiltro)
         .subscribe(resp => {
           let temp: ResponseConsultaUnidadDocumental = JSON.parse(JSON.stringify(resp));
@@ -372,6 +375,7 @@ export class QUnidadDocumentalAdmComponent implements OnInit {
 
             console.log(error, "error");
           })
+        }
     } catch (e) {
       console.log(e);
     }
@@ -379,7 +383,9 @@ export class QUnidadDocumentalAdmComponent implements OnInit {
 
   cargarTabla(event: LazyLoadEvent) {
     setTimeout(() => {
-      this.consultarUnidadesDocumentales(event.first);
+      if(this.clienteFiltro.value.id !==0){
+        this.consultarUnidadesDocumentales(event.first);
+      }
     }, 100);
   }
 
@@ -528,6 +534,18 @@ export class QUnidadDocumentalAdmComponent implements OnInit {
     } else {
       this.clienteFiltro = this.listaClientes[0];
     }
+  }
+
+  validarRol(rol: string) {
+    let validar = false;
+    this.sesionService.objServiceSesion.usuarioSesion.listaRoles.forEach(roles => {
+      if (!validar) {
+        if (roles.codigo == rol) {
+          validar = true;
+        }
+      }
+    });
+    return validar;
   }
 
 }

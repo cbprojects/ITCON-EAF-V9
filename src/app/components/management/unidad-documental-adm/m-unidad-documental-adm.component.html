@@ -32,7 +32,16 @@
                                                             class="form-required">*</span></label>
                                                     <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
                                                         [(ngModel)]="clienteFiltro" [items]="listaClientes"
-                                                        (ngModelChange)="consultarSociedades()">
+                                                        (ngModelChange)="consultarSociedadesYCaja()"
+                                                        >
+                                                    </ng-select>
+                                                </div>
+                                                <div class="form-group col-sm-12 col-lg-3">
+                                                    <label class="form-label">Caja<span
+                                                            class="form-required">*</span></label>
+                                                    <ng-select notFoundText="{{msg.lbl_info_sin_resultados}}"
+                                                        [(ngModel)]="cajaFiltro" [items]="listaCajas"
+                                                        [disabled]="!esNuevaUnidadDocumental">
                                                     </ng-select>
                                                 </div>
                                                 <div class="form-group col-sm-12 col-lg-3">
@@ -168,7 +177,7 @@
                                                         <label class="form-label">Fecha Recibe<span
                                                                 class="form-required">*</span></label>
                                                         <p-calendar [(ngModel)]="unidadDocumental.fechaRecibe"
-                                                            [readonlyInput]="true">
+                                                        [readonlyInput]="false" dateFormat="dd-mm-yy">
                                                         </p-calendar>
                                                     </div>
                                                 </div>
@@ -176,7 +185,7 @@
                                                     <div class="form-group">
                                                         <label class="form-label">Fecha Inicial</label>
                                                         <p-calendar [(ngModel)]="unidadDocumental.fechaIni"
-                                                            [readonlyInput]="true">
+                                                        [readonlyInput]="false" dateFormat="dd-mm-yy">
                                                         </p-calendar>
                                                     </div>
                                                 </div>
@@ -184,7 +193,7 @@
                                                     <div class="form-group">
                                                         <label class="form-label">Fecha Final</label>
                                                         <p-calendar [(ngModel)]="unidadDocumental.fechaFin"
-                                                            [readonlyInput]="true">
+                                                        [readonlyInput]="false" dateFormat="dd-mm-yy">
                                                         </p-calendar>
                                                     </div>
                                                 </div>

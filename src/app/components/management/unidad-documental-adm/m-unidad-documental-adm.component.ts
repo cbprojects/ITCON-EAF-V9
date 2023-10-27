@@ -6,11 +6,15 @@ import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
 import { Area } from 'src/app/model/areaModel';
+import { Caja } from 'src/app/model/cajaModel';
 import { Cliente } from 'src/app/model/clienteModel';
 import { Contenedor } from 'src/app/model/contenedorModel';
 import { Entrepano } from 'src/app/model/entrepanoModel';
 import { Proyecto } from 'src/app/model/proyectoModel';
 import { RequestAreasXSociedad } from 'src/app/model/requestAreasXSociedad';
+import { RequestConsultaCaja } from 'src/app/model/requestConsultaCajaPorSociedadModel';
+import { RequestSociedadXCliente } from 'src/app/model/requestSociedadXCliente';
+import { Sociedad } from 'src/app/model/sociedadModel';
 import { TipoDocumental } from 'src/app/model/tipoDocumentalModel';
 import { UnidadDocumental } from 'src/app/model/unidadDocumentalModel';
 import { RestService } from 'src/app/services/rest.service';
@@ -36,6 +40,7 @@ export class MUnidadDocumentalAdmComponent implements OnInit {
   contenedorFiltro: any;
   proyectoFiltro: any;
   clienteFiltro: any;
+  cajaFiltro: any;
 
   listaSociedadesTemp: any[];
   listaAreasTemp: any[];
@@ -43,8 +48,10 @@ export class MUnidadDocumentalAdmComponent implements OnInit {
   listaContenedoresTemp: any[];
   listaProyectosTemp: any[];
   listaClientesTemp: any[];
+  listaCajasTemp: any[];
 
   listaClientes: any[];
+  listaCajas: any[];
   listaProyectos: any[];
   listaUnidadesDocumentales: UnidadDocumental[];
   listaSociedades: any[];
@@ -100,6 +107,7 @@ export class MUnidadDocumentalAdmComponent implements OnInit {
       // Cargando datos
       this.clienteFiltro = { value: this.unidadDocumental.sociedadArea.sociedad.cliente, label: this.unidadDocumental.sociedadArea.sociedad.cliente.nombre };
       this.sociedadFiltro = { value: this.unidadDocumental.sociedadArea.sociedad, label: this.unidadDocumental.sociedadArea.sociedad.nombre };
+      this.cajaFiltro = { value: this.unidadDocumental.caja, label: this.unidadDocumental.caja.codigoAlterno };
       this.areaFiltro = { value: this.unidadDocumental.sociedadArea.area, label: this.unidadDocumental.sociedadArea.area.nombre };
       this.contenedorFiltro = { value: this.unidadDocumental.contenedor, label: this.unidadDocumental.contenedor.nombre };
       this.tipoDocumentalFiltro = { value: this.unidadDocumental.tipoDocumental, label: this.unidadDocumental.tipoDocumental.nombre };
@@ -111,6 +119,7 @@ export class MUnidadDocumentalAdmComponent implements OnInit {
       this.contenedorFiltro = { value: this.objectModelInitializer.getDataContenedor(), label: this.msg.lbl_enum_generico_valor_vacio };
       this.tipoDocumentalFiltro = { value: this.objectModelInitializer.getDataTipoDocumental(), label: this.msg.lbl_enum_generico_valor_vacio };
       this.proyectoFiltro = { value: this.objectModelInitializer.getDataProyecto(), label: this.msg.lbl_enum_generico_valor_vacio };
+      this.cajaFiltro = { value: this.objectModelInitializer.getDataCaja(), label: this.msg.lbl_enum_generico_valor_vacio };
     }
   }
 
@@ -164,10 +173,12 @@ export class MUnidadDocumentalAdmComponent implements OnInit {
 
   consultarSociedades() {
     try {
+      let requestSociedadXCliente:RequestSociedadXCliente=this.objectModelInitializer.getDataRequestSociedadXCliente();
+      requestSociedadXCliente.idCliente=this.clienteFiltro.value.id;
       this.listaSociedades = [];
-      this.restService.getREST(this.const.urlConsultarSociedadActiva)
+      this.restService.putREST(this.const.urlConsultarSociedadXClienteActiva,requestSociedadXCliente)
         .subscribe(resp => {
-          let temp: Entrepano[] = JSON.parse(JSON.stringify(resp));
+          let temp: Sociedad[] = JSON.parse(JSON.stringify(resp));
           if (temp !== undefined && temp.length > 0) {
             this.listaSociedadesTemp = temp;
             this.activarCambiosSociedades();
@@ -343,12 +354,13 @@ export class MUnidadDocumentalAdmComponent implements OnInit {
       this.unidadDocumental.sociedadArea.area = this.areaFiltro.value;
       this.unidadDocumental.sociedadArea.sociedad = this.sociedadFiltro.value;
       this.unidadDocumental.proyecto = this.proyectoFiltro.value;
+      this.unidadDocumental.caja=this.cajaFiltro.value;
       this.unidadDocumental.contenedor = this.contenedorFiltro.value;
       this.unidadDocumental.tipoDocumental = this.tipoDocumentalFiltro.value;
       this.unidadDocumental.estado = this.unidadDocumental.estado.value;
       this.unidadDocumental.usuarioCreacion = this.creacion;
       this.unidadDocumental.usuarioActualizacion = this.creacion;
-      this.restService.postREST(this.const.urlCrearUD, this.unidadDocumental)
+      this.restService.postREST(this.const.urlCrearUDCaja, this.unidadDocumental)
         .subscribe(resp => {
           let respuesta: UnidadDocumental = JSON.parse(JSON.stringify(resp));
           if (respuesta !== null) {
@@ -473,11 +485,56 @@ export class MUnidadDocumentalAdmComponent implements OnInit {
     this.listaClientesTemp.forEach(cliente => {
       this.listaClientes.push({ value: cliente, label: cliente.nombre });
     });
-    if (this.listaClientes.length > 1) {
-      this.clienteFiltro = this.listaClientes[1];
-    } else {
+    if (this.esNuevaUnidadDocumental) {
       this.clienteFiltro = this.listaClientes[0];
     }
   }
 
+  consultarSociedadesYCaja(){
+    this.consultarSociedades();
+    this.consultarCajas();
+  }
+
+  consultarCajas(){
+    try {
+      let requestConsultaCaja:RequestConsultaCaja=this.objectModelInitializer.getDataRequestConsultaCajasPorSociedad();
+      requestConsultaCaja.id=this.clienteFiltro.value.id;
+      this.listaCajas = [];
+      this.restService.putREST(this.const.urlConsultarCajasPorCliente,requestConsultaCaja)
+        .subscribe(resp => {
+          let temp: Caja[] = JSON.parse(JSON.stringify(resp));
+          if (temp !== undefined && temp.length > 0) {
+            this.listaCajasTemp = temp;
+            this.activarCambiosCajas();
+          }
+        },
+          error => {
+            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+            let titleError = listaMensajes[0];
+            listaMensajes.splice(0, 1);
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+            this.messageService.clear();
+
+            listaMensajes.forEach(mensaje => {
+              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+            });
+            this.messageService.add(mensajeFinal);
+
+            console.log(error, "error");
+          })
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  activarCambiosCajas() {
+    this.listaCajas = [];
+    this.listaCajas.push({ value: this.objectModelInitializer.getDataCaja(), label: this.msg.lbl_enum_generico_valor_vacio });
+    this.listaCajasTemp.forEach(caja => {
+      this.listaCajas.push({ value: caja, label: caja.codigoAlterno });
+    });
+    if (this.esNuevaUnidadDocumental) {
+      this.cajaFiltro = this.listaCajas[0];
+    }
+  }
 }

@@ -11,6 +11,8 @@ import { Contenedor } from 'src/app/model/contenedorModel';
 import { Entrepano } from 'src/app/model/entrepanoModel';
 import { Proyecto } from 'src/app/model/proyectoModel';
 import { RequestAreasXSociedad } from 'src/app/model/requestAreasXSociedad';
+import { RequestSociedadXCliente } from 'src/app/model/requestSociedadXCliente';
+import { Sociedad } from 'src/app/model/sociedadModel';
 import { TipoDocumental } from 'src/app/model/tipoDocumentalModel';
 import { UnidadDocumental } from 'src/app/model/unidadDocumentalModel';
 import { RestService } from 'src/app/services/rest.service';
@@ -167,10 +169,12 @@ export class MUnidadDocumentalComponent implements OnInit {
 
   consultarSociedades() {
     try {
+      let requestSociedadXCliente:RequestSociedadXCliente=this.objectModelInitializer.getDataRequestSociedadXCliente();
+      requestSociedadXCliente.idCliente=this.clienteFiltro.value.id;
       this.listaSociedades = [];
-      this.restService.getREST(this.const.urlConsultarSociedadActiva)
+      this.restService.putREST(this.const.urlConsultarSociedadXClienteActiva,requestSociedadXCliente)
         .subscribe(resp => {
-          let temp: Entrepano[] = JSON.parse(JSON.stringify(resp));
+          let temp: Sociedad[] = JSON.parse(JSON.stringify(resp));
           if (temp !== undefined && temp.length > 0) {
             this.listaSociedadesTemp = temp;
             this.activarCambiosSociedades();
@@ -476,9 +480,7 @@ export class MUnidadDocumentalComponent implements OnInit {
     this.listaClientesTemp.forEach(cliente => {
       this.listaClientes.push({ value: cliente, label: cliente.nombre });
     });
-    if (this.listaClientes.length > 1) {
-      this.clienteFiltro = this.listaClientes[1];
-    } else {
+    if(this.esNuevaUnidadDocumental){
       this.clienteFiltro = this.listaClientes[0];
     }
   }
