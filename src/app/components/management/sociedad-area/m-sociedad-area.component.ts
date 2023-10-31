@@ -7,7 +7,7 @@ import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
 import { Area } from 'src/app/model/areaModel';
 import { Cliente } from 'src/app/model/clienteModel';
-import { RequestSociedadXCliente } from 'src/app/model/requestSociedadXCliente';
+import { RequestSociedadXCliente } from 'src/app/model/request/requestSociedadXCliente';
 import { SociedadArea } from 'src/app/model/sociedadAreaModel';
 import { Sociedad } from 'src/app/model/sociedadModel';
 import { RestService } from 'src/app/services/rest.service';

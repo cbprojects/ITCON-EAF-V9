@@ -6,7 +6,7 @@ import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
 import { Bodega } from 'src/app/model/bodegaModel';
-import { RequestCrearBodega } from 'src/app/model/requestCrearBodegaModel';
+import { RequestCrearBodega } from 'src/app/model/request/requestCrearBodegaModel';
 import { Sede } from 'src/app/model/sedeModel';
 import { RestService } from 'src/app/services/rest.service';
 import { SesionService } from 'src/app/services/sesionService/sesion.service';

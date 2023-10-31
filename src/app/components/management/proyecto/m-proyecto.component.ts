@@ -8,7 +8,7 @@ import { Util } from 'src/app/config/Util';
 import { Area } from 'src/app/model/areaModel';
 import { Cliente } from 'src/app/model/clienteModel';
 import { Proyecto } from 'src/app/model/proyectoModel';
-import { RequestSociedadXCliente } from 'src/app/model/requestSociedadXCliente';
+import { RequestSociedadXCliente } from 'src/app/model/request/requestSociedadXCliente';
 import { Sociedad } from 'src/app/model/sociedadModel';
 import { RestService } from 'src/app/services/rest.service';
 import { SesionService } from 'src/app/services/sesionService/sesion.service';

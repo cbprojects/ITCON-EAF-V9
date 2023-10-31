@@ -9,9 +9,10 @@ import { Area } from 'src/app/model/areaModel';
 import { Cliente } from 'src/app/model/clienteModel';
 import { Contenedor } from 'src/app/model/contenedorModel';
 import { Entrepano } from 'src/app/model/entrepanoModel';
+import { Especificacion } from 'src/app/model/especificacionModel';
 import { Proyecto } from 'src/app/model/proyectoModel';
-import { RequestAreasXSociedad } from 'src/app/model/requestAreasXSociedad';
-import { RequestSociedadXCliente } from 'src/app/model/requestSociedadXCliente';
+import { RequestAreasXSociedad } from 'src/app/model/request/requestAreasXSociedad';
+import { RequestSociedadXCliente } from 'src/app/model/request/requestSociedadXCliente';
 import { Sociedad } from 'src/app/model/sociedadModel';
 import { TipoDocumental } from 'src/app/model/tipoDocumentalModel';
 import { UnidadDocumental } from 'src/app/model/unidadDocumentalModel';
@@ -54,6 +55,7 @@ export class MUnidadDocumentalComponent implements OnInit {
   listaAreas: any[];
   listaTipoDocumental: any[];
   listaContenedores: any[];
+  listaEspecificaciones: Especificacion[];
   creacion: any;
 
   // Utilidades
@@ -91,15 +93,15 @@ export class MUnidadDocumentalComponent implements OnInit {
       this.unidadDocumental = this.sesionService.objUnidadDocumentalCargada;
       console.log(this.unidadDocumental.fechaIni);
       this.unidadDocumental.estado = this.util.getValorEnumerado(this.enumEstado, this.unidadDocumental.estado);
-      let fechaR:Date =  new Date(this.unidadDocumental.fechaRecibe);
-      fechaR.setDate(fechaR.getDate()+1);
-      this.unidadDocumental.fechaRecibe=fechaR;
-      let fechaI:Date= new Date(this.unidadDocumental.fechaIni);
-      fechaI.setDate(fechaI.getDate()+1);
-      this.unidadDocumental.fechaIni =fechaI;
-      let fechaF:Date =  new Date(this.unidadDocumental.fechaFin);
-      fechaF.setDate(fechaF.getDate()+1);
-      this.unidadDocumental.fechaFin=fechaF;
+      let fechaR: Date = new Date(this.unidadDocumental.fechaRecibe);
+      fechaR.setDate(fechaR.getDate() + 1);
+      this.unidadDocumental.fechaRecibe = fechaR;
+      let fechaI: Date = new Date(this.unidadDocumental.fechaIni);
+      fechaI.setDate(fechaI.getDate() + 1);
+      this.unidadDocumental.fechaIni = fechaI;
+      let fechaF: Date = new Date(this.unidadDocumental.fechaFin);
+      fechaF.setDate(fechaF.getDate() + 1);
+      this.unidadDocumental.fechaFin = fechaF;
       this.esNuevaUnidadDocumental = false;
       // Cargando datos
       this.clienteFiltro = { value: this.unidadDocumental.sociedadArea.sociedad.cliente, label: this.unidadDocumental.sociedadArea.sociedad.cliente.nombre };
@@ -116,6 +118,7 @@ export class MUnidadDocumentalComponent implements OnInit {
       this.contenedorFiltro = { value: this.objectModelInitializer.getDataContenedor(), label: this.msg.lbl_enum_generico_valor_vacio };
       this.tipoDocumentalFiltro = { value: this.objectModelInitializer.getDataTipoDocumental(), label: this.msg.lbl_enum_generico_valor_vacio };
       this.proyectoFiltro = { value: this.objectModelInitializer.getDataProyecto(), label: this.msg.lbl_enum_generico_valor_vacio };
+      this.listaEspecificaciones = [];
     }
   }
 
@@ -128,7 +131,7 @@ export class MUnidadDocumentalComponent implements OnInit {
       this.listaContenedores.push({ value: contenedor, label: contenedor.nombre });
     });
 
-    if(this.esNuevaUnidadDocumental){
+    if (this.esNuevaUnidadDocumental) {
       this.contenedorFiltro = this.listaContenedores[0];
     }
   }
@@ -139,7 +142,7 @@ export class MUnidadDocumentalComponent implements OnInit {
     this.listaTipoDocumentalTemp.forEach(tipoD => {
       this.listaTipoDocumental.push({ value: tipoD, label: tipoD.nombre });
     });
-    if(this.esNuevaUnidadDocumental){
+    if (this.esNuevaUnidadDocumental) {
       this.tipoDocumentalFiltro = this.listaTipoDocumental[0];
     }
   }
@@ -150,13 +153,13 @@ export class MUnidadDocumentalComponent implements OnInit {
     this.listaSociedadesTemp.forEach(sociedad => {
       this.listaSociedades.push({ value: sociedad, label: sociedad.nombre });
     });
-    if(this.esNuevaUnidadDocumental){
+    if (this.esNuevaUnidadDocumental) {
       this.sociedadFiltro = this.listaSociedades[0];
     }
   }
 
   activarCambiosAreas() {
-    
+
     this.listaAreas = [];
     this.listaAreas.push({ value: this.objectModelInitializer.getDataArea(), label: this.msg.lbl_enum_generico_valor_vacio });
     this.listaAreasTemp.forEach(area => {
@@ -169,10 +172,10 @@ export class MUnidadDocumentalComponent implements OnInit {
 
   consultarSociedades() {
     try {
-      let requestSociedadXCliente:RequestSociedadXCliente=this.objectModelInitializer.getDataRequestSociedadXCliente();
-      requestSociedadXCliente.idCliente=this.clienteFiltro.value.id;
+      let requestSociedadXCliente: RequestSociedadXCliente = this.objectModelInitializer.getDataRequestSociedadXCliente();
+      requestSociedadXCliente.idCliente = this.clienteFiltro.value.id;
       this.listaSociedades = [];
-      this.restService.putREST(this.const.urlConsultarSociedadXClienteActiva,requestSociedadXCliente)
+      this.restService.putREST(this.const.urlConsultarSociedadXClienteActiva, requestSociedadXCliente)
         .subscribe(resp => {
           let temp: Sociedad[] = JSON.parse(JSON.stringify(resp));
           if (temp !== undefined && temp.length > 0) {
@@ -197,7 +200,7 @@ export class MUnidadDocumentalComponent implements OnInit {
     } catch (e) {
       console.log(e);
     }
-   
+
   }
 
   consultarContenedores() {
@@ -228,7 +231,7 @@ export class MUnidadDocumentalComponent implements OnInit {
     } catch (e) {
       console.log(e);
     }
-    
+
   }
 
   consultarTiposDocumentales() {
@@ -259,7 +262,7 @@ export class MUnidadDocumentalComponent implements OnInit {
     } catch (e) {
       console.log(e);
     }
-    
+
   }
 
   cargarAreasXSociedad(event) {
@@ -295,11 +298,11 @@ export class MUnidadDocumentalComponent implements OnInit {
     } catch (e) {
       console.log(e);
     }
-    
-    
+
+
   }
 
-  cargarProyectosXSociedad(id:Number) {
+  cargarProyectosXSociedad(id: Number) {
     this.listaProyectos = [];
     this.listaProyectosTemp = [];
     try {
@@ -330,7 +333,7 @@ export class MUnidadDocumentalComponent implements OnInit {
     } catch (e) {
       console.log(e);
     }
-    
+
   }
 
   activarCambiosProyectos() {
@@ -339,7 +342,7 @@ export class MUnidadDocumentalComponent implements OnInit {
     this.listaProyectosTemp.forEach(proyecto => {
       this.listaProyectos.push({ value: proyecto, label: proyecto.nombre });
     });
-    if(this.esNuevaUnidadDocumental){
+    if (this.esNuevaUnidadDocumental) {
       this.proyectoFiltro = this.listaProyectos[0];
     }
   }
@@ -355,6 +358,8 @@ export class MUnidadDocumentalComponent implements OnInit {
       this.unidadDocumental.estado = this.unidadDocumental.estado.value;
       this.unidadDocumental.usuarioCreacion = this.creacion;
       this.unidadDocumental.usuarioActualizacion = this.creacion;
+      // TODO: Acá debe ir el nuevo request usando la lista de especificaciones
+      // this.listaEspecificaciones
       this.restService.postREST(this.const.urlCrearUD, this.unidadDocumental)
         .subscribe(resp => {
           let respuesta: UnidadDocumental = JSON.parse(JSON.stringify(resp));
@@ -480,8 +485,31 @@ export class MUnidadDocumentalComponent implements OnInit {
     this.listaClientesTemp.forEach(cliente => {
       this.listaClientes.push({ value: cliente, label: cliente.nombre });
     });
-    if(this.esNuevaUnidadDocumental){
+    if (this.esNuevaUnidadDocumental) {
       this.clienteFiltro = this.listaClientes[0];
     }
   }
+
+  agregarNuevaEspecificacion() {
+    let especificacion: Especificacion = this.objectModelInitializer.getDataEspecificacion();
+    especificacion.id = this.listaEspecificaciones.length + 1;
+    this.listaEspecificaciones.push(especificacion);
+  }
+
+  removerEspecificacion(id: any) {
+    let tempList = [];
+    if (this.listaEspecificaciones && this.listaEspecificaciones.length > 0) {
+      let i = 1;
+      this.listaEspecificaciones.forEach(especificacion => {
+        if (especificacion.id !== id) {
+          especificacion.id = i;
+          tempList.push(especificacion);
+          i++;
+        }
+      });
+    }
+
+    this.listaEspecificaciones = tempList;
+  }
+
 }

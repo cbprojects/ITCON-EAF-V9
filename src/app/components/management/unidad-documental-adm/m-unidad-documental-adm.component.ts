@@ -9,11 +9,11 @@ import { Area } from 'src/app/model/areaModel';
 import { Caja } from 'src/app/model/cajaModel';
 import { Cliente } from 'src/app/model/clienteModel';
 import { Contenedor } from 'src/app/model/contenedorModel';
-import { Entrepano } from 'src/app/model/entrepanoModel';
+import { Especificacion } from 'src/app/model/especificacionModel';
 import { Proyecto } from 'src/app/model/proyectoModel';
-import { RequestAreasXSociedad } from 'src/app/model/requestAreasXSociedad';
-import { RequestConsultaCaja } from 'src/app/model/requestConsultaCajaPorSociedadModel';
-import { RequestSociedadXCliente } from 'src/app/model/requestSociedadXCliente';
+import { RequestAreasXSociedad } from 'src/app/model/request/requestAreasXSociedad';
+import { RequestConsultaCaja } from 'src/app/model/request/requestConsultaCajaPorSociedadModel';
+import { RequestSociedadXCliente } from 'src/app/model/request/requestSociedadXCliente';
 import { Sociedad } from 'src/app/model/sociedadModel';
 import { TipoDocumental } from 'src/app/model/tipoDocumentalModel';
 import { UnidadDocumental } from 'src/app/model/unidadDocumentalModel';
@@ -58,6 +58,7 @@ export class MUnidadDocumentalAdmComponent implements OnInit {
   listaAreas: any[];
   listaTipoDocumental: any[];
   listaContenedores: any[];
+  listaEspecificaciones: Especificacion[];
   creacion: any;
 
   // Utilidades
@@ -120,6 +121,7 @@ export class MUnidadDocumentalAdmComponent implements OnInit {
       this.tipoDocumentalFiltro = { value: this.objectModelInitializer.getDataTipoDocumental(), label: this.msg.lbl_enum_generico_valor_vacio };
       this.proyectoFiltro = { value: this.objectModelInitializer.getDataProyecto(), label: this.msg.lbl_enum_generico_valor_vacio };
       this.cajaFiltro = { value: this.objectModelInitializer.getDataCaja(), label: this.msg.lbl_enum_generico_valor_vacio };
+      this.listaEspecificaciones = [];
     }
   }
 
@@ -360,6 +362,8 @@ export class MUnidadDocumentalAdmComponent implements OnInit {
       this.unidadDocumental.estado = this.unidadDocumental.estado.value;
       this.unidadDocumental.usuarioCreacion = this.creacion;
       this.unidadDocumental.usuarioActualizacion = this.creacion;
+      // TODO: Acá debe ir el nuevo request usando la lista de especificaciones
+      // this.listaEspecificaciones
       this.restService.postREST(this.const.urlCrearUDCaja, this.unidadDocumental)
         .subscribe(resp => {
           let respuesta: UnidadDocumental = JSON.parse(JSON.stringify(resp));
@@ -537,4 +541,27 @@ export class MUnidadDocumentalAdmComponent implements OnInit {
       this.cajaFiltro = this.listaCajas[0];
     }
   }
+
+  agregarNuevaEspecificacion() {
+    let especificacion: Especificacion = this.objectModelInitializer.getDataEspecificacion();
+    especificacion.id = this.listaEspecificaciones.length + 1;
+    this.listaEspecificaciones.push(especificacion);
+  }
+
+  removerEspecificacion(id: any) {
+    let tempList = [];
+    if (this.listaEspecificaciones && this.listaEspecificaciones.length > 0) {
+      let i = 1;
+      this.listaEspecificaciones.forEach(especificacion => {
+        if (especificacion.id !== id) {
+          especificacion.id = i;
+          tempList.push(especificacion);
+          i++;
+        }
+      });
+    }
+
+    this.listaEspecificaciones = tempList;
+  }
+
 }

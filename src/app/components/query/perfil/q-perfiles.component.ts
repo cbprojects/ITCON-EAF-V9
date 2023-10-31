@@ -6,8 +6,8 @@ import { ObjectModelInitializer } from 'src/app/config/ObjectModelInitializer';
 import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
 import { Perfil } from 'src/app/model/perfilModel';
-import { RequestConsultaPerfil } from 'src/app/model/requestConsultaPerfilModel';
-import { ResponseConsultaPerfil } from 'src/app/model/responseConsultaPerfilModel';
+import { RequestConsultaPerfil } from 'src/app/model/request/requestConsultaPerfilModel';
+import { ResponseConsultaPerfil } from 'src/app/model/response/responseConsultaPerfilModel';
 import { RestService } from 'src/app/services/rest.service';
 import { SesionService } from 'src/app/services/sesionService/sesion.service';
 

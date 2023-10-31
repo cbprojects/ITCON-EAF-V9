@@ -24,9 +24,9 @@ export interface UnidadDocumental {
     fechaRecibe: any;
     cajaRecibido: any;
     recepcionAprobada: any;
+    estado: any;
     fechaCreacion: any;
     usuarioCreacion: any;
     fechaActualizacion: any;
     usuarioActualizacion: any;
-    estado: any;
 }

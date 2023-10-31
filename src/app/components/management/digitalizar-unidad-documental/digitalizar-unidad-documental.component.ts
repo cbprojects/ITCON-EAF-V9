@@ -9,7 +9,7 @@ import { Archivo } from 'src/app/model/archivoModel';
 import { Area } from 'src/app/model/areaModel';
 import { Caja } from 'src/app/model/cajaModel';
 import { CajaTree } from 'src/app/model/cajaTreeModel';
-import { RequestArchivo } from 'src/app/model/requestArchivoModel';
+import { RequestArchivo } from 'src/app/model/request/requestArchivoModel';
 import { Sociedad } from 'src/app/model/sociedadModel';
 import { TipoDocumental } from 'src/app/model/tipoDocumentalModel';
 import { UnidadDocumental } from 'src/app/model/unidadDocumentalModel';

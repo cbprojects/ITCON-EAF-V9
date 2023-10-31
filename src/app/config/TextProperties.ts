@@ -245,6 +245,8 @@ export class TextProperties {
       lbl_tip_eliminar_archivo: idioma === constant.idiomaEs ? '[Clic] para eliminar archivo' : 'Click to delete file',
       lbl_tip_mostrar_ocultar_archivos: idioma === constant.idiomaEs ? '[Clic] para mostrar/ocultar archivos' : 'Click to show/hide files',
       lbl_tip_ir_prestamos: idioma === constant.idiomaEs ? '[Clic] para ir a Préstamos' : 'Click to go to Loans',
+      lbl_tip_agregar_especificacion: idioma === constant.idiomaEs ? '[Clic] para agregar una nueva especificación' : 'Click to add a new specification',
+      lbl_tip_remover_especificacion: idioma === constant.idiomaEs ? '[Clic] para remover una especificación' : 'Click to remove a specification',
 
       //Enums
       lbl_enum_generico_valor_vacio: idioma === constant.idiomaEs ? 'Selecciona una opción' : 'Select a Item',

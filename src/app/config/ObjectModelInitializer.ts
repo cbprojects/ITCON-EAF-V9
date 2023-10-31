@@ -1046,7 +1046,7 @@ export class ObjectModelInitializer {
     }
   };
 
-  getRequestConsultaBodega(){
+  getRequestConsultaBodega() {
     return {
       codigo: '',
       nombre: '',
@@ -1056,7 +1056,7 @@ export class ObjectModelInitializer {
       cantidadRegistro: 0
     }
   };
-  getRequestCrearBodega(){
+  getRequestCrearBodega() {
     return {
       sedeId: 0,
       nombreBodega: '',
@@ -1068,7 +1068,7 @@ export class ObjectModelInitializer {
       usuarioCreacion: '',
       codigoBodega: '',
       ownerNameBodega: ''
-      
+
     }
   };
   getDataBodegaPermisos() {
@@ -1131,6 +1131,7 @@ export class ObjectModelInitializer {
       cantidadRegistro: 0
     }
   };
+
   getRequestConsultaUsuarioCliente() {
     return {
       usuarioCliente: this.getDataUsuarioCliente(),
@@ -1138,10 +1139,25 @@ export class ObjectModelInitializer {
       cantidadRegistro: 0
     }
   };
+
   getRequestConsultaPermisosBodega() {
     return {
       idBodega: 0,
       idUsuario: 0
     }
   };
+
+  getDataEspecificacion() {
+    return {
+      id: 0,
+      codigo: '',
+      nombre: '',
+      descripcion: '',
+      codigoBarra: '',
+      qr: '',
+      cajaRecibido: '',
+      consecutivoIni: '',
+      consecutivoFin: ''
+    }
+  }
 }

@@ -7,7 +7,7 @@ import { TextProperties } from 'src/app/config/TextProperties';
 import { Util } from 'src/app/config/Util';
 import { Bodega } from 'src/app/model/bodegaModel';
 import { BodegaPermisos } from 'src/app/model/bodegaPermisosModel';
-import { RequestBodegasXSede } from 'src/app/model/requestBodegasXSedeModel';
+import { RequestBodegasXSede } from 'src/app/model/request/requestBodegasXSedeModel';
 import { Sede } from 'src/app/model/sedeModel';
 import { Sociedad } from 'src/app/model/sociedadModel';
 import { Usuario } from 'src/app/model/usuarioModel';

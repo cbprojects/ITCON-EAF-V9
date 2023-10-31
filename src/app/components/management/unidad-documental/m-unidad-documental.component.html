@@ -87,7 +87,87 @@
                                             </div>
                                         </div>
                                         <div class="card-body">
-                                            <div class="row justify-content-center">
+                                            <!-- LISTA DE ESPECIFICACIONES -->
+                                            <div *ngIf="esNuevaUnidadDocumental" class="row justify-content-center">
+                                                <div class="col-md-12 ser-grid pb-2">
+                                                    <button type="button" (click)="agregarNuevaEspecificacion()"
+                                                        pTooltip="{{msg.lbl_tip_agregar_especificacion}}"
+                                                        tooltipPosition="bottom"
+                                                        class="btn btn-icon btn-primary btn-sm">
+                                                            <i class="fe fe-plus"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="form-group col-sm-12 col-lg-12">
+                                                    <div class="table-responsive {{listaEspecificaciones.length > 0 ? '' : 'displayNone'}}">
+                                                        <p-table [lazy]="false" [paginator]="false" styleClass="table mb-0"
+                                                        [responsive]="true" [value]="listaEspecificaciones" [rows]="100">
+                                                            <ng-template pTemplate="header">
+                                                                <tr>
+                                                                    <th class="text-center middle">#</th>
+                                                                    <th class="text-center middle">Código</th>
+                                                                    <th class="text-center middle">Nombre</th>
+                                                                    <th class="text-center middle">Descripción</th>
+                                                                    <th class="text-center middle">Código Barras</th>
+                                                                    <th class="text-center middle">Código QR</th>
+                                                                    <th class="text-center middle">Caja Recibido</th>
+                                                                    <th class="text-center middle">Consecutivo Inicial</th>
+                                                                    <th class="text-center middle">Consecutivo Final</th>
+                                                                    <th class="text-center middle"></th>
+                                                                </tr>
+                                                            </ng-template>
+                                                            <ng-template pTemplate="body" let-especificacion>
+                                                                <tr>
+                                                                    <td class="text-center middle">{{especificacion.id}}</td>
+                                                                    <td class="text-center">
+                                                                        <input type="text" [(ngModel)]="especificacion.codigo" class="form-control">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" [(ngModel)]="especificacion.nombre" class="form-control">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" [(ngModel)]="especificacion.descripcion" class="form-control">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" [(ngModel)]="especificacion.codigoBarra" class="form-control">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" [(ngModel)]="especificacion.qr" class="form-control">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" [(ngModel)]="especificacion.cajaRecibido" class="form-control">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" [(ngModel)]="especificacion.consecutivoIni" class="form-control">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" [(ngModel)]="especificacion.consecutivoFin" class="form-control">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <button type="button" (click)="removerEspecificacion(especificacion.id)"
+                                                                            pTooltip="{{msg.lbl_tip_remover_especificacion}}"
+                                                                            tooltipPosition="bottom"
+                                                                            class="btn btn-icon btn-danger btn-sm">
+                                                                                <i class="fe fe-minus"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </ng-template>
+                                                        </p-table>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="listaEspecificaciones.length <= 0" class="col-md-12 ser-grid">
+                                                    <div class="service-grids">
+                                                        <div class="col-md-12 ser-grid">
+                                                            <p class="sinResultados">
+                                                                {{msg.lbl_info_sin_resultados}}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- DETALLE DE ESPECIFICACION -->
+                                            <div *ngIf="!esNuevaUnidadDocumental" class="row justify-content-center">
                                                 <div class="form-group col-sm-12 col-lg-3">
                                                     <div class="form-group">
                                                         <label class="form-label">Código<span
@@ -101,6 +181,13 @@
                                                         <label class="form-label">Nombre<span
                                                                 class="form-required">*</span></label>
                                                         <input type="text" [(ngModel)]="unidadDocumental.nombre"
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-sm-12 col-lg-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Descripción</label>
+                                                        <input type="text" [(ngModel)]="unidadDocumental.descripcion"
                                                             class="form-control">
                                                     </div>
                                                 </div>
@@ -123,13 +210,6 @@
                                                     <div class="form-group">
                                                         <label class="form-label">Caja Recibido</label>
                                                         <input type="text" [(ngModel)]="unidadDocumental.cajaRecibido"
-                                                            class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group col-sm-12 col-lg-3">
-                                                    <div class="form-group">
-                                                        <label class="form-label">Descripción</label>
-                                                        <input type="text" [(ngModel)]="unidadDocumental.descripcion"
                                                             class="form-control">
                                                     </div>
                                                 </div>

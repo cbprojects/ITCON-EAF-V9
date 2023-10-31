@@ -7,5 +7,4 @@ export interface Area {
     usuarioCreacion: any;
     fechaActualizacion: any;
     usuarioActualizacion: any;
-
 }
