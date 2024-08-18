@@ -3,14 +3,14 @@ import { Injectable } from '@angular/core';
 //export var HOST = 'http://localhost:9002';
 //export var HOST = 'http://10.176.56.211:9002';
 //qa
-export var HOST = 'https://143.198.123.29:8443/CentralUsuariosQA';
+//export var HOST = 'https://143.198.123.29:8443/CentralUsuariosQA';
 //dev
-//export var HOST = 'https://143.198.123.29:8443/CentralUsuarios';
+export var HOST = 'https://143.198.123.29:8443/CentralUsuarios';
 
-//export var SYSTEM = 'http://localhost:4200';
+export var SYSTEM = 'http://localhost:4200';
 //export var SYSTEM = 'http://10.176.56.211:7001';
 //export var SYSTEM = 'https://www.itcon.cbaeneprojects.com';
-export var SYSTEM = 'https://www.itconqa.cbaeneprojects.com';
+//export var SYSTEM = 'https://www.itconqa.cbaeneprojects.com';
 
 @Injectable()
 export class ObjectModelInitializer {
@@ -64,6 +64,7 @@ export class ObjectModelInitializer {
       // Recepcion
       urlConsultarUnidadDocumentalRecepcion: `${HOST}/central/unidadDocumental/consultarUnidadDocumentalRecepcion`,
       urlAprobacionRecepcion: `${HOST}/central/unidadDocumental/aprobacionRecepcion`,
+      urlAprobacionRecepcionMasivo: `${HOST}/central/unidadDocumental/aprobacionRecepcionTodo`,
       urlGenerarPdf: `${HOST}/central/unidadDocumental/generarPdf`,
       urlEnviarPdf: `${HOST}/central/unidadDocumental/enviarPdf`,
       // Acta
@@ -128,7 +129,9 @@ export class ObjectModelInitializer {
       // Unidad Documental
       urlConsultarUDPorFiltros: `${HOST}/central/unidadDocumental/consultarUnidadDocumentalFiltros`,
       urlCrearUD: `${HOST}/central/unidadDocumental/crearUnidadDocumental`,
+      urlCrearUDMasiva: `${HOST}/central/unidadDocumental/crearUnidadDocumentalMasiva`,
       urlCrearUDCaja: `${HOST}/central/unidadDocumental/crearUnidadDocumentalCaja`,
+      urlCrearUDCajaMasiva: `${HOST}/central/unidadDocumental/crearUnidadDocumentalCajaMasivo`,
       urlModificarUD: `${HOST}/central/unidadDocumental/modificarUnidadDocumental`,
       urlConsultarUnidadDocumentalPorCajaMasiva: `${HOST}/central/unidadDocumental/consultarUnidadDocumentalPorCajaMasiva`,
       urlCambiarCajaUnidadDocumentalMasiva: `${HOST}/central/unidadDocumental/cambiarCajaUnidadDocumentalMasiva`,
@@ -706,6 +709,7 @@ export class ObjectModelInitializer {
 
   getDataRequestObtenerArchivos() {
     return {
+      idCliente:0,
       idSociedad: 0,
       idCaja: '',
       idUnidadDocumental: '',
@@ -906,6 +910,12 @@ export class ObjectModelInitializer {
     return {
       lstUnidadDocumentalCajaUno: [],
       lstUnidadDocumentalCajaDos: []
+    }
+  }
+
+  getDataRequestUdMasivo() {
+    return {
+      lstUdMasiva: []
     }
   }
 

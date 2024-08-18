@@ -525,7 +525,7 @@ export class QUnidadDocumentalAdmComponent implements OnInit {
 
   activarCambiosCliente() {
     this.listaClientes = [];
-    this.listaClientes.push({ value: this.objectModelInitializer.getDataSociedad(), label: this.msg.lbl_enum_generico_valor_vacio });
+    this.listaClientes.push({ value: this.objectModelInitializer.getDataCliente(), label: this.msg.lbl_enum_generico_valor_vacio });
     this.listaClientesTemp.forEach(cliente => {
       this.listaClientes.push({ value: cliente, label: cliente.nombre });
     });

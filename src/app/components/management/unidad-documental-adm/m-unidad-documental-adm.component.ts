@@ -14,6 +14,8 @@ import { Proyecto } from 'src/app/model/proyectoModel';
 import { RequestAreasXSociedad } from 'src/app/model/request/requestAreasXSociedad';
 import { RequestConsultaCaja } from 'src/app/model/request/requestConsultaCajaPorSociedadModel';
 import { RequestSociedadXCliente } from 'src/app/model/request/requestSociedadXCliente';
+import { RequestUdMasivoModel } from 'src/app/model/request/requestUdMasivaModel';
+import { ResponseModificarPrestamo } from 'src/app/model/response/responseModificarPrestamo';
 import { Sociedad } from 'src/app/model/sociedadModel';
 import { TipoDocumental } from 'src/app/model/tipoDocumentalModel';
 import { UnidadDocumental } from 'src/app/model/unidadDocumentalModel';
@@ -352,6 +354,8 @@ export class MUnidadDocumentalAdmComponent implements OnInit {
 
   crearUD() {
     try {
+      let requestUdMasivo : RequestUdMasivoModel=this.objectModelInitializer.getDataRequestUdMasivo();
+      let listaUnidadesDocumentalesCrear: UnidadDocumental[]=[];;
       this.unidadDocumental.sociedadArea.id = 0;
       this.unidadDocumental.sociedadArea.area = this.areaFiltro.value;
       this.unidadDocumental.sociedadArea.sociedad = this.sociedadFiltro.value;
@@ -362,11 +366,42 @@ export class MUnidadDocumentalAdmComponent implements OnInit {
       this.unidadDocumental.estado = this.unidadDocumental.estado.value;
       this.unidadDocumental.usuarioCreacion = this.creacion;
       this.unidadDocumental.usuarioActualizacion = this.creacion;
+      let unidad: UnidadDocumental;
       // TODO: Acá debe ir el nuevo request usando la lista de especificaciones
+      for (let index = 0; index < this.listaEspecificaciones.length; index++) {
+        const element = this.listaEspecificaciones[index];
+        unidad= this.objectModelInitializer.getDataUnidadDocumental();
+        unidad.codigo=element.codigo;
+        unidad.nombre=element.nombre;
+        unidad.descripcion=element.descripcion;
+        unidad.codigoBarra=element.codigoBarra;
+        unidad.qr=element.qr;
+        unidad.cajaRecibido=element.cajaRecibido;
+        unidad.consecutivoIni=element.consecutivoIni;
+        unidad.consecutivoFin=element.consecutivoFin;
+        unidad.sociedadArea=this.unidadDocumental.sociedadArea;
+        unidad.caja=this.unidadDocumental.caja;
+        unidad.rutaArchivo=this.unidadDocumental.rutaArchivo;
+        unidad.tipoDocumental=this.unidadDocumental.tipoDocumental;
+        unidad.contenedor=this.unidadDocumental.contenedor;
+        unidad.proyecto=this.unidadDocumental.proyecto;
+        unidad.fechaIni=this.unidadDocumental.fechaIni;
+        unidad.fechaFin=this.unidadDocumental.fechaFin;
+        unidad.fechaRecibe=this.unidadDocumental.fechaRecibe;
+        unidad.recepcionAprobada=this.unidadDocumental.recepcionAprobada;
+        unidad.estado=this.unidadDocumental.estado;
+        unidad.fechaCreacion=this.unidadDocumental.fechaCreacion;
+        unidad.usuarioCreacion=this.unidadDocumental.usuarioCreacion;
+        unidad.fechaActualizacion=this.unidadDocumental.fechaActualizacion;
+        unidad.usuarioActualizacion=this.unidadDocumental.usuarioActualizacion;
+        listaUnidadesDocumentalesCrear.push(unidad);
+      }
+      requestUdMasivo.lstUdMasiva=listaUnidadesDocumentalesCrear;
+
       // this.listaEspecificaciones
-      this.restService.postREST(this.const.urlCrearUDCaja, this.unidadDocumental)
+      this.restService.postREST(this.const.urlCrearUDCajaMasiva, requestUdMasivo)
         .subscribe(resp => {
-          let respuesta: UnidadDocumental = JSON.parse(JSON.stringify(resp));
+          let respuesta: ResponseModificarPrestamo = JSON.parse(JSON.stringify(resp));
           if (respuesta !== null) {
             // Mostrar mensaje exitoso y consultar de nuevo
             this.messageService.clear();

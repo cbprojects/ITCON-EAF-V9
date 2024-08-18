@@ -147,6 +147,48 @@ export class RecepcionComponent implements OnInit {
     });
     
   }
+  seleccionarTodo(){
+    try {
+      let requestRecepcion: RequestRecepcion = this.objectModelInitializer.getDataRequestRecepcion();
+      let cliente = this.objectModelInitializer.getDataCliente();
+      cliente=this.clienteFiltro.value;
+      requestRecepcion.cliente = this.objectModelInitializer.getDataCliente();
+      requestRecepcion.cliente = cliente;
+      requestRecepcion.registroInicial = 0;
+      requestRecepcion.cantidadRegistro = 10000;
+      this.restService.postREST(this.const.urlAprobacionRecepcionMasivo,requestRecepcion)
+        .subscribe(resp => {
+          let temp: ResponseModificarPrestamo = JSON.parse(JSON.stringify(resp));
+          let mensajeFinal;
+          if (temp && temp.codigo === '0') {
+            mensajeFinal = { severity: this.const.severity[1], summary: this.const.lbl_summary_success, detail: temp.mensaje, sticky: true };
+          } else {
+            mensajeFinal = { severity: this.const.severity[2], summary: this.const.lbl_summary_warning, detail: temp.mensaje, sticky: true };
+          }
+          if(this.listaUD.length!=0){
+            this.consultarRecepcion(0);
+          }
+          this.messageService.clear();
+          this.messageService.add(mensajeFinal);
+        },
+          error => {
+            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+            let titleError = listaMensajes[0];
+            listaMensajes.splice(0, 1);
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+            this.messageService.clear();
+
+            listaMensajes.forEach(mensaje => {
+              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+            });
+            this.messageService.add(mensajeFinal);
+
+            console.log(error, "error");
+          })
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   aprobarRecepcion(ud:UnidadDocumental){
     this.activarCorreo=true;

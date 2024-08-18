@@ -9,7 +9,10 @@ import { Archivo } from 'src/app/model/archivoModel';
 import { Area } from 'src/app/model/areaModel';
 import { Caja } from 'src/app/model/cajaModel';
 import { CajaTree } from 'src/app/model/cajaTreeModel';
+import { Cliente } from 'src/app/model/clienteModel';
 import { RequestArchivo } from 'src/app/model/request/requestArchivoModel';
+import { RequestAreasXSociedad } from 'src/app/model/request/requestAreasXSociedad';
+import { RequestSociedadXCliente } from 'src/app/model/request/requestSociedadXCliente';
 import { Sociedad } from 'src/app/model/sociedadModel';
 import { TipoDocumental } from 'src/app/model/tipoDocumentalModel';
 import { UnidadDocumental } from 'src/app/model/unidadDocumentalModel';
@@ -42,6 +45,7 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
   sociedadSelect: any;
   areaSelect: any;
   cajaSelect: any;
+  clienteFiltro: any;
   uniDocuSelect: any;
   archivoFiltro: any;
   tipoUniDocuSelect: any;
@@ -55,6 +59,8 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
   items: MenuItem[];
   fileUploadPrecargado: any;
   archivosPrecargados: any[];
+  listaClientesTemp: any[];
+  listaClientes: any[];
 
   // Utilidades
   msg: any;
@@ -73,12 +79,13 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
 
   inicializar() {
     this.files = [];
+    this.clienteFiltro = { value: this.objectModelInitializer.getDataCliente(), label: this.msg.lbl_enum_generico_valor_vacio };
     this.sociedadSelect = { value: this.objectModelInitializer.getDataSociedad(), label: this.msg.lbl_enum_generico_valor_vacio };
     this.areaSelect = { value: this.objectModelInitializer.getDataArea(), label: this.msg.lbl_enum_generico_valor_vacio };
     this.cajaSelect = { value: this.objectModelInitializer.getDataCaja(), label: this.msg.lbl_enum_generico_valor_vacio };
     this.uniDocuSelect = { value: this.objectModelInitializer.getDataUnidadDocumental(), label: this.msg.lbl_enum_generico_valor_vacio };
     this.tipoUniDocuSelect = { value: this.objectModelInitializer.getDataTipoDocumental(), label: this.msg.lbl_enum_generico_valor_vacio };
-    this.consultarSociedades();
+    this.consultarClientes();
     this.consultarTipoUD();
     this.items = [
       { label: 'Descargar', icon: 'pi pi-download', command: (event) => this.descargarArchivo(this.selectedFiles) },
@@ -89,8 +96,10 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
   consultarSociedades() {
     this.listaSociedades = [];
     this.loading = true;
+    let request: RequestSociedadXCliente = this.objectModelInitializer.getDataRequestSociedadXCliente();
+      request.idCliente = this.clienteFiltro.value.id;
     try {
-      this.restService.getREST(this.const.urlConsultarSociedadActiva)
+      this.restService.postREST(this.const.urlConsultarSociedadXClienteActiva, request)
         .subscribe(resp => {
           let temp: Sociedad[] = JSON.parse(JSON.stringify(resp));
           if (temp !== undefined && temp.length > 0) {
@@ -286,6 +295,11 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
       this.requestObtenerArchivos = this.objectModelInitializer.getDataRequestObtenerArchivos();
       if (this.sociedadSelect != undefined && this.sociedadSelect != null && this.sociedadSelect.id > 0) {
         this.requestObtenerArchivos.idSociedad = this.sociedadSelect.id;
+        if (this.clienteFiltro.value.id === 0) {
+          this.requestObtenerArchivos.idCliente = null;
+        } else {
+          this.requestObtenerArchivos.idCliente = this.clienteFiltro.value.id;
+        }
         if (this.cajaSelect.id === 0) {
           this.requestObtenerArchivos.idCaja = null;
         } else {
@@ -782,5 +796,53 @@ export class DigitalizarUnidadDocumentalComponent implements OnInit {
 
   mostrarConfirmarPopUpCoincidencias() {
     setTimeout(() => $('#confirmPPCoincidencias').click(), 100);
+  }
+
+  consultarClientes() {
+    try {
+      let request: RequestAreasXSociedad = this.objectModelInitializer.getDataRequestAreasXSociedad();
+      request.id = +localStorage.getItem("idUser");
+      this.restService.postREST(this.const.urlBuscarClientesActivosPorUsuario, request)
+        .subscribe(resp => {
+          let temp: Cliente[] = JSON.parse(JSON.stringify(resp));
+          if (temp !== undefined && temp.length > 0) {
+            this.listaClientesTemp = temp;
+          }
+          this.activarCambiosCliente()
+          if (this.listaClientes.length > 1) {
+            this.consultarSociedades();
+          }
+        },
+          error => {
+            let listaMensajes = this.util.construirMensajeExcepcion(error.error, this.msg.lbl_summary_danger);
+            let titleError = listaMensajes[0];
+            listaMensajes.splice(0, 1);
+            let mensajeFinal = { severity: titleError.severity, summary: titleError.detail, detail: '', sticky: true };
+            this.messageService.clear();
+
+            listaMensajes.forEach(mensaje => {
+              mensajeFinal.detail = mensajeFinal.detail + mensaje.detail + " ";
+            });
+            this.messageService.add(mensajeFinal);
+
+            console.log(error, "error");
+          })
+    } catch (e) {
+      console.log(e);
+    }
+
+  }
+
+  activarCambiosCliente() {
+    this.listaClientes = [];
+    this.listaClientes.push({ value: this.objectModelInitializer.getDataCliente(), label: this.msg.lbl_enum_generico_valor_vacio });
+    this.listaClientesTemp.forEach(cliente => {
+      this.listaClientes.push({ value: cliente, label: cliente.nombre });
+    });
+    if (this.listaClientes.length > 1) {
+      this.clienteFiltro = this.listaClientes[1];
+    } else {
+      this.clienteFiltro = this.listaClientes[0];
+    }
   }
 }
